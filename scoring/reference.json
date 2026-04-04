@@ -1,0 +1,54 @@
+{
+  "experiments": {
+    "biased_shapley_game": {
+      "description": "Biased Shapley game (Table 2) — deviation rating gives equal ratings to R=P=S=N, while uniform gives transitive ranking R > P > N > S",
+      "weight": 0.4,
+      "primary_metric": "dev_gap",
+      "metrics": {
+        "dev_gap": {"higher_is_better": false, "coefficient": -1.0},
+        "CCE_gap": {"higher_is_better": false, "coefficient": -0.3}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "dev_gap": 0.0,
+          "CCE_gap": 0.0
+        },
+        "uniform_rating": {
+          "type": "baseline",
+          "dev_gap": 1481.0
+        }
+      }
+    },
+    "clone_invariance": {
+      "description": "Clone invariance: adding a copy of a strategy does not change ratings of other strategies",
+      "weight": 0.3,
+      "primary_metric": "max_diff",
+      "metrics": {
+        "max_diff": {"higher_is_better": false, "coefficient": -1.0}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "max_diff": 0.0
+        }
+      }
+    },
+    "llm_rating_livebench": {
+      "description": "Livebench LLM rating (Figure 2) — deviation rating groups top 4 models (claude-3-5-sonnet, gemini-1.5-pro, Llama-3.1-405B, gpt-4o) equally at the top",
+      "weight": 0.3,
+      "primary_metric": "top4_overlap",
+      "metrics": {
+        "top4_overlap": {"higher_is_better": true, "coefficient": 1.0},
+        "CCE_gap": {"higher_is_better": false, "coefficient": -0.3}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "top4_overlap": 4,
+          "CCE_gap": 0.0
+        }
+      }
+    }
+  }
+}

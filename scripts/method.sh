@@ -1,7 +1,5 @@
 #!/bin/bash
-# Run the paper's proposed method.
-#
-# This script trains/runs the paper's method using code in method/.
+# Run the deviation rating method (paper's proposed approach).
 #
 # Usage:
 #   bash scripts/method.sh
@@ -10,5 +8,5 @@ set -e
 
 cd /home/user
 
-# TODO: run the paper's method
-# TODO: call scripts/evaluate.sh to score
+# Run evaluation which includes the deviation rating method
+bash scripts/evaluate.sh

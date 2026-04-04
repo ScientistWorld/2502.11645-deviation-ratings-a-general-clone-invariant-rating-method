@@ -1,17 +1,36 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
+How do you rate strategies (players, models, agents, tasks) in multi-agent or multi-task evaluation scenarios where interactions are strategic — adversarial, cooperative, or mixed-motive?
 
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+When you have outcomes from pairwise (or multi-way) interactions — win/loss records, scores, ratings — how do you distill these into a single quality score per strategy that:
+
+1. **Is clone invariant**: adding a copy (clone) of an existing strategy does not change anyone's rating
+2. **Is scalable**: redundant or overlapping data should not distort ratings without manual curation
+3. **Is resilient**: cannot be manipulated by submitting many similar strategies that exploit a niche
+4. **Is directional**: optimizing the rating leads to genuine improvement
+5. **Works for N players and general-sum games**: not limited to two-player zero-sum
+
+This is known as the **strategy rating problem** in game theory.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+Real-world evaluation scenarios naturally model as normal-form games:
+- **LLM leaderboards** (Chatbot Arena): model vs model vs prompt — a 3-player general-sum game
+- **RL agent benchmarks**: agent vs task — where different tasks measure overlapping skills
+- **Sports rankings**: team vs team — but the same team can appear in many contexts
+- **Chess ratings**: player vs player — but with transitive and intransitive cycles
+
+Existing methods (Elo, TrueSkill, etc.) only work for two-player zero-sum games. Other methods like Nash averaging achieve clone invariance but are limited to two-player zero-sum. No existing method achieves clone invariance for N-player general-sum games.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A rating method should:
+- Produce **unique** ratings that always exist for any finite game
+- **Preserve dominance**: if strategy A dominates B (never worse, sometimes better), A must be rated higher
+- **Be clone invariant**: copying strategies doesn't change any ratings
+- **Be mixture invariant**: adding mixtures of existing strategies doesn't change ratings
+- **Be offset invariant**: adding arbitrary offsets to payoffs doesn't change ratings
+- **Scale to N players and general-sum games**: no restrictions on number of players or payoff structure
+- **Be efficiently computable**: polynomial time in the size of the game

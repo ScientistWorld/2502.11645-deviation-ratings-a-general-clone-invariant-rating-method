@@ -1,0 +1,1 @@
+"""Deviation rating method implementation."""

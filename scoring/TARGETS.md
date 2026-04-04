@@ -1,50 +1,23 @@
 # Evaluation Targets
 
-<!-- Do not edit this unless you decide to stop -->
+## Primary: deviation_rating_quality
 
-<!--
-Describe what a scientist could optimize and how to measure it.
+**Biased Shapley Game** — deviation ratings should be equal across all strategies.
+- **Metric**: `dev_gap` = max(all ratings) - min(all ratings) for player 0 (lower is better, 0 = perfect equality)
+- **Metric**: `CCE_gap` = sum_p max_a' delta_p(a') (lower is better, 0 = exact CCE)
+- **Run**: Compute deviation rating on the 4x4 biased Shapley game
 
-If a paper claims "we get X without sacrificing Y." Your targets must
-capture BOTH sides. Without constraint targets, a scientist can trivially
-"improve" by breaking the property the paper was designed to satisfy.
+**Livebench** — deviation ratings should group the top 4 models equally at the top.
+- **Metric**: `top4_overlap` = number of expected top-4 models in the top group (higher is better, max = 4)
+- **Run**: Construct 3-player game from model-task scores, compute deviation ratings
 
-Three kinds of targets:
+## Constraint: clone_invariance
 
-  PRIMARY    — the main thing the paper optimizes (accuracy, PSNR, etc.)
-  CONSTRAINT — what the paper must maintain (security, fairness, param count,
-               baseline comparison). Constraint metrics guard against cheating:
-               a scientist who ignores the constraint should score WORSE.
-  ABLATION   — what breaks when the key idea is removed (wrong-key test,
-               no-module test). Proves the method actually does something. 
-               This can be ignored if truly not important.
+Adding a copy of a strategy must not change existing ratings.
+- **Metric**: `max_diff` = max absolute change in any original rating after adding a clone (lower is better, 0 = perfect invariance)
+- **Run**: Compare ratings before/after adding a strategy clone to Rock-Paper-Scissors
 
-For each target, write:
-- What the experiment tests (one sentence)
-- The primary metric and direction (higher/lower is better)
-- How to run evaluation
+## Secondary: uniform_baseline
 
-Every target here MUST appear in both reference.json and scores.json.
-Do not list targets you cannot measure — phantom targets are worse than
-missing targets.
-
-Example for a steganography paper:
-
-## Primary: reconstruction_quality
-Cover and hidden scene PSNR on Blender Synthetic.
-- **Metric**: psnr (higher is better)
-
-## Constraint: key_security
-Wrong-key rendering must produce incoherent output.
-- **Metric**: wrong_key_psnr (lower is better — high means security is broken)
-
-## Ablation: vs_standalone_baseline
-Cover quality should match standalone model (no hidden scene embedded).
-- **Metric**: psnr_gap (lower is better — large gap means hiding costs quality)
-
-Delete this comment block and fill in your actual targets below.
--->
-
-<!-- This is high-level. IT IS ABOUT CONCEPT, NOT NUMBERS. DO NOT INCLUDE ANY ACTUAL VALUES FROM THE PAPER OR YOUR EXPERIMENTS HERE. -->
-
-<!-- This should EXACTLY corresponds to the structure in your scores.json. -->
+Uniform averaging as a baseline comparison.
+- The scientist should verify that uniform rating gives a different (transitive) ranking compared to deviation rating, demonstrating the value of game-theoretic equilibrium-based ratings.

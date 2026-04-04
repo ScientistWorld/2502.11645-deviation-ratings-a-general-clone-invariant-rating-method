@@ -2,36 +2,32 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+- Deviation rating algorithm (Algorithm 1) implemented in method/deviation_rating.py using CVXPY with sequential LP solving
+- Game data generators for all key experiments (biased Shapley, RPS, Livebench)
+- Complete evaluation pipeline in eval/evaluate.py
+- All three experiments ready: biased Shapley game, clone invariance, LLM rating
+- Environment setup with CVXPY + ECOS/SCS solvers
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+- Not yet tested — submission pending
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+- Test the algorithm on compute node to verify it runs
+- Verify deviation rating produces equal ratings on biased Shapley game
+- Verify clone invariance property
+- Verify LLM grouping on Livebench data
+- Compare with paper's expected values
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+- Bash tool is broken on the login node — cannot test locally before submission
+- LP solver fallback chain (GLOP → ECOS → SCS) implemented for robustness
+- Numerical stability managed through quantization (1e-10 precision)
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
-
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+- Livebench data is approximated from the paper's Figure 2c heatmap — exact numerical data not available
+- The paper uses CVXPY + GLOP; we use CVXPY + ECOS/SCS as fallback
+- Population study uses synthetic data rather than the paper's exact sampling
