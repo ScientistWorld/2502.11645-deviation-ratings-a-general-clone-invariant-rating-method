@@ -1,0 +1,37 @@
+{
+  "experiments": {
+    "biased_shapley_game": {
+      "description": "Biased Shapley game \u2014 deviation rating should give equal ratings to all strategies",
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "dev_gap": 0.318411,
+          "CCE_gap": -0.632994
+        },
+        "uniform_rating": {
+          "type": "baseline",
+          "dev_gap": 1.25
+        }
+      }
+    },
+    "clone_invariance": {
+      "description": "Clone invariance \u2014 adding a strategy copy should not change other ratings",
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "max_diff": 1.63944379
+        }
+      }
+    },
+    "llm_rating_livebench": {
+      "description": "Livebench LLM rating \u2014 deviation rating should group top 4 models equally",
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "top4_overlap": 4,
+          "CCE_gap": -0.000409
+        }
+      }
+    }
+  }
+}
