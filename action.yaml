@@ -31,4 +31,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Test job: verify deviation rating algorithm runs end-to-end on Shapley game and Livebench."
+notes: "Fix v4: 3x3 Shapley, CCE_gap=0, clean scores.json, improved solver params"
