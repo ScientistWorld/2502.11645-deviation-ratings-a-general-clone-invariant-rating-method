@@ -1,21 +1,12 @@
 #!/bin/bash
-# Install Python packages into the container overlay.
-#
-# This paper needs CVXPY for linear programming.
-# Game theory computation — CPU only, no GPU required.
+# Install scipy/numpy into /home/user/pkgs (overlay is read-only at runtime).
+# PYTHONPATH is prepended at container entrypoint to pick these up.
 
 set -e
 
-# CVXPY for sequential LP solving (deviation rating algorithm)
-uv pip install --system \
-    numpy \
-    cvxpy \
-    scipy
+export UV_CACHE_DIR=/tmp/uv_cache
+mkdir -p /home/user/pkgs
 
-# ECOS solver (ships with CVXPY, but explicit install for safety)
-uv pip install --system \
-    ecos
-
-# Optional: SCS solver as fallback
-uv pip install --system \
-    scs
+# Install to user-writable directory, avoiding the read-only overlay.
+# UV_NO_PROGRESS=1 quiets output; --target is critical.
+uv pip install --system --target /home/user/pkgs numpy scipy

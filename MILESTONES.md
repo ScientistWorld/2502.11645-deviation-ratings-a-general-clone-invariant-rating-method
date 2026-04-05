@@ -5,13 +5,12 @@
 ## Progress Log
 
 ### [2026-04-05] - method_runs
-- Implemented deviation rating algorithm (Algorithm 1) in method/deviation_rating.py
-- Fixed game construction: biased Shapley game is 3×3 (R,P,S only — the cycle game)
-- All experiments implemented: Shapley game, clone invariance, Livebench LLM rating, population study
-- Fixed scores.json format to only include numeric metrics matching reference.json
-- SCS solver with improved convergence parameters
-- Previous test: algorithm runs, Livebench works (top4_overlap=4/4), but Shapley game needs CCE_gap=0
+- Algorithm runs end-to-end with scipy.optimize.linprog
+- Livebench works (top4_overlap=4/4) — 3-player game converges correctly
+- Population study works (dev spread=0) — symmetric games solve correctly
+- Previous issue: biased Shapley game (3x3) didn't converge to CCE_gap=0 with ECOS
+- Fix: replaced CVXPY/ECOS with scipy.optimize.linprog for more reliable LP solving
+- The strictest CCE of the biased Shapley game should be a pure NE → CCE_gap=0
 
 ### [2026-04-04] - none
-- Initial workspace setup
-- Read the paper thoroughly
+- Initial workspace setup, read the paper thoroughly

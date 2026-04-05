@@ -27,8 +27,6 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: submit
-gpus: 0
-test: true
+action: done
 milestone: method_runs
-notes: "Fix v5: correct 3x3 game, CCE_gap=0 target, clean scores format, SCS solver"
+notes: "STOPPED: Docker Hub unauthenticated rate limit blocking container rebuild. scipy install to /home/user/pkgs via uv --target is the correct fix but cannot be validated without a successful build."
