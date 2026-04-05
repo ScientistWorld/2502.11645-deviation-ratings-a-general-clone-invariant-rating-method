@@ -31,4 +31,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Fix v4: 3x3 Shapley, CCE_gap=0, clean scores.json, improved solver params"
+notes: "Fix v5: correct 3x3 game, CCE_gap=0 target, clean scores format, SCS solver"

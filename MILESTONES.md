@@ -4,14 +4,13 @@
 
 ## Progress Log
 
-### [2026-04-04] - method_runs
-- Implemented deviation rating algorithm (Algorithm 1 from the paper) in method/deviation_rating.py
-- Implemented game generators (biased Shapley, Livebench, RPS) in method/game_generators.py
-- Implemented evaluation code in eval/evaluate.py covering all key experiments
-- Filled in briefing documents (problem.md, evaluation.md, method.md, overview.md)
-- Created scoring/reference.json with paper's reported numbers
-- Set up environment (container.def, setup.sh) with CVXPY + LP solvers
-- All code files committed, workspace ready for test run
+### [2026-04-05] - method_runs
+- Implemented deviation rating algorithm (Algorithm 1) in method/deviation_rating.py
+- Fixed game construction: biased Shapley game is 3×3 (R,P,S only — the cycle game)
+- All experiments implemented: Shapley game, clone invariance, Livebench LLM rating, population study
+- Fixed scores.json format to only include numeric metrics matching reference.json
+- SCS solver with improved convergence parameters
+- Previous test: algorithm runs, Livebench works (top4_overlap=4/4), but Shapley game needs CCE_gap=0
 
 ### [2026-04-04] - none
 - Initial workspace setup
