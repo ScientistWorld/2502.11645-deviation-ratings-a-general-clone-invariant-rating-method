@@ -118,11 +118,11 @@ How success is measured for a game-theoretic rating method.
 
 ## Metrics
 
-Since this is a rating method rather than a supervised predictor, evaluation is based on whether the computed ratings satisfy the paper's game-theoretic claims on explicit normal-form games.
+Since this is a rating task rather than a supervised prediction task, evaluation is based on whether a method produces stable and interpretable ratings on explicit normal-form games that expose the benchmark's key phenomena.
 
 1. **Deviation equality on the augmented biased Shapley game**
-   - The paper's method should assign equal deviation ratings to `R`, `P`, `S`, and the Nash-mixture action `N`
-   - The strictest-CCE solution should have zero residual deviation gain (`CCE_gap = 0`)
+   - A successful method should assign equal ratings to `R`, `P`, `S`, and the added mixed action `N`
+   - The selected recommendation distribution should satisfy the benchmark's equilibrium-feasibility check (`CCE_gap = 0`)
 
 2. **Clone invariance**
    - If one strategy is duplicated, the ratings assigned to the original strategies should remain unchanged
@@ -138,26 +138,26 @@ Since this is a rating method rather than a supervised predictor, evaluation is 
 - **Uniform averaging**: mean payoff over all opponents. Simple but not clone invariant.
 
 **Target properties** reflected by the current scored experiments:
-- Deviation rating should produce equal ratings on the augmented biased Shapley example
-- Deviation rating should be clone invariant on the cloned-RPS example
-- The equilibrium found by the LP should satisfy the paper's strictest-CCE conditions (`CCE_gap = 0`)
+- The method should avoid imposing an artificial linear order on the augmented biased Shapley example
+- The method should be invariant to duplicated strategies on the cloned-RPS example
+- The selected recommendation distribution should satisfy the equilibrium-feasibility check (`CCE_gap = 0`)
 
 ## Evaluation Protocol
 
 ### Experiment 1: Biased Shapley Game
 - Construct the 4x4 biased Shapley game (R, P, S, plus Nash mixture N)
-- Compute deviation ratings and compare all four action ratings
+- Compute ratings and compare all four action ratings
 - Score `dev_gap = max(ratings) - min(ratings)` and `CCE_gap`
 
 ### Experiment 2: Clone Invariance Test
 - Take a Rock-Paper-Scissors game
-- Compute deviation ratings for original game
+- Compute ratings for the original game
 - Add a clone of one strategy and recompute
 - Score `max_diff` over the original strategies' ratings before vs. after cloning
 
 ## Packaged Scope
 
-The paper also contains broader theoretical and empirical claims, including the model/task rating example. The current reusable environment packages the minimum experiments needed for `core_claim`: the augmented biased Shapley example and clone invariance.
+The paper also contains broader theoretical and empirical claims, including larger benchmark analyses. The current reusable environment packages the minimum experiments needed for `core_claim`: the augmented biased Shapley example and clone invariance.
 
 ---
 
@@ -225,6 +225,45 @@ The paper also contains broader theoretical and empirical claims, including the 
 
 </details>
 
+### Iteration 4: glm-5.1 (verifier)
+- **Milestone**: `core_claim` | **Status**: done
+- **Working time**: 1m | **GPU**: 0.0h
+- **Jobs**: 1 total (1 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-04-07 00:00] - none
+- Read the paper and inspected the existing workspace implementation
+- Identified the paper's minimum reproducible claims as the augmented biased Shapley example and clone invariance
+
+### [2026-04-07 00:00] - method_runs
+- Implemented and corrected the sequential LP deviation-rating pipeline
+- Added reproducible method, baseline, evaluation, and end-to-end shell scripts
+- Verified the algorithm executes end-to-end without errors
+
+### [2026-04-07 00:00] - core_claim
+- Reproduced the paper's augmented biased Shapley result with `dev_gap = 0.0` and `CCE_gap = 0.0`
+- Reproduced exact clone invariance on cloned RPS with `max_diff = 0.0`
+- Validated the environment with `bash scripts/reproduce.sh` and `python validate.py --compare`
+
+### [2026-04-07 22:22] - core_claim
+- Installed the declared runtime dependencies into `/home/user/pkgs` on the login node for a real local verification pass
+- Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
+- Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
+
+### [2026-04-07 22:35] - core_claim
+- Verified the workspace as a gym package rather than a reproduction attempt
+- Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
+- Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
+
+### [2026-04-07 22:50] - core_claim
+- Completed final wrap-up of milestone, progress, and scoring guidance documents
+- Confirmed `python3 validate.py` passes with the final scoring contract
+- Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
+
+</details>
+
 
 ---
 
@@ -248,5 +287,20 @@ The paper also contains broader theoretical and empirical claims, including the 
 - Reproduced exact clone invariance on cloned RPS with `max_diff = 0.0`
 - Validated the environment with `bash scripts/reproduce.sh` and `python validate.py --compare`
 
+### [2026-04-07 22:22] - core_claim
+- Installed the declared runtime dependencies into `/home/user/pkgs` on the login node for a real local verification pass
+- Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
+- Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
+
+### [2026-04-07 22:35] - core_claim
+- Verified the workspace as a gym package rather than a reproduction attempt
+- Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
+- Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
+
+### [2026-04-07 22:50] - core_claim
+- Completed final wrap-up of milestone, progress, and scoring guidance documents
+- Confirmed `python3 validate.py` passes with the final scoring contract
+- Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
+
 ## Stop Justification
-- Not stopping. The next action is a submitted packaged run of the current core-claim reproduction.
+- Finalized at `core_claim`. The packaged environment is consistent, validated, and usable as a gym for the two scored experiments, but it does not include the paper's broader empirical sections, so a higher milestone would overclaim coverage.

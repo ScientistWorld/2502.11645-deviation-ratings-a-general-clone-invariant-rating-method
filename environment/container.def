@@ -1,20 +1,18 @@
 # Apptainer definition file for deviation rating reproduction.
 #
-# Build:  apptainer build container.sif container.def
-#
-# This paper involves game-theoretic linear programming computation.
-# CPU-only workload (CVXPY + LP solvers), no GPU needed.
+# This workload is CPU-only and only needs a minimal Python base image.
 
 Bootstrap: docker
-From: python@sha256:ad65166ad2583036804a3f772ec8f1cad733cf77d631c6840ab1ea9231b6b350
+From: python:3.11-slim
 
 %post
     apt-get update && apt-get install -y --no-install-recommends \
-        tmux nano vim-tiny less curl wget git build-essential \
+        git curl wget \
         && rm -rf /var/lib/apt/lists/*
 
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints
+    mkdir -p /home/user/pkgs
     mkdir -p /home/user/scoring
     chmod 755 /home/user
 
