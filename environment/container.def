@@ -7,7 +7,7 @@
 # when the scheduler rebuilds the environment.
 
 Bootstrap: localimage
-From: /home/user/environment/container.sif
+From: container.sif
 
 %post
     mkdir -p /home/user/data
