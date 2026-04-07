@@ -2,25 +2,25 @@
 
 ## Initial Assessment
 
-The workspace was already at a credible `core_claim` state. The method, data, and evaluation code were separated correctly enough for reuse, and the packaged scripts had already been locally validated. The main weakness was documentation leakage: several files intended for from-scratch scientists named the paper's exact algorithmic choices instead of only describing the problem and benchmark goals.
+The workspace was already in a strong state. The paper method implementation ran end-to-end, `python3 validate.py --compare` passed, `eval/` and `data/` did not import from `method/`, and the milestone recorded in the workspace had been advanced beyond the earlier `core_claim` baseline to `secondary_claims`. The main remaining question was gym quality rather than reproduction correctness.
 
 ## Issues Found
 
-- Minor: [briefing/evaluation.md](/home/user/briefing/evaluation.md) leaked the paper's specific method name and implementation framing in a method-agnostic file.
-- Minor: [scoring/TARGETS.md](/home/user/scoring/TARGETS.md), [scoring/CONSTRAINTS.md](/home/user/scoring/CONSTRAINTS.md), and [scoring/DIRECTION.md](/home/user/scoring/DIRECTION.md) exposed more of the paper's exact algorithm than is appropriate for a gym that must support from-scratch mode.
-- Cosmetic: [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) was accurate but too terse to serve as a clear experiment map for future scientists.
+- Minor: [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) did not match the actual scored benchmark. It only documented two experiments even though [scoring/scores.json](/home/user/scoring/scores.json) contains five.
+- Minor: the current scored benchmark is saturation-prone for improve-mode use. All scored metrics are exact property checks and the reproduced method already achieves perfect values on them, so the environment is much stronger as a correctness and separation gym than as an optimization-headroom gym.
 
 ## Fixes Applied
 
-- Rewrote [briefing/evaluation.md](/home/user/briefing/evaluation.md) to keep it method-agnostic while preserving the benchmark definitions and metrics.
-- Rewrote [scoring/TARGETS.md](/home/user/scoring/TARGETS.md), [scoring/CONSTRAINTS.md](/home/user/scoring/CONSTRAINTS.md), and [scoring/DIRECTION.md](/home/user/scoring/DIRECTION.md) to describe benchmark goals, boundaries, and allowed research direction without handing over the paper's exact algorithm.
-- Expanded [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) so experiment names, outputs, and intent match the scored structure more clearly.
+- Expanded [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) so it now documents all five scored experiments in a method-agnostic way and matches [scoring/scores.json](/home/user/scoring/scores.json) exactly.
+- Re-ran `python3 validate.py --compare` after the documentation fix to confirm the scoring contract still passes.
 
 ## Final Judgment
 
-The workspace is ready to serve as a small but usable research gym. Improve-mode agents have a runnable reproduction to build on, and from-scratch agents can now read the problem/evaluation/scoring guidance without being told the original algorithm. The benchmark is narrow and exact rather than broad, but it is coherent and honest for `core_claim`.
+The workspace is structurally clean and honest. A from-scratch scientist can use [briefing/problem.md](/home/user/briefing/problem.md), [briefing/evaluation.md](/home/user/briefing/evaluation.md), [data/](/home/user/data), [eval/](/home/user/eval), and the scoring docs without method leakage. An improve-mode scientist can inspect the full reproduction and rerun it through [scripts/reproduce.sh](/home/user/scripts/reproduce.sh) and [scripts/evaluate.sh](/home/user/scripts/evaluate.sh).
 
-- Milestone: core_claim
-- Ready for gym use: yes
+The main limitation is that the scored benchmark currently consists of exact theorem/property checks that the reproduced method already satisfies exactly, so score-improvement headroom is limited. That does not invalidate the current milestone, but it does make this workspace better suited as a correctness-oriented gym than a competitive optimization benchmark.
+
+- Milestone: secondary_claims
+- Ready for gym use: partial
 - Confidence: high
-- Key limitation: only the small-form core-claim experiments are packaged; the paper's larger empirical sections are not part of the gym
+- Key limitation: scored metrics are saturated exact-property checks, so improve-mode headroom is limited

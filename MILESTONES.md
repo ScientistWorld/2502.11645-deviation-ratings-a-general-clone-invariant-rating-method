@@ -39,5 +39,11 @@
 - Re-ran `bash scripts/reproduce.sh` and `python3 validate.py --compare` successfully with the new five-experiment scoring contract
 - Prepared a CPU-only scheduler validation run for the packaged environment
 
+### [2026-04-07 23:30] - secondary_claims
+- Verified that `eval/` and `data/` are cleanly separated from `method/`
+- Confirmed the scoring contract still passes with `python3 validate.py --compare`
+- Fixed `scoring/EXPERIMENTS.md` so it matches the five scored experiments exactly
+- Recorded the final verification judgment in `VERIFICATION.md`
+
 ## Stop Justification
-- Not stopping. The workspace now supports `secondary_claims` locally and a CPU-only validation job is prepared to re-run the packaged environment through the scheduler. The remaining gap to higher milestones is the paper's broader empirical coverage, especially the larger LLM study.
+- Finalized at `secondary_claims`. The workspace is structurally clean, the five scored experiments are documented consistently, and the scoring contract validates. The remaining limitation is benchmark headroom: the current scored suite is dominated by exact property checks that the reproduced method already satisfies exactly, and broader empirical coverage from the paper is still not packaged.
