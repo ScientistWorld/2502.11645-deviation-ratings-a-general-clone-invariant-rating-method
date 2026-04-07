@@ -5,14 +5,10 @@
 # This paper involves game-theoretic linear programming computation.
 # CPU-only workload (CVXPY + LP solvers), no GPU needed.
 
-Bootstrap: library
-From: ubuntu:22.04
+Bootstrap: localimage
+From: /scratch/projects/researchgym/workspaces/workspaces/2502.11645/environment/container.sif
 
 %post
-    apt-get update && apt-get install -y --no-install-recommends \
-        python3 python3-pip python3-dev tmux nano vim-tiny less curl wget git build-essential \
-        && rm -rf /var/lib/apt/lists/*
-
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints
     mkdir -p /home/user/scoring
