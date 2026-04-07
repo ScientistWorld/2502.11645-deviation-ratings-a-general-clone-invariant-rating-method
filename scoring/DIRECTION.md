@@ -2,24 +2,21 @@
 
 ## Research Problem
 
-This paper introduces deviation ratings — a game-theoretic method for rating strategies in N-player general-sum normal-form games. The core challenge is: how do you rate strategies when interactions are strategic (adversarial, cooperative, or mixed-motive) and involve more than two players?
+The benchmark studies how to rate strategies in multi-player, general-sum normal-form games when interactions are strategic rather than purely transitive. The core challenge is to produce ratings that remain meaningful when there are cycles, mixed motives, and redundant strategies.
 
-## Core Contribution
+## Scope
 
-The paper's novelty is using coarse correlated equilibrium (CCE) deviation gains as the rating signal, and selecting the strictest CCE (minimizing the maximum deviation gain) to produce unique ratings. This achieves clone invariance for the first time in N-player general-sum games.
-
-The scientist must work within this paradigm: equilibrium-based ratings derived from deviation gains.
+Scientists should work on principled game-theoretic rating methods that are appropriate for normal-form games and that respect the benchmark's invariance requirements. Work that merely fits a scalar ranking to the final tables, without modeling the strategic game structure, is out of scope.
 
 ## Approach Scope
 
 The scientist may explore:
-- Improving the LP solving (warm-starting, better solvers, constraint preprocessing)
-- Handling numerical stability better (quantization, preconditioning)
-- Extending to larger games through decomposition or approximation
-- Alternative equilibrium selection criteria that preserve clone invariance
-- Applications to new domains after preserving the scored experiments
+- Better optimization or numerical methods for computing ratings
+- Alternative principled rating formulations for the same problem family
+- Improved scalability to larger games while preserving the scored properties
+- Broader evaluations or extra experiments after keeping the scored benchmark intact
 
 ## Out of Bounds
-- Replacing CCE deviation gains with a fundamentally different rating approach (e.g., pure Elo, PageRank, or non-game-theoretic scoring). The paper's thesis is that game-theoretic equilibria enable clone invariance — sidestepping that defeats the purpose.
+- Replacing the problem with ordinary pairwise ranking or a non-game-theoretic leaderboard fit
 - Using the paper's exact numerical outputs without recomputation.
-- Modifying the problem formulation (e.g., changing the game structure, payoff normalization) without justification.
+- Modifying the scored game definitions or metric meanings while still claiming direct improvement on this gym.

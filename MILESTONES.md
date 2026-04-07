@@ -23,5 +23,10 @@
 - Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
 - Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
 
+### [2026-04-07 22:35] - core_claim
+- Verified the workspace as a gym package rather than a reproduction attempt
+- Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
+- Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
+
 ## Stop Justification
-- Not stopping. The next action is a submitted packaged run of the current core-claim reproduction.
+- Verification complete. The workspace is ready to serve as a `core_claim` gym with the current scored experiments.
