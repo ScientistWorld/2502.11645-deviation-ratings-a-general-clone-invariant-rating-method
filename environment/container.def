@@ -21,10 +21,3 @@ From: python:3.11-slim
 %environment
     export HOME=/home/user
     export PYTHONUNBUFFERED=1
-    export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
-
-%startscript
-    # Ensure PYTHONPATH is set when container starts (interactive shells).
-    if [ -n "$PYTHONPATH" ]; then
-        export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
-    fi
