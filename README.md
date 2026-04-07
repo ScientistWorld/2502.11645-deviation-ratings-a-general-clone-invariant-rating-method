@@ -128,7 +128,17 @@ Since this is a rating task rather than a supervised prediction task, evaluation
    - If one strategy is duplicated, the ratings assigned to the original strategies should remain unchanged
    - The scored statistic is the maximum absolute difference between original-game ratings and cloned-game ratings (`max_diff`)
 
-3. **Baseline contrast**
+3. **Mixture invariance**
+   - If a mixed strategy is added to a game, the original ratings should remain unchanged
+   - The new strategy's rating should equal the corresponding mixture of the original ratings
+
+4. **Offset invariance**
+   - Adding arbitrary offsets that depend only on the opponents' actions should not change ratings
+
+5. **Dominance preservation**
+   - If one strategy dominates another, it should not receive a lower rating
+
+6. **Baseline contrast**
    - A simple uniform-payoff baseline is included to demonstrate that naive averaging need not satisfy the same invariance/equality behavior
    - Baselines are evaluated through the same reusable evaluation pipeline
 
@@ -140,6 +150,9 @@ Since this is a rating task rather than a supervised prediction task, evaluation
 **Target properties** reflected by the current scored experiments:
 - The method should avoid imposing an artificial linear order on the augmented biased Shapley example
 - The method should be invariant to duplicated strategies on the cloned-RPS example
+- The method should be invariant to mixed-strategy augmentation on a scored general-sum reference game
+- The method should be invariant to payoff offsets on a scored general-sum reference game
+- The method should preserve encoded dominance relations on a scored dominance test game
 - The selected recommendation distribution should satisfy the equilibrium-feasibility check (`CCE_gap = 0`)
 
 ## Evaluation Protocol
@@ -155,9 +168,23 @@ Since this is a rating task rather than a supervised prediction task, evaluation
 - Add a clone of one strategy and recompute
 - Score `max_diff` over the original strategies' ratings before vs. after cloning
 
+### Experiment 3: Mixture Invariance Test
+- Start from a small general-sum 2x2 game with non-equal ratings
+- Add one mixed strategy for player 0
+- Score the maximum change in original ratings and the error between the new rating and the expected mixed rating
+
+### Experiment 4: Offset Invariance Test
+- Start from the same small general-sum 2x2 game
+- Add arbitrary `b_p(a_-p)` offsets to each player's payoffs
+- Score `max_diff` between the original and offset-adjusted ratings
+
+### Experiment 5: Dominance Preservation Test
+- Evaluate a 2x2 game with one strictly dominant action per player
+- Score how many encoded dominance relations are violated
+
 ## Packaged Scope
 
-The paper also contains broader theoretical and empirical claims, including larger benchmark analyses. The current reusable environment packages the minimum experiments needed for `core_claim`: the augmented biased Shapley example and clone invariance.
+The paper also contains broader empirical claims, including LiveBench and policy-improvement studies. The current reusable environment packages the exact small-game experiments that cover the core theorem-style claims and several secondary properties at low cost.
 
 ---
 
@@ -264,12 +291,64 @@ The paper also contains broader theoretical and empirical claims, including larg
 
 </details>
 
+### Iteration 5: glm-5.1 (verifier)
+- **Milestone**: `secondary_claims` | **Status**: done
+- **Working time**: 23m | **GPU**: 0.0h
+- **Jobs**: 1 total (1 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-04-07 00:00] - none
+- Read the paper and inspected the existing workspace implementation
+- Identified the paper's minimum reproducible claims as the augmented biased Shapley example and clone invariance
+
+### [2026-04-07 00:00] - method_runs
+- Implemented and corrected the sequential LP deviation-rating pipeline
+- Added reproducible method, baseline, evaluation, and end-to-end shell scripts
+- Verified the algorithm executes end-to-end without errors
+
+### [2026-04-07 00:00] - core_claim
+- Reproduced the paper's augmented biased Shapley result with `dev_gap = 0.0` and `CCE_gap = 0.0`
+- Reproduced exact clone invariance on cloned RPS with `max_diff = 0.0`
+- Validated the environment with `bash scripts/reproduce.sh` and `python validate.py --compare`
+
+### [2026-04-07 22:22] - core_claim
+- Installed the declared runtime dependencies into `/home/user/pkgs` on the login node for a real local verification pass
+- Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
+- Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
+
+### [2026-04-07 22:35] - core_claim
+- Verified the workspace as a gym package rather than a reproduction attempt
+- Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
+- Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
+
+### [2026-04-07 22:50] - core_claim
+- Completed final wrap-up of milestone, progress, and scoring guidance documents
+- Confirmed `python3 validate.py` passes with the final scoring contract
+- Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
+
+### [2026-04-07 23:10] - secondary_claims
+- Extended the packaged benchmark from two to five scored paper properties: clone invariance, mixture invariance, offset invariance, dominance preservation, and the augmented biased Shapley equality result
+- Fixed the sequential LP active-set update to freeze all numerically active max-deviation constraints at each optimum, not only constraints with nonzero dual marginals
+- Re-ran `bash scripts/reproduce.sh` and `python3 validate.py --compare` successfully with the new five-experiment scoring contract
+- Prepared a CPU-only scheduler validation run for the packaged environment
+
+### [2026-04-07 23:30] - secondary_claims
+- Verified that `eval/` and `data/` are cleanly separated from `method/`
+- Confirmed the scoring contract still passes with `python3 validate.py --compare`
+- Fixed `scoring/EXPERIMENTS.md` so it matches the five scored experiments exactly
+- Removed a latent undeclared LiveBench scoring path from `eval/evaluate.py`
+- Recorded the final verification judgment in `VERIFICATION.md`
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: secondary_claims**
 
 ## Progress Log
 
@@ -302,5 +381,18 @@ The paper also contains broader theoretical and empirical claims, including larg
 - Confirmed `python3 validate.py` passes with the final scoring contract
 - Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
 
+### [2026-04-07 23:10] - secondary_claims
+- Extended the packaged benchmark from two to five scored paper properties: clone invariance, mixture invariance, offset invariance, dominance preservation, and the augmented biased Shapley equality result
+- Fixed the sequential LP active-set update to freeze all numerically active max-deviation constraints at each optimum, not only constraints with nonzero dual marginals
+- Re-ran `bash scripts/reproduce.sh` and `python3 validate.py --compare` successfully with the new five-experiment scoring contract
+- Prepared a CPU-only scheduler validation run for the packaged environment
+
+### [2026-04-07 23:30] - secondary_claims
+- Verified that `eval/` and `data/` are cleanly separated from `method/`
+- Confirmed the scoring contract still passes with `python3 validate.py --compare`
+- Fixed `scoring/EXPERIMENTS.md` so it matches the five scored experiments exactly
+- Removed a latent undeclared LiveBench scoring path from `eval/evaluate.py`
+- Recorded the final verification judgment in `VERIFICATION.md`
+
 ## Stop Justification
-- Finalized at `core_claim`. The packaged environment is consistent, validated, and usable as a gym for the two scored experiments, but it does not include the paper's broader empirical sections, so a higher milestone would overclaim coverage.
+- Finalized at `secondary_claims`. The workspace is structurally clean, the five scored experiments are documented consistently, and the scoring contract validates. The remaining limitation is benchmark headroom: the current scored suite is dominated by exact property checks that the reproduced method already satisfies exactly, and broader empirical coverage from the paper is still not packaged.
