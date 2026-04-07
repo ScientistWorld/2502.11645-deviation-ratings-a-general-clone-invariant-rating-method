@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: secondary_claims**
 
 ## Progress Log
 
@@ -33,5 +33,11 @@
 - Confirmed `python3 validate.py` passes with the final scoring contract
 - Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
 
+### [2026-04-07 23:10] - secondary_claims
+- Extended the packaged benchmark from two to five scored paper properties: clone invariance, mixture invariance, offset invariance, dominance preservation, and the augmented biased Shapley equality result
+- Fixed the sequential LP active-set update to freeze all numerically active max-deviation constraints at each optimum, not only constraints with nonzero dual marginals
+- Re-ran `bash scripts/reproduce.sh` and `python3 validate.py --compare` successfully with the new five-experiment scoring contract
+- Prepared a CPU-only scheduler validation run for the packaged environment
+
 ## Stop Justification
-- Finalized at `core_claim`. The packaged environment is consistent, validated, and usable as a gym for the two scored experiments, but it does not include the paper's broader empirical sections, so a higher milestone would overclaim coverage.
+- Not stopping. The workspace now supports `secondary_claims` locally and a CPU-only validation job is prepared to re-run the packaged environment through the scheduler. The remaining gap to higher milestones is the paper's broader empirical coverage, especially the larger LLM study.

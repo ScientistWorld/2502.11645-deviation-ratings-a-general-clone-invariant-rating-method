@@ -12,5 +12,6 @@ set -e
 
 cd /home/user
 
-# Run the full reproduction pipeline
+# Run the full reproduction pipeline and validate the scoring contract.
 bash scripts/reproduce.sh
+python3 validate.py --compare

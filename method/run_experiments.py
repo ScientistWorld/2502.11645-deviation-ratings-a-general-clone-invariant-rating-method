@@ -8,8 +8,12 @@ import numpy as np
 
 from data.game_data import (
     augmented_biased_shapley_game,
+    add_mixed_strategy_for_player,
+    add_offset,
     cloned_first_action_game,
     construct_livebench_three_player_game,
+    dominance_test_game,
+    general_sum_reference_game,
     load_livebench_task_table,
     rock_paper_scissors,
 )
@@ -61,6 +65,84 @@ def run_clone(output_dir: Path) -> None:
     )
 
 
+def run_mixture(output_dir: Path) -> None:
+    payoffs, action_names, meta = general_sum_reference_game()
+    mixture = np.array([0.3, 0.7], dtype=float)
+    base = deviation_rating(payoffs, 2, [2, 2])
+    augmented_payoffs = add_mixed_strategy_for_player(payoffs, mixture, player=0)
+    augmented = deviation_rating(augmented_payoffs, 2, [3, 2])
+    expected_rating = float(
+        mixture[0] * base["ratings_dict"][0][0] + mixture[1] * base["ratings_dict"][0][1]
+    )
+    _write_json(
+        output_dir / "mixture_invariance.json",
+        {
+            "experiment": "mixture_invariance",
+            "action_names": action_names + ["mix_0.3_0.7"],
+            "meta": meta,
+            "mixture": mixture.tolist(),
+            "base": {
+                "ratings": base["ratings_dict"],
+                "equilibrium": base["equilibrium"].tolist(),
+                "cce_gap": cce_gap(payoffs, np.array(base["equilibrium"]), 2, [2, 2]),
+            },
+            "augmented": {
+                "ratings": augmented["ratings_dict"],
+                "equilibrium": augmented["equilibrium"].tolist(),
+                "cce_gap": cce_gap(augmented_payoffs, np.array(augmented["equilibrium"]), 2, [3, 2]),
+            },
+            "expected_mixture_rating": expected_rating,
+        },
+    )
+
+
+def run_offset(output_dir: Path) -> None:
+    payoffs, action_names, meta = general_sum_reference_game()
+    offsets = [np.array([10.0, -4.0], dtype=float), np.array([7.0, -3.0], dtype=float)]
+    adjusted_payoffs = add_offset(payoffs, offsets)
+    base = deviation_rating(payoffs, 2, [2, 2])
+    adjusted = deviation_rating(adjusted_payoffs, 2, [2, 2])
+    _write_json(
+        output_dir / "offset_invariance.json",
+        {
+            "experiment": "offset_invariance",
+            "action_names": action_names,
+            "meta": meta,
+            "offsets": [offset.tolist() for offset in offsets],
+            "base": {
+                "ratings": base["ratings_dict"],
+                "equilibrium": base["equilibrium"].tolist(),
+                "cce_gap": cce_gap(payoffs, np.array(base["equilibrium"]), 2, [2, 2]),
+            },
+            "offset": {
+                "ratings": adjusted["ratings_dict"],
+                "equilibrium": adjusted["equilibrium"].tolist(),
+                "cce_gap": cce_gap(adjusted_payoffs, np.array(adjusted["equilibrium"]), 2, [2, 2]),
+            },
+        },
+    )
+
+
+def run_dominance(output_dir: Path) -> None:
+    payoffs, action_names, meta = dominance_test_game()
+    result = deviation_rating(payoffs, 2, [2, 2])
+    _write_json(
+        output_dir / "dominance_preserving.json",
+        {
+            "experiment": "dominance_preserving",
+            "action_names": action_names,
+            "meta": meta,
+            "ratings": result["ratings_dict"],
+            "equilibrium": result["equilibrium"].tolist(),
+            "cce_gap": cce_gap(payoffs, np.array(result["equilibrium"]), 2, [2, 2]),
+            "dominance_pairs": [
+                {"player": 0, "better": 0, "worse": 1},
+                {"player": 1, "better": 0, "worse": 1},
+            ],
+        },
+    )
+
+
 def run_livebench(output_dir: Path, csv_path: Path) -> None:
     scores, models, tasks = load_livebench_task_table(csv_path)
     payoffs, action_dims = construct_livebench_three_player_game(scores)
@@ -86,7 +168,13 @@ def main() -> None:
     parser.add_argument(
         "--experiments",
         nargs="+",
-        default=["biased_shapley_augmented", "clone_invariance"],
+        default=[
+            "biased_shapley_augmented",
+            "clone_invariance",
+            "mixture_invariance",
+            "offset_invariance",
+            "dominance_preserving",
+        ],
     )
     args = parser.parse_args()
 
@@ -96,6 +184,12 @@ def main() -> None:
             run_shapley(output_dir)
         elif experiment == "clone_invariance":
             run_clone(output_dir)
+        elif experiment == "mixture_invariance":
+            run_mixture(output_dir)
+        elif experiment == "offset_invariance":
+            run_offset(output_dir)
+        elif experiment == "dominance_preserving":
+            run_dominance(output_dir)
         elif experiment == "llm_rating_livebench":
             run_livebench(output_dir, Path(args.livebench_csv))
         else:

@@ -9,22 +9,19 @@ Run all scored evaluations with:
 ### `biased_shapley_augmented`
 
 What it tests:
-- Whether the method avoids inventing a strict order on the augmented biased Shapley game and instead treats the four strategies as one top group.
+- Whether the method avoids inventing a strict order on the augmented biased Shapley game and instead treats `R`, `P`, `S`, and `N` as one top group.
 
 Primary metric:
 - `dev_gap`
 - Direction: lower is better
-- Interpretation: `dev_gap = 0` means all four player-0 strategy ratings are equal
+- Interpretation: `dev_gap = 0` means the four deviation ratings are equal
 
-Secondary metric recorded in the same experiment:
+Constraint metric in the same experiment:
 - `CCE_gap`
 - Direction: lower is better
-- Interpretation: `CCE_gap = 0` means the selected recommendation distribution satisfies the equilibrium-feasibility check exactly
+- Interpretation: `CCE_gap = 0` means the selected recommendation distribution satisfies the equilibrium-feasibility check
 
-How to run:
-- `bash scripts/evaluate.sh`
-
-## Constraint Target
+## Constraint Targets
 
 ### `clone_invariance`
 
@@ -36,11 +33,42 @@ Primary metric:
 - Direction: lower is better
 - Interpretation: `max_diff = 0` means exact invariance of the original ratings under cloning
 
-How to run:
-- `bash scripts/evaluate.sh`
+### `mixture_invariance`
 
-## Ablation Target
+What it tests:
+- Whether adding a mixed strategy leaves all original ratings unchanged and gives the new strategy the corresponding mixed rating.
 
-No separate scored ablation experiment is packaged at the current `core_claim` milestone.
+Primary metrics:
+- `original_max_diff`
+- `mixture_error`
+- Direction: lower is better
+- Interpretation: both metrics should be `0`
 
-The current benchmark only contains the two scored experiments listed above, which correspond one-to-one with `scoring/scores.json`.
+### `offset_invariance`
+
+What it tests:
+- Whether adding arbitrary offsets `b_p(a_-p)` leaves the deviation ratings unchanged.
+
+Primary metric:
+- `max_diff`
+- Direction: lower is better
+- Interpretation: `max_diff = 0` means exact offset invariance on the scored game
+
+## Secondary Property Target
+
+### `dominance_preserving`
+
+What it tests:
+- Whether a dominant strategy is never rated below a dominated one.
+
+Primary metric:
+- `dominance_violations`
+- Direction: lower is better
+- Interpretation: `0` means every encoded dominance relation is respected
+
+Constraint metric in the same experiment:
+- `CCE_gap`
+- Direction: lower is better
+- Interpretation: the equilibrium-feasibility check should still be satisfied
+
+The current benchmark only contains the five scored experiments listed above, which correspond one-to-one with `scoring/scores.json`.

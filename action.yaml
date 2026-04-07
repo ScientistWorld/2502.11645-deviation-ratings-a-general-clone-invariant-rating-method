@@ -1,6 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
-milestone: core_claim
-notes: "Verification passed. Gym docs were cleaned to remove method leakage; scoring and separation checks are valid for the current core-claim workspace."
+action: submit
+gpus: 0
+test: true
+milestone: secondary_claims
+notes: "CPU-only scheduler validation of the packaged five-experiment benchmark: run reproduce.sh and validate.py --compare after extending the gym beyond the core clone-invariance claim."

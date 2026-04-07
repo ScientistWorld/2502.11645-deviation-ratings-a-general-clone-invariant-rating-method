@@ -9,4 +9,9 @@ set -e
 cd /home/user
 export PYTHONPATH="/home/user:/home/user/pkgs:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
 
-python3 -m method.run_experiments --experiments biased_shapley_augmented clone_invariance
+python3 -m method.run_experiments --experiments \
+  biased_shapley_augmented \
+  clone_invariance \
+  mixture_invariance \
+  offset_invariance \
+  dominance_preserving

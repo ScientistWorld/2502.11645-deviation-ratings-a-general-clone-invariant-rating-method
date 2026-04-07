@@ -1,8 +1,8 @@
 {
   "experiments": {
     "biased_shapley_augmented": {
-      "description": "Paper Table 2: biased Shapley game augmented with the Nash strategy N. Deviation ratings should assign equal ratings to R, P, S, and N, while the uniform baseline induces the paper's transitive order.",
-      "weight": 0.6,
+      "description": "Paper Table 2: biased Shapley game augmented with the Nash strategy N. Deviation ratings should assign equal ratings to R, P, S, and N.",
+      "weight": 0.35,
       "primary_metric": "dev_gap",
       "metrics": {
         "dev_gap": {"higher_is_better": false, "coefficient": -1.0},
@@ -17,8 +17,8 @@
       }
     },
     "clone_invariance": {
-      "description": "Property 6: adding a clone of an existing strategy should not change the ratings of the original strategies.",
-      "weight": 0.4,
+      "description": "Paper Property 6: adding a clone of an existing strategy should not change the ratings of the original strategies.",
+      "weight": 0.2,
       "primary_metric": "max_diff",
       "metrics": {
         "max_diff": {"higher_is_better": false, "coefficient": -1.0}
@@ -27,6 +27,52 @@
         "deviation_rating": {
           "type": "proposed",
           "max_diff": 0.0
+        }
+      }
+    },
+    "mixture_invariance": {
+      "description": "Paper Property 7: adding a mixed strategy should not change the original ratings, and the new strategy should inherit the corresponding mixed rating.",
+      "weight": 0.15,
+      "primary_metric": "original_max_diff",
+      "metrics": {
+        "original_max_diff": {"higher_is_better": false, "coefficient": -1.0},
+        "mixture_error": {"higher_is_better": false, "coefficient": -1.0}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0
+        }
+      }
+    },
+    "offset_invariance": {
+      "description": "Paper Property 5: adding arbitrary b_p(a_-p) offsets should not change any deviation ratings.",
+      "weight": 0.15,
+      "primary_metric": "max_diff",
+      "metrics": {
+        "max_diff": {"higher_is_better": false, "coefficient": -1.0}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "max_diff": 0.0
+        }
+      }
+    },
+    "dominance_preserving": {
+      "description": "Paper Property 4: if one strategy dominates another, the dominant strategy should not receive a lower rating.",
+      "weight": 0.15,
+      "primary_metric": "dominance_violations",
+      "metrics": {
+        "dominance_violations": {"higher_is_better": false, "coefficient": -1.0},
+        "CCE_gap": {"higher_is_better": false, "coefficient": -0.2}
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "dominance_violations": 0,
+          "CCE_gap": 0.0
         }
       }
     }

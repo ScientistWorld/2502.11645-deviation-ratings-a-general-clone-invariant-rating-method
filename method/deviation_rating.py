@@ -95,6 +95,7 @@ def deviation_rating(
     epsilon_history: List[float] = []
     sigma_star = np.full(num_joint, 1.0 / num_joint, dtype=float)
 
+    num_solves = 0
     for iteration in range(max_iterations):
         if len(active_constraints) == total_constraints:
             break
@@ -153,6 +154,7 @@ def deviation_rating(
         )
         if not result.success:
             raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
+        num_solves += 1
 
         sigma_star = np.maximum(result.x[:num_joint], 0.0)
         sigma_sum = sigma_star.sum()
@@ -162,7 +164,7 @@ def deviation_rating(
         epsilon_star = float(result.x[epsilon_idx])
         epsilon_history.append(epsilon_star)
 
-        new_active: List[Tuple[int, int]] = []
+        new_active_set: set[Tuple[int, int]] = set()
         marginals = None
         if result.ineqlin is not None and getattr(result.ineqlin, "marginals", None) is not None:
             marginals = np.asarray(result.ineqlin.marginals, dtype=float).reshape(-1)
@@ -172,16 +174,18 @@ def deviation_rating(
                 if abs(marginal) > active_tol:
                     p, ap = unfrozen_constraints[idx]
                     ratings[p, ap] = float(np.dot(coeff[p, ap], sigma_star))
-                    new_active.append((p, ap))
+                    new_active_set.add((p, ap))
 
-        if not new_active:
-            for p, ap in unfrozen_constraints:
-                delta = float(np.dot(coeff[p, ap], sigma_star))
-                if abs(delta - epsilon_star) <= active_tol:
-                    ratings[p, ap] = delta
-                    new_active.append((p, ap))
+        # Freeze every constraint that is active at the optimum, not only those
+        # selected by nonzero duals. Degenerate optima can have active max
+        # constraints with zero dual marginals.
+        for p, ap in unfrozen_constraints:
+            delta = float(np.dot(coeff[p, ap], sigma_star))
+            if abs(delta - epsilon_star) <= active_tol:
+                ratings[p, ap] = delta
+                new_active_set.add((p, ap))
 
-        if not new_active:
+        if not new_active_set:
             best = None
             best_delta = -np.inf
             for p, ap in all_constraints:
@@ -194,7 +198,9 @@ def deviation_rating(
             if best is None:
                 raise RuntimeError("No constraint available to freeze")
             ratings[best[0], best[1]] = best_delta
-            new_active.append(best)
+            new_active_set.add(best)
+
+        new_active = sorted(new_active_set)
 
         for constraint in new_active:
             active_constraints.add(constraint)
@@ -210,7 +216,7 @@ def deviation_rating(
     return {
         "ratings_dict": ratings_dict,
         "equilibrium": sigma_star,
-        "n_iterations": iteration + 1,
+        "n_iterations": num_solves,
         "active_constraints": sorted(active_constraints),
         "epsilon_history": epsilon_history,
     }

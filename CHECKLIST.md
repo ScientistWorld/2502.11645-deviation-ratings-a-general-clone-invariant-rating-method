@@ -35,8 +35,8 @@
 ## Milestones
 - [x] `method_runs` — algorithm executes end-to-end without errors
 - [x] `core_claim` — minimum experiment supports the central claim on augmented biased Shapley + clone invariance
-- [ ] `core_claim_plus` — additional settings
-- [ ] `secondary_claims`
+- [x] `core_claim_plus` — additional settings
+- [x] `secondary_claims`
 - [ ] `majority`
 - [ ] `near_complete`
 - [ ] `full`
