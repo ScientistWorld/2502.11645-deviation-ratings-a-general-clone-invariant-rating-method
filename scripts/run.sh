@@ -1,5 +1,5 @@
 #!/bin/bash
-# Job script submitted via end-of-turn YAML block.
+# Job script submitted via the end-of-turn YAML block.
 #
 # This runs inside the compute container with:
 #   - Your workspace mounted at /home/user
