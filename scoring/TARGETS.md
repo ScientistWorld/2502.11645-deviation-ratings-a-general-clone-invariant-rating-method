@@ -71,4 +71,12 @@ Constraint metric in the same experiment:
 - Direction: lower is better
 - Interpretation: the equilibrium-feasibility check should still be satisfied
 
+## Ablation Targets
+
+No separate ablation experiment is currently packaged in `scoring/scores.json`.
+
+Why:
+- The current benchmark only contains exact property checks on explicit games and does not yet include a scored "remove the key idea" comparison.
+- Future extensions should add any ablation here only when the ablation is also represented as its own experiment in both `scoring/reference.json` and `scoring/scores.json`.
+
 The current benchmark only contains the five scored experiments listed above, which correspond one-to-one with `scoring/scores.json`.

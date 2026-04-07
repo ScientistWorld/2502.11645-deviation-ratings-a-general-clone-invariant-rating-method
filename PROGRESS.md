@@ -35,7 +35,7 @@ Re-validation on April 7, 2026 confirmed the same outputs immediately before pre
 - Current milestone is `secondary_claims`.
 - The workspace is packaged as a small research gym centered on five scored theorem/property experiments in `scoring/scores.json`.
 - The main remaining limitation is scope, not correctness: the larger empirical sections of the paper, especially the LiveBench-style study, are not packaged into the current benchmark.
-- A final CPU-only scheduler validation run is prepared in `scripts/run.sh`.
+- Final verification judged the workspace `partial` for gym use: from-scratch mode is clean and usable, but improve-mode headroom is limited because the current scored metrics are already saturated at their exact optimum.
 
 ## Issues Encountered
 - Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.
@@ -50,7 +50,7 @@ Re-validation on April 7, 2026 confirmed the same outputs immediately before pre
 ## Status
 **Milestone: secondary_claims**
 
-The environment is usable: the paper's actual algorithm runs end-to-end, the scored experiments come from executed code, and the reproduced results support both the central clone-invariance claim and additional secondary paper properties on mixture invariance, offset invariance, and dominance preservation.
+The environment is usable: the paper's actual algorithm runs end-to-end, the scored experiments come from executed code, and the reproduced results support both the central clone-invariance claim and additional secondary paper properties on mixture invariance, offset invariance, and dominance preservation. The packaged benchmark is best understood as a correctness-oriented property suite rather than a high-headroom optimization benchmark.
 
 At 2026-04-07 22:22 UTC, the packaged entrypoints were revalidated locally after installing the declared runtime dependencies into `/home/user/pkgs`:
 - `bash scripts/reproduce.sh`
