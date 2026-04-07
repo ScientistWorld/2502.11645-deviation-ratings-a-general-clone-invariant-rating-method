@@ -20,10 +20,13 @@ Local run on April 7, 2026 via `bash scripts/reproduce.sh`:
 
 `python validate.py --compare` passes on the current `reference.json` and `scores.json`.
 
-## What Remains
-- Run the packaged workflow on a scheduled node through `scripts/run.sh` to validate the submitted environment, not just the login-node execution.
-- Extend the reproduction toward the paper's larger empirical section if budget remains, especially the LiveBench-style model/task game construction.
-- Add more paper-side invariance/property checks if there is enough remaining time after the core claim is secured.
+Re-validation on April 7, 2026 confirmed the same outputs immediately before submitting a packaged CPU-only scheduler run through `scripts/run.sh`.
+
+## Final Status
+- Final milestone remains `core_claim`.
+- The workspace is packaged as a small research gym centered on the two scored experiments in `scoring/scores.json`.
+- No further work is planned in this paper session.
+- The main remaining limitation is scope, not correctness: the larger empirical sections of the paper are not packaged into the current benchmark.
 
 ## Issues Encountered
 - Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.

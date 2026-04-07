@@ -28,5 +28,10 @@
 - Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
 - Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
 
+### [2026-04-07 22:50] - core_claim
+- Completed final wrap-up of milestone, progress, and scoring guidance documents
+- Confirmed `python3 validate.py` passes with the final scoring contract
+- Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
+
 ## Stop Justification
-- Verification complete. The workspace is ready to serve as a `core_claim` gym with the current scored experiments.
+- Finalized at `core_claim`. The packaged environment is consistent, validated, and usable as a gym for the two scored experiments, but it does not include the paper's broader empirical sections, so a higher milestone would overclaim coverage.
