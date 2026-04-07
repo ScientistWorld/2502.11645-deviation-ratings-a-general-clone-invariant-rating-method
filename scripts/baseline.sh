@@ -7,6 +7,6 @@
 set -e
 
 cd /home/user
-export PYTHONPATH="/home/user:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONPATH="/home/user:/home/user/pkgs:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
 
 python3 -m baseline.run_uniform

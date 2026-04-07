@@ -1,15 +1,18 @@
 # Apptainer definition file for deviation rating reproduction.
 #
-# Build: apptainer build container.sif container.def
-# Python packages are installed in environment/setup.sh.
+# Build:  apptainer build container.sif container.def
 #
-# Use the checked-in local base image to avoid transient registry failures
-# when the scheduler rebuilds the environment.
+# This paper involves game-theoretic linear programming computation.
+# CPU-only workload (CVXPY + LP solvers), no GPU needed.
 
-Bootstrap: localimage
-From: container.sif
+Bootstrap: docker
+From: python:3.11-slim
 
 %post
+    apt-get update && apt-get install -y --no-install-recommends \
+        tmux nano vim-tiny less curl wget git build-essential \
+        && rm -rf /var/lib/apt/lists/*
+
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints
     mkdir -p /home/user/scoring
@@ -18,3 +21,9 @@ From: container.sif
 %environment
     export HOME=/home/user
     export PYTHONUNBUFFERED=1
+    export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
+
+%startscript
+    if [ -n "$PYTHONPATH" ]; then
+        export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
+    fi

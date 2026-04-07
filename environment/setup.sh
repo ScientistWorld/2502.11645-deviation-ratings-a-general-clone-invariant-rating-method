@@ -1,6 +1,10 @@
 #!/bin/bash
-# Python dependencies for the reproduction.
+# Install scipy/numpy into /home/user/pkgs (overlay is read-only at runtime).
+# PYTHONPATH is prepended at container entrypoint to pick these up.
 
 set -e
 
-uv pip install --system numpy scipy
+export UV_CACHE_DIR=/tmp/uv_cache
+mkdir -p /home/user/pkgs
+
+uv pip install --system --target /home/user/pkgs numpy scipy
