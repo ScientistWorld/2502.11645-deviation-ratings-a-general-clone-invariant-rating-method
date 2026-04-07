@@ -1,6 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
+action: submit
+gpus: 0
+test: true
 milestone: core_claim
-notes: "Stopping after repeated environment build failures. The core-claim reproduction works locally via scripts/reproduce.sh, but the scheduler could not build the container after 10 attempts."
+notes: "CPU validation job for the packaged core-claim reproduction via scripts/run.sh after re-verifying scripts/reproduce.sh and validate.py locally."

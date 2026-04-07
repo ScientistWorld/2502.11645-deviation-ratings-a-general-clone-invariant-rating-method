@@ -18,5 +18,10 @@
 - Reproduced exact clone invariance on cloned RPS with `max_diff = 0.0`
 - Validated the environment with `bash scripts/reproduce.sh` and `python validate.py --compare`
 
+### [2026-04-07 22:22] - core_claim
+- Installed the declared runtime dependencies into `/home/user/pkgs` on the login node for a real local verification pass
+- Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
+- Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
+
 ## Stop Justification
 - Not stopping. The next action is a submitted packaged run of the current core-claim reproduction.

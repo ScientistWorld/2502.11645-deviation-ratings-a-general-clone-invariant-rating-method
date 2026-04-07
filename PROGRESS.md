@@ -28,6 +28,7 @@ Local run on April 7, 2026 via `bash scripts/reproduce.sh`:
 ## Issues Encountered
 - Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.
 - The original status files overstated LiveBench coverage. The packaged environment now reports only experiments that are actually implemented and scored.
+- The login node did not yet have `/home/user/pkgs`, so `numpy` and `scipy` were not importable until the dependencies declared in `environment/setup.sh` were installed into that path for local verification.
 
 ## Deviations From Paper
 - The current `core_claim` reproduction focuses on the exact small normal-form experiments that directly establish the method's strictest-CCE behavior and clone invariance.
@@ -37,3 +38,7 @@ Local run on April 7, 2026 via `bash scripts/reproduce.sh`:
 **Milestone: core_claim**
 
 The environment is usable: the paper's actual algorithm runs end-to-end, the scored experiments come from executed code, and the minimum reproduced results support the central claim that deviation ratings yield clone-invariant ratings in general normal-form settings.
+
+At 2026-04-07 22:22 UTC, the packaged entrypoints were revalidated locally after installing the declared runtime dependencies into `/home/user/pkgs`:
+- `bash scripts/reproduce.sh`
+- `python3 validate.py --compare`
