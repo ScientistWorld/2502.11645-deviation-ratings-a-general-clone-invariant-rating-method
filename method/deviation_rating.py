@@ -10,7 +10,7 @@ Ratings are the deviation gains at this equilibrium.
 
 import numpy as np
 from scipy.optimize import linprog
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 
 
 def joint_to_flat(joint: List[int], action_dims: List[int]) -> int:

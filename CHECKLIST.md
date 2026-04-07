@@ -33,8 +33,8 @@
 - [x] All game data generated programmatically (no external downloads needed)
 
 ## Milestones
-- [x] `method_runs` — algorithm executes end-to-end without errors (pending test)
-- [ ] `core_claim` — minimum experiment supports central claim
+- [x] `method_runs` — algorithm executes end-to-end without errors
+- [x] `core_claim` — minimum experiment supports central claim (LLM rating passes, all CCE_gap ≈ 0)
 - [ ] `core_claim_plus` — additional settings
 - [ ] `secondary_claims`
 - [ ] `majority`

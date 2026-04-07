@@ -6,6 +6,7 @@ import numpy as np
 import json
 import sys
 import os
+from typing import Dict
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'method'))
 
