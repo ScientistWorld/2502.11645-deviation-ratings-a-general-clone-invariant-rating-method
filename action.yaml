@@ -27,8 +27,6 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: submit
-gpus: 0
-test: true
-milestone: core_claim
-notes: "Deviation rating algorithm (Algorithm 1) implemented with scipy linprog. LLM rating passes (top4=4, CCE_gap=0). CPU-only LP computation."
+action: done
+milestone: method_runs
+notes: "Algorithm verified locally (LLM top4=4, CCE_gap=0). Docker Hub rate limit blocks container build - tried Docker Hub, ghcr.io, quay.io, Singularity Hub (all blocked). External infrastructure constraint, not code issue."
