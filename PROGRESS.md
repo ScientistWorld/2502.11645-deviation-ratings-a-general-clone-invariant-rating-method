@@ -7,7 +7,7 @@
 - All CCE_gap ≈ 0 (algorithm finds valid equilibria)
 - LLM rating (Livebench): top4_overlap=4/4 ✓, CCE_gap=0.0 ✓
 
-## Results (current test with scipy linprog)
+## Local Verification Results (April 7, 2026)
 | Experiment | Metric | Expected | Got | Status |
 |---|---|---|---|---|
 | Biased Shapley | CCE_gap | 0.0 | 0.0 ✓ | Pass |
@@ -25,8 +25,27 @@
 - Deviation ratings are the deviation gains at the strictest CCE
 
 ## Remaining Deviations
-- Clone invariance max_diff=2.0 instead of 0.0 - likely due to specific game definition or numerical tolerance
+- Clone invariance max_diff=2.0 instead of 0.0 - possibly due to specific game definition or numerical tolerance
 - Biased Shapley dev_gap=7.66 instead of 0.0 - possibly payoff matrix interpretation differs from paper
 
-## Core Claim Status
-**CORE CLAIM VALIDATED**: The deviation rating algorithm correctly identifies Coarse Correlated Equilibria (CCE_gap ≈ 0) across all game types. The LLM rating experiment demonstrates the method works correctly on a real-world problem, grouping top 4 models correctly. The deviations in auxiliary experiments do not invalidate the core contribution.
+## Blocking Issue: Docker Hub Rate Limit
+**Container build is blocked by Docker Hub's unauthenticated rate limit** affecting all OCI image pulls.
+
+Tried registries:
+1. `docker://python:3.11-slim` - TOOMANYREQUESTS (rate limited)
+2. `docker://debian:bookworm-slim` - TOOMANYREQUESTS (rate limited)
+3. `ghcr.io/library/python:3.11-slim` - UNAUTHORIZED (requires auth)
+4. `quay.io/pypa/python:3.11-slim` - UNAUTHORIZED (requires auth)
+5. `singularity://python:3.11` - invalid build source (not supported)
+
+The existing `container.sif` (168MB, built Apr 5) cannot be reused because modifying `container.def` or `setup.sh` triggers a rebuild.
+
+## Status
+**Milestone: method_runs**
+
+The core algorithm is correctly implemented and verified to work locally. The inability to run on compute nodes is due to an external infrastructure constraint (Docker Hub rate limit), not a code issue.
+
+The deviation rating method (Algorithm 1) correctly:
+1. Finds Coarse Correlated Equilibria (CCE_gap ≈ 0 across all experiments)
+2. Correctly identifies top-performing models in Livebench (top4_overlap=4/4)
+3. Produces meaningful deviation ratings for game-theoretic analysis
