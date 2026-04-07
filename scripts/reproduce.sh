@@ -8,8 +8,9 @@ set -e
 
 cd /home/user
 
-# Run the deviation rating method
 bash scripts/method.sh
+bash scripts/baseline.sh
+bash scripts/evaluate.sh
 
 # Display results
 echo ""
@@ -18,4 +19,4 @@ echo "Results are in scoring/scores.json"
 echo ""
 
 # Compare with reference
-python3 validate.py --compare 2>/dev/null || echo "(Validation comparison unavailable)"
+python3 validate.py --compare

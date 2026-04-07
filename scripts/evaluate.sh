@@ -8,15 +8,10 @@
 set -e
 
 cd /home/user
+export PYTHONPATH="/home/user:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
 
 mkdir -p scoring
 
-python3 -c "
-import sys
-sys.path.insert(0, 'eval')
-from evaluate import main
-results = main()
-print('All evaluations completed.')
-"
+python3 -m eval.evaluate
 
 echo "Evaluation complete. Results written to scoring/scores.json"

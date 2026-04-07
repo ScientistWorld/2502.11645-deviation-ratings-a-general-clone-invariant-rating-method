@@ -1,9 +1,7 @@
 # Apptainer definition file for deviation rating reproduction.
 #
-# Build:  apptainer build container.sif container.def
-#
-# This paper involves game-theoretic linear programming computation.
-# CPU-only workload (CVXPY + LP solvers), no GPU needed.
+# Build: apptainer build container.sif container.def
+# Python packages are installed in environment/setup.sh.
 
 Bootstrap: docker
 From: debian:bookworm-slim
@@ -12,9 +10,6 @@ From: debian:bookworm-slim
     apt-get update && apt-get install -y --no-install-recommends \
         python3 python3-pip python3-dev tmux nano vim-tiny less curl wget git build-essential \
         && rm -rf /var/lib/apt/lists/*
-
-    # Install scipy into system Python (rootfs writable during %post)
-    python3 -m pip install --no-cache-dir numpy scipy
 
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints

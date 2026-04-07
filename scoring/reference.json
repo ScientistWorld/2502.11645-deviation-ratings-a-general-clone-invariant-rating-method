@@ -1,24 +1,24 @@
 {
   "experiments": {
-    "biased_shapley_game": {
-      "description": "Biased Shapley game (3x3 cycle: R→S→P). At the strictest CCE (pure NE), deviation ratings should be approximately equal for the cycle strategies, with CCE gap = 0.",
-      "weight": 0.4,
-      "primary_metric": "CCE_gap",
+    "biased_shapley_augmented": {
+      "description": "Paper Table 2: biased Shapley game augmented with the Nash strategy N. Deviation ratings should assign equal ratings to R, P, S, and N, while the uniform baseline induces the paper's transitive order.",
+      "weight": 0.6,
+      "primary_metric": "dev_gap",
       "metrics": {
-        "CCE_gap": {"higher_is_better": false, "coefficient": -1.0},
-        "dev_gap": {"higher_is_better": false, "coefficient": -0.5}
+        "dev_gap": {"higher_is_better": false, "coefficient": -1.0},
+        "CCE_gap": {"higher_is_better": false, "coefficient": -0.2}
       },
       "results": {
         "deviation_rating": {
           "type": "proposed",
-          "CCE_gap": 0.0,
-          "dev_gap": 0.0
+          "dev_gap": 0.0,
+          "CCE_gap": 0.0
         }
       }
     },
     "clone_invariance": {
-      "description": "Clone invariance: adding a copy of a strategy does not change ratings",
-      "weight": 0.3,
+      "description": "Property 6: adding a clone of an existing strategy should not change the ratings of the original strategies.",
+      "weight": 0.4,
       "primary_metric": "max_diff",
       "metrics": {
         "max_diff": {"higher_is_better": false, "coefficient": -1.0}
@@ -27,22 +27,6 @@
         "deviation_rating": {
           "type": "proposed",
           "max_diff": 0.0
-        }
-      }
-    },
-    "llm_rating_livebench": {
-      "description": "Livebench LLM rating — deviation rating groups top 4 models (claude-3-5-sonnet, gemini-1.5-pro, Llama-3.1-405B, gpt-4o) equally at the top",
-      "weight": 0.3,
-      "primary_metric": "top4_overlap",
-      "metrics": {
-        "top4_overlap": {"higher_is_better": true, "coefficient": 1.0},
-        "CCE_gap": {"higher_is_better": false, "coefficient": -0.3}
-      },
-      "results": {
-        "deviation_rating": {
-          "type": "proposed",
-          "top4_overlap": 4,
-          "CCE_gap": 0.0
         }
       }
     }

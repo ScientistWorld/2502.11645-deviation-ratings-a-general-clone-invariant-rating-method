@@ -7,6 +7,6 @@
 set -e
 
 cd /home/user
+export PYTHONPATH="/home/user:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
 
-# Run evaluation which includes the deviation rating method
-bash scripts/evaluate.sh
+python3 -m method.run_experiments --experiments biased_shapley_augmented clone_invariance

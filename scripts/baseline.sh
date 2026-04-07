@@ -7,7 +7,6 @@
 set -e
 
 cd /home/user
+export PYTHONPATH="/home/user:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
 
-# The baseline (uniform rating) is computed within eval/evaluate.py.
-# Running evaluate.sh includes both deviation rating and baseline comparisons.
-bash scripts/evaluate.sh
+python3 -m baseline.run_uniform

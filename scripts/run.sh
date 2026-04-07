@@ -6,7 +6,7 @@
 #   - GPU(s) available (game theory computation is CPU-bound)
 #   - No internet access
 #
-# This paper involves game-theoretic LP computation — CPU only, no GPU needed.
+# This paper involves CPU-only linear programming.
 
 set -e
 

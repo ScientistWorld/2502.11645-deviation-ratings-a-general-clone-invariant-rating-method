@@ -17,8 +17,7 @@ The scientist may explore:
 - Handling numerical stability better (quantization, preconditioning)
 - Extending to larger games through decomposition or approximation
 - Alternative equilibrium selection criteria that preserve clone invariance
-- Analyzing task contributions to ratings (how individual game elements affect the final rating)
-- Applications to new domains (different game structures, different rating use cases)
+- Applications to new domains after preserving the scored experiments
 
 ## Out of Bounds
 - Replacing CCE deviation gains with a fundamentally different rating approach (e.g., pure Elo, PageRank, or non-game-theoretic scoring). The paper's thesis is that game-theoretic equilibria enable clone invariance — sidestepping that defeats the purpose.

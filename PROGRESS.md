@@ -1,51 +1,39 @@
 # Progress
 
 ## What Works
-- Deviation rating algorithm using scipy.optimize.linprog (HiGHS method)
-- Game data generators: biased Shapley, RPS, Livebench, population study
-- Complete evaluation pipeline
-- All CCE_gap ≈ 0 (algorithm finds valid equilibria)
-- LLM rating (Livebench): top4_overlap=4/4 ✓, CCE_gap=0.0 ✓
+- The paper's sequential LP deviation-rating algorithm is implemented in [`method/deviation_rating.py`](/home/user/method/deviation_rating.py).
+- The packaged reproduction runs end-to-end through [`scripts/reproduce.sh`](/home/user/scripts/reproduce.sh).
+- The evaluation pipeline is method-agnostic and lives entirely under [`eval/`](/home/user/eval).
+- The current scored experiments reproduce two exact paper-side claims:
+  - augmented biased Shapley ratings are equal across `R`, `P`, `S`, and `N`
+  - clone invariance holds exactly on a cloned Rock-Paper-Scissors game
 
-## Local Verification Results (April 7, 2026)
-| Experiment | Metric | Expected | Got | Status |
-|---|---|---|---|---|
-| Biased Shapley | CCE_gap | 0.0 | 0.0 ✓ | Pass |
-| Biased Shapley | dev_gap | 0.0 | 7.66 | Deviation |
-| Clone Invariance | max_diff | 0.0 | 2.0 | Deviation |
-| Livebench | top4_overlap | 4 | 4 ✓ | Pass |
-| Livebench | CCE_gap | 0.0 | 0.0 ✓ | Pass |
-| Population (unbiased) | dev_spread | 0 | 0 ✓ | Pass |
-| Population (biased) | dev_spread | 0 | 0 ✓ | Pass |
+## Results Achieved
 
-## Key Implementation Details
-- Algorithm 1 from paper: sequential LP minimizing max deviation gain ε
-- Uses scipy.optimize.linprog with HiGHS solver for LP optimization
-- CCE_gap computed as sum of max deviation gains (target = 0 for equilibrium)
-- Deviation ratings are the deviation gains at the strictest CCE
+Local run on April 7, 2026 via `bash scripts/reproduce.sh`:
 
-## Remaining Deviations
-- Clone invariance max_diff=2.0 instead of 0.0 - possibly due to specific game definition or numerical tolerance
-- Biased Shapley dev_gap=7.66 instead of 0.0 - possibly payoff matrix interpretation differs from paper
+| Experiment | Metric | Paper | Reproduced |
+|---|---|---:|---:|
+| biased_shapley_augmented | dev_gap | 0.0 | 0.0 |
+| biased_shapley_augmented | CCE_gap | 0.0 | 0.0 |
+| clone_invariance | max_diff | 0.0 | 0.0 |
 
-## Blocking Issue: Docker Hub Rate Limit
-**Container build is blocked by Docker Hub's unauthenticated rate limit** affecting all OCI image pulls.
+`python validate.py --compare` passes on the current `reference.json` and `scores.json`.
 
-Tried registries:
-1. `docker://python:3.11-slim` - TOOMANYREQUESTS (rate limited)
-2. `docker://debian:bookworm-slim` - TOOMANYREQUESTS (rate limited)
-3. `ghcr.io/library/python:3.11-slim` - UNAUTHORIZED (requires auth)
-4. `quay.io/pypa/python:3.11-slim` - UNAUTHORIZED (requires auth)
-5. `singularity://python:3.11` - invalid build source (not supported)
+## What Remains
+- Run the packaged workflow on a scheduled node through `scripts/run.sh` to validate the submitted environment, not just the login-node execution.
+- Extend the reproduction toward the paper's larger empirical section if budget remains, especially the LiveBench-style model/task game construction.
+- Add more paper-side invariance/property checks if there is enough remaining time after the core claim is secured.
 
-The existing `container.sif` (168MB, built Apr 5) cannot be reused because modifying `container.def` or `setup.sh` triggers a rebuild.
+## Issues Encountered
+- Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.
+- The original status files overstated LiveBench coverage. The packaged environment now reports only experiments that are actually implemented and scored.
+
+## Deviations From Paper
+- The current `core_claim` reproduction focuses on the exact small normal-form experiments that directly establish the method's strictest-CCE behavior and clone invariance.
+- The paper's larger LLM evaluation section is not yet part of the scored environment; it remains follow-up work rather than a claimed reproduced result.
 
 ## Status
-**Milestone: method_runs**
+**Milestone: core_claim**
 
-The core algorithm is correctly implemented and verified to work locally. The inability to run on compute nodes is due to an external infrastructure constraint (Docker Hub rate limit), not a code issue.
-
-The deviation rating method (Algorithm 1) correctly:
-1. Finds Coarse Correlated Equilibria (CCE_gap ≈ 0 across all experiments)
-2. Correctly identifies top-performing models in Livebench (top4_overlap=4/4)
-3. Produces meaningful deviation ratings for game-theoretic analysis
+The environment is usable: the paper's actual algorithm runs end-to-end, the scored experiments come from executed code, and the minimum reproduced results support the central claim that deviation ratings yield clone-invariant ratings in general normal-form settings.

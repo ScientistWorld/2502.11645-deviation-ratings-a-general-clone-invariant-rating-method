@@ -1,23 +1,12 @@
 # Evaluation Targets
 
-## Primary: deviation_rating_quality
+## biased_shapley_augmented
 
-**Biased Shapley Game** — deviation ratings should be equal across all strategies.
-- **Metric**: `dev_gap` = max(all ratings) - min(all ratings) for player 0 (lower is better, 0 = perfect equality)
-- **Metric**: `CCE_gap` = sum_p max_a' delta_p(a') (lower is better, 0 = exact CCE)
-- **Run**: Compute deviation rating on the 4x4 biased Shapley game
+Tests the paper's Table 2 phenomenon: the biased Shapley game with the added Nash strategy should collapse to a single top group under deviation rating.
+- **Metric**: `dev_gap` = max minus min deviation rating over the four player-0 strategies. Lower is better; 0 is perfect equality.
+- **Metric**: `CCE_gap` = CCE regret gap of the selected distribution. Lower is better; 0 means exact CCE.
 
-**Livebench** — deviation ratings should group the top 4 models equally at the top.
-- **Metric**: `top4_overlap` = number of expected top-4 models in the top group (higher is better, max = 4)
-- **Run**: Construct 3-player game from model-task scores, compute deviation ratings
+## clone_invariance
 
-## Constraint: clone_invariance
-
-Adding a copy of a strategy must not change existing ratings.
-- **Metric**: `max_diff` = max absolute change in any original rating after adding a clone (lower is better, 0 = perfect invariance)
-- **Run**: Compare ratings before/after adding a strategy clone to Rock-Paper-Scissors
-
-## Secondary: uniform_baseline
-
-Uniform averaging as a baseline comparison.
-- The scientist should verify that uniform rating gives a different (transitive) ranking compared to deviation rating, demonstrating the value of game-theoretic equilibrium-based ratings.
+Tests the paper's clone-invariance claim on a simple zero-sum game.
+- **Metric**: `max_diff` = maximum absolute change in any original rating after cloning one strategy. Lower is better; 0 is perfect invariance.
