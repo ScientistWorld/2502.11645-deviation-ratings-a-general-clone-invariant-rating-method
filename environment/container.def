@@ -5,8 +5,9 @@
 # This paper involves game-theoretic linear programming computation.
 # CPU-only workload (CVXPY + LP solvers), no GPU needed.
 
-Bootstrap: docker
-From: python:3.11-slim
+# Use Singularity Hub library instead of Docker Hub
+Bootstrap: singularity
+From: library://python:3.11
 
 %post
     apt-get update && apt-get install -y --no-install-recommends \
