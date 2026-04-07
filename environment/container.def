@@ -5,12 +5,14 @@
 # This paper involves game-theoretic linear programming computation.
 # CPU-only workload (CVXPY + LP solvers), no GPU needed.
 
-Bootstrap: debootstrap
-OSVersion: bookworm
-MirrorURL: http://deb.debian.org/debian/
-Include: ca-certificates,python3,python3-pip,python3-dev,tmux,nano,vim-tiny,less,curl,wget,git,build-essential
+Bootstrap: docker
+From: python@sha256:ad65166ad2583036804a3f772ec8f1cad733cf77d631c6840ab1ea9231b6b350
 
 %post
+    apt-get update && apt-get install -y --no-install-recommends \
+        tmux nano vim-tiny less curl wget git build-essential \
+        && rm -rf /var/lib/apt/lists/*
+
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints
     mkdir -p /home/user/scoring
