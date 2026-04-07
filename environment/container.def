@@ -6,11 +6,11 @@
 # CPU-only workload (CVXPY + LP solvers), no GPU needed.
 
 Bootstrap: docker
-From: ghcr.io/library/python:3.11-slim
+From: debian:bookworm-slim
 
 %post
     apt-get update && apt-get install -y --no-install-recommends \
-        tmux nano vim-tiny less curl wget git build-essential \
+        python3 python3-pip python3-dev tmux nano vim-tiny less curl wget git build-essential \
         && rm -rf /var/lib/apt/lists/*
 
     mkdir -p /home/user/data
