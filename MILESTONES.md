@@ -43,6 +43,7 @@
 - Verified that `eval/` and `data/` are cleanly separated from `method/`
 - Confirmed the scoring contract still passes with `python3 validate.py --compare`
 - Fixed `scoring/EXPERIMENTS.md` so it matches the five scored experiments exactly
+- Removed a latent undeclared LiveBench scoring path from `eval/evaluate.py`
 - Recorded the final verification judgment in `VERIFICATION.md`
 
 ## Stop Justification

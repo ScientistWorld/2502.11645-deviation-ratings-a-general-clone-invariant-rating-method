@@ -7,11 +7,13 @@ The workspace was already in a strong state. The paper method implementation ran
 ## Issues Found
 
 - Minor: [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) did not match the actual scored benchmark. It only documented two experiments even though [scoring/scores.json](/home/user/scoring/scores.json) contains five.
+- Minor: [eval/evaluate.py](/home/user/eval/evaluate.py) still had a latent optional LiveBench scoring path that could emit an undeclared experiment if an extra checkpoint file appeared.
 - Minor: the current scored benchmark is saturation-prone for improve-mode use. All scored metrics are exact property checks and the reproduced method already achieves perfect values on them, so the environment is much stronger as a correctness and separation gym than as an optimization-headroom gym.
 
 ## Fixes Applied
 
 - Expanded [scoring/EXPERIMENTS.md](/home/user/scoring/EXPERIMENTS.md) so it now documents all five scored experiments in a method-agnostic way and matches [scoring/scores.json](/home/user/scoring/scores.json) exactly.
+- Removed the undeclared optional LiveBench emission path from [eval/evaluate.py](/home/user/eval/evaluate.py) so evaluation cannot silently write experiments absent from the current scoring contract.
 - Re-ran `python3 validate.py --compare` after the documentation fix to confirm the scoring contract still passes.
 
 ## Final Judgment

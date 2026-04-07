@@ -109,21 +109,6 @@ def evaluate_dominance_preserving() -> Dict:
     }
 
 
-def evaluate_livebench() -> Dict:
-    payload = _load_json(METHOD_DIR / "livebench_three_player.json")
-    models = payload["models"]
-    ratings = payload["ratings"]["0"]
-    ordered = sorted(((models[i], ratings[str(i)]) for i in range(len(models))), key=lambda item: item[1], reverse=True)
-    top_value = ordered[0][1]
-    top_group = [model for model, value in ordered if abs(value - top_value) <= 1e-8]
-    expected = {"claude-3-5-sonnet", "gemini-1.5-pro", "Llama-3.1-405B", "gpt-4o"}
-    return {
-        "top_group": top_group,
-        "top4_overlap": len(expected.intersection(top_group)),
-        "CCE_gap": round(payload["cce_gap"], 8),
-    }
-
-
 def main() -> Dict:
     SCORING_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -175,18 +160,6 @@ def main() -> Dict:
             }
         }
     }
-
-    livebench_path = METHOD_DIR / "livebench_three_player.json"
-    if livebench_path.exists():
-        livebench = evaluate_livebench()
-        scores["experiments"]["llm_rating_livebench"] = {
-            "results": {
-                "deviation_rating": {
-                    "top4_overlap": livebench["top4_overlap"],
-                    "CCE_gap": livebench["CCE_gap"],
-                }
-            }
-        }
 
     (SCORING_DIR / "scores.json").write_text(json.dumps(scores, indent=2))
     print(json.dumps(scores, indent=2))
