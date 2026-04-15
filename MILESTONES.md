@@ -47,4 +47,4 @@
 - Recorded the final verification judgment in `VERIFICATION.md`
 
 ## Stop Justification
-- Finalized at `secondary_claims`. The workspace is structurally clean, the five scored experiments are documented consistently, and the scoring contract validates. The remaining limitation is benchmark headroom: the current scored suite is dominated by exact property checks that the reproduced method already satisfies exactly, and broader empirical coverage from the paper is still not packaged.
+- Completed at milestone `secondary_claims`.
