@@ -1,6 +1,3 @@
-# IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends. Sleeping blocks the entire pipeline.
 action: done
-milestone: secondary_claims
-notes: "Fixed data package ignore rules so fresh clones include required source files; no external downloads are needed."
+gpus: 0
+notes: "Metric-triangulation split over existing deviation-rating artifacts; train has 8 metrics and test has 12 metrics; final reproduction has zero train/test error gaps except the positive dominance min_margin=1.0."
