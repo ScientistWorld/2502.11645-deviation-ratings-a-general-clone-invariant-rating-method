@@ -3,4 +3,4 @@
 # only after your turn ends. Sleeping blocks the entire pipeline.
 action: done
 milestone: secondary_claims
-notes: "Verified the workspace for gym use, fixed the experiment documentation mismatch, and recorded a partial-ready judgment due to saturated exact-property scoring."
+notes: "Fixed data package ignore rules so fresh clones include required source files; no external downloads are needed."
