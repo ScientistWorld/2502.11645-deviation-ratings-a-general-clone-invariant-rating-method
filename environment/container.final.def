@@ -1,0 +1,39 @@
+# Apptainer definition file for deviation rating reproduction.
+#
+# This workload is CPU-only and only needs a minimal Python base image.
+
+Bootstrap: docker
+From: python:3.11-slim
+
+%post
+    apt-get update && apt-get install -y --no-install-recommends \
+        git curl wget \
+        && rm -rf /var/lib/apt/lists/*
+
+    mkdir -p /home/user/data
+    mkdir -p /home/user/checkpoints
+    mkdir -p /home/user/pkgs
+    mkdir -p /home/user/scoring
+    chmod 755 /home/user
+
+
+
+    # --- Frozen environment (4 packages) ---
+    # Sources: 0 both, 0 overlay-only, 4 setup-only
+    pip install --break-system-packages uv 2>/dev/null || pip install uv 2>/dev/null || true
+    export UV_SYSTEM_PYTHON=1 UV_BREAK_SYSTEM_PACKAGES=1
+    uv pip install --system \
+        'export' \  # setup
+        'numpy' \  # setup
+        'scipy' \  # setup
+        'uv_cache_dir'  # setup
+
+%environment
+    export HOME=/home/user
+    export PYTHONUNBUFFERED=1
+    export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
+
+%startscript
+    if [ -n "$PYTHONPATH" ]; then
+        export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
+    fi
