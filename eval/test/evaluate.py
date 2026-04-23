@@ -14,10 +14,9 @@ from math import prod
 from pathlib import Path
 from typing import Iterable
 
+from eval.split_common import SCORING_DIR, discover_method_dirs
 
 ROOT = Path("/home/user")
-METHOD_DIR = ROOT / "checkpoints" / "method"
-SCORING_DIR = ROOT / "scoring"
 
 
 def _load_json(path: Path) -> dict:
@@ -152,8 +151,8 @@ def cce_gap(payoffs: list, sigma: list[float], action_dims: list[int]) -> float:
     return float(total_gap)
 
 
-def evaluate_biased_shapley() -> dict[str, float]:
-    payload = _load_json(METHOD_DIR / "biased_shapley_augmented.json")
+def evaluate_biased_shapley(method_dir: Path) -> dict[str, float]:
+    payload = _load_json(method_dir / "biased_shapley_augmented.json")
     action_count = len(payload["action_names"])
     all_ratings = [
         _rating(payload, None, player, action)
@@ -171,8 +170,8 @@ def evaluate_biased_shapley() -> dict[str, float]:
     }
 
 
-def evaluate_clone_invariance() -> dict[str, float]:
-    payload = _load_json(METHOD_DIR / "clone_invariance.json")
+def evaluate_clone_invariance(method_dir: Path) -> dict[str, float]:
+    payload = _load_json(method_dir / "clone_invariance.json")
     diffs = []
     for player, action_count in ((0, 3), (1, 3)):
         for action in range(action_count):
@@ -187,8 +186,8 @@ def evaluate_clone_invariance() -> dict[str, float]:
     }
 
 
-def evaluate_mixture_invariance() -> dict[str, float]:
-    payload = _load_json(METHOD_DIR / "mixture_invariance.json")
+def evaluate_mixture_invariance(method_dir: Path) -> dict[str, float]:
+    payload = _load_json(method_dir / "mixture_invariance.json")
     base_game = general_sum_reference_game()
     mixture = [float(value) for value in payload["mixture"]]
     augmented_game = add_mixed_strategy_for_player(base_game, mixture, player=0)
@@ -203,8 +202,8 @@ def evaluate_mixture_invariance() -> dict[str, float]:
     }
 
 
-def evaluate_offset_invariance() -> dict[str, float]:
-    payload = _load_json(METHOD_DIR / "offset_invariance.json")
+def evaluate_offset_invariance(method_dir: Path) -> dict[str, float]:
+    payload = _load_json(method_dir / "offset_invariance.json")
     base_game = general_sum_reference_game()
     offset_game = add_offset(
         base_game,
@@ -225,8 +224,8 @@ def evaluate_offset_invariance() -> dict[str, float]:
     }
 
 
-def evaluate_dominance_preserving() -> dict[str, float]:
-    payload = _load_json(METHOD_DIR / "dominance_preserving.json")
+def evaluate_dominance_preserving(method_dir: Path) -> dict[str, float]:
+    payload = _load_json(method_dir / "dominance_preserving.json")
     margins = []
     violations = 0
     for pair in payload["dominance_pairs"]:
@@ -248,23 +247,29 @@ def main() -> dict:
     SCORING_DIR.mkdir(parents=True, exist_ok=True)
     scores = {
         "experiments": {
-            "biased_shapley_augmented": {
-                "results": {"deviation_rating": evaluate_biased_shapley()}
-            },
-            "clone_invariance": {
-                "results": {"deviation_rating": evaluate_clone_invariance()}
-            },
-            "mixture_invariance": {
-                "results": {"deviation_rating": evaluate_mixture_invariance()}
-            },
-            "offset_invariance": {
-                "results": {"deviation_rating": evaluate_offset_invariance()}
-            },
-            "dominance_preserving": {
-                "results": {"deviation_rating": evaluate_dominance_preserving()}
-            },
+            "biased_shapley_augmented": {"results": {}},
+            "clone_invariance": {"results": {}},
+            "mixture_invariance": {"results": {}},
+            "offset_invariance": {"results": {}},
+            "dominance_preserving": {"results": {}},
         }
     }
+    for method_id, method_dir in discover_method_dirs().items():
+        scores["experiments"]["biased_shapley_augmented"]["results"][method_id] = evaluate_biased_shapley(
+            method_dir
+        )
+        scores["experiments"]["clone_invariance"]["results"][method_id] = evaluate_clone_invariance(
+            method_dir
+        )
+        scores["experiments"]["mixture_invariance"]["results"][method_id] = evaluate_mixture_invariance(
+            method_dir
+        )
+        scores["experiments"]["offset_invariance"]["results"][method_id] = evaluate_offset_invariance(
+            method_dir
+        )
+        scores["experiments"]["dominance_preserving"]["results"][method_id] = (
+            evaluate_dominance_preserving(method_dir)
+        )
     output_path = SCORING_DIR / "scores_test.json"
     output_path.write_text(json.dumps(scores, indent=2))
     print(json.dumps(scores, indent=2))

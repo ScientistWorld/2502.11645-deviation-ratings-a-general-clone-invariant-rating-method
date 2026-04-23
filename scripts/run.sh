@@ -1,17 +1,12 @@
 #!/bin/bash
 # Job script submitted via the end-of-turn YAML block.
 #
-# This runs inside the compute container with:
-#   - Your workspace mounted at /home/user
-#   - GPU(s) available (game theory computation is CPU-bound)
-#   - No internet access
-#
-# This paper involves CPU-only linear programming.
+# The split evaluators score the already-generated method artifacts under
+# /home/user/checkpoints and refresh scoring/scores_{train,test}.json.
 
 set -e
 
 cd /home/user
 
-# Run the full reproduction pipeline and validate the scoring contract.
-bash scripts/reproduce.sh
-python3 validate.py --compare
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
