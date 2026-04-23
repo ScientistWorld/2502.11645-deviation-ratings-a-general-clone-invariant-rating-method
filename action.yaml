@@ -1,4 +1,3 @@
-action: submit
+action: done
 gpus: 0
-test: false
-notes: "Retry split-eval submit after environment fix: keep container.def apt-only and install numpy/scipy in setup.sh into /home/user/pkgs, then run scripts/evaluate_{train,test}.sh."
+notes: "Metric-triangulation split; 8 train metrics and 12 test metrics populated from a real CPU run; train/test method keys match and scripts are rewired correctly; caveat: the frozen deviation-rating method saturates most property metrics at 0, so this remains a correctness-oriented low-headroom benchmark."
