@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "Run scripts/evaluate_{train,test}.sh on existing checkpoints; refresh scores_{train,test}.json with correct train/test metric assignment and method-key parity."
+notes: "Retry split-eval submit after environment fix: keep container.def apt-only and install numpy/scipy in setup.sh into /home/user/pkgs, then run scripts/evaluate_{train,test}.sh."
