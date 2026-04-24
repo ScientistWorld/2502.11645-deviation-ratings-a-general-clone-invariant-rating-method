@@ -1,12 +1,14 @@
 #!/bin/bash
 # Job script submitted via the end-of-turn YAML block.
 #
-# These are post-hoc scorers over existing method artifacts, so this job is
-# CPU-only and simply refreshes scoring/scores_{train,test}.json.
+# Run the packaged reproduction end to end, then refresh the train/test split
+# on the freshly generated artifacts and validate both scoring paths.
 
 set -euo pipefail
 
 cd /home/user
 
+bash scripts/reproduce.sh
 bash scripts/evaluate_train.sh
 bash scripts/evaluate_test.sh
+python3 validate.py

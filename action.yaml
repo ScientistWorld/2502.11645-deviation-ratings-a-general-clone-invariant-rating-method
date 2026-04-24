@@ -1,3 +1,5 @@
-action: done
+action: submit
 gpus: 0
-notes: "visible-train plus held-out-test anti-shortcut split; 8 train metrics, 12 test metrics; deviation_rating stays at 0-gap / 0-violation on both slices while held-out offset and strict-dominance metrics separate uniform-payoff and zero-rating shortcuts from the proposed method; no remaining validation caveats."
+milestone: secondary_claims
+test: false
+notes: "CPU end-to-end verification: rerun the deviation-rating method and baseline into scoring/scores.json, then regenerate scores_train.json and scores_test.json and validate the full packaged secondary-claims benchmark."
