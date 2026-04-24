@@ -63,6 +63,9 @@
         "deviation_rating": {
           "type": "proposed",
           "max_diff": 0.0
+        },
+        "uniform_payoff": {
+          "type": "baseline"
         }
       }
     },
@@ -80,6 +83,12 @@
           "type": "proposed",
           "dominance_violations": 0,
           "CCE_gap": 0.0
+        },
+        "zero_rating": {
+          "type": "baseline"
+        },
+        "negative_uniform_payoff": {
+          "type": "baseline"
         }
       }
     }

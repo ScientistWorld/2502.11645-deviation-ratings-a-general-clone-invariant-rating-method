@@ -39,6 +39,53 @@ def _round(value: float) -> float:
     return round(float(value), 8)
 
 
+def _uniform_joint(action_dims: list[int]) -> list[float]:
+    mass = 1.0 / prod(action_dims)
+    return [mass for _ in range(prod(action_dims))]
+
+
+def _uniform_action_ratings(payoffs: list, action_dims: list[int]) -> dict[int, list[float]]:
+    if len(action_dims) != 2:
+        raise ValueError(f"Only 2-player games are supported, got {action_dims}")
+
+    rows, cols = action_dims
+    player0 = [sum(float(payoffs[0][row][col]) for col in range(cols)) / cols for row in range(rows)]
+    player1 = [sum(float(payoffs[1][row][col]) for row in range(rows)) / rows for col in range(cols)]
+    return {0: player0, 1: player1}
+
+
+def _negative_uniform_action_ratings(payoffs: list, action_dims: list[int]) -> dict[int, list[float]]:
+    ratings = _uniform_action_ratings(payoffs, action_dims)
+    return {
+        player: [-value for value in player_ratings]
+        for player, player_ratings in ratings.items()
+    }
+
+
+def _zero_action_ratings(action_dims: list[int]) -> dict[int, list[float]]:
+    return {player: [0.0 for _ in range(count)] for player, count in enumerate(action_dims)}
+
+
+def _player_centered(ratings: dict[int, list[float]]) -> dict[int, list[float]]:
+    centered = {}
+    for player, player_ratings in ratings.items():
+        mean_value = sum(player_ratings) / len(player_ratings)
+        centered[player] = [value - mean_value for value in player_ratings]
+    return centered
+
+
+def _max_abs_action_delta(
+    before: dict[int, list[float]],
+    after: dict[int, list[float]],
+    players: Iterable[int],
+) -> float:
+    diffs = []
+    for player in players:
+        for action, value in enumerate(before[player]):
+            diffs.append(after[player][action] - value)
+    return _max_abs(diffs)
+
+
 def augmented_biased_shapley_game() -> list:
     q = 241.0
     player0 = [
@@ -211,15 +258,22 @@ def evaluate_offset_invariance(method_dir: Path) -> dict[str, float]:
     )
     base_gap = cce_gap(base_game, payload["base"]["equilibrium"], [2, 2])
     offset_gap = cce_gap(offset_game, payload["offset"]["equilibrium"], [2, 2])
-    diffs = []
-    for player in (0, 1):
-        for action in (0, 1):
-            diffs.append(
-                _rating(payload, "offset", player, action)
-                - _rating(payload, "base", player, action)
-            )
+    base_ratings = {
+        0: [_rating(payload, "base", 0, action) for action in (0, 1)],
+        1: [_rating(payload, "base", 1, action) for action in (0, 1)],
+    }
+    offset_ratings = {
+        0: [_rating(payload, "offset", 0, action) for action in (0, 1)],
+        1: [_rating(payload, "offset", 1, action) for action in (0, 1)],
+    }
     return {
-        "max_diff": _round(_max_abs(diffs)),
+        "max_diff": _round(
+            _max_abs_action_delta(
+                _player_centered(base_ratings),
+                _player_centered(offset_ratings),
+                players=(0, 1),
+            )
+        ),
         "max_CCE_gap": _round(max(base_gap, offset_gap)),
     }
 
@@ -234,12 +288,69 @@ def evaluate_dominance_preserving(method_dir: Path) -> dict[str, float]:
         worse = int(pair["worse"])
         margin = _rating(payload, None, player, better) - _rating(payload, None, player, worse)
         margins.append(margin)
-        if margin < -1e-8:
+        if margin <= 1e-8:
             violations += 1
     return {
         "dominance_violations": violations,
         "min_margin": _round(min(margins)),
         "CCE_gap": _round(cce_gap(dominance_test_game(), payload["equilibrium"], [2, 2])),
+    }
+
+
+def evaluate_offset_uniform_baseline() -> dict[str, float]:
+    base_game = general_sum_reference_game()
+    offset_game = add_offset(
+        base_game,
+        [[10.0, -4.0], [7.0, -3.0]],
+    )
+    base_ratings = _uniform_action_ratings(base_game, [2, 2])
+    offset_ratings = _uniform_action_ratings(offset_game, [2, 2])
+    return {
+        "max_diff": _round(
+            _max_abs_action_delta(
+                _player_centered(base_ratings),
+                _player_centered(offset_ratings),
+                players=(0, 1),
+            )
+        ),
+        "max_CCE_gap": _round(
+            max(
+                cce_gap(base_game, _uniform_joint([2, 2]), [2, 2]),
+                cce_gap(offset_game, _uniform_joint([2, 2]), [2, 2]),
+            )
+        ),
+    }
+
+
+def evaluate_dominance_zero_baseline() -> dict[str, float]:
+    ratings = _zero_action_ratings([2, 2])
+    margins = []
+    violations = 0
+    for player in (0, 1):
+        margin = ratings[player][0] - ratings[player][1]
+        margins.append(margin)
+        if margin <= 1e-8:
+            violations += 1
+    return {
+        "dominance_violations": violations,
+        "min_margin": _round(min(margins)),
+        "CCE_gap": _round(cce_gap(dominance_test_game(), _uniform_joint([2, 2]), [2, 2])),
+    }
+
+
+def evaluate_dominance_negative_uniform_baseline() -> dict[str, float]:
+    ratings = _negative_uniform_action_ratings(dominance_test_game(), [2, 2])
+    margins = []
+    violations = 0
+    for player in (0, 1):
+        margin = ratings[player][0] - ratings[player][1]
+        margins.append(margin)
+        if margin <= 1e-8:
+            violations += 1
+    return {
+        "dominance_violations": violations,
+        "min_margin": _round(min(margins)),
+        "CCE_gap": _round(cce_gap(dominance_test_game(), _uniform_joint([2, 2]), [2, 2])),
     }
 
 
@@ -270,6 +381,16 @@ def main() -> dict:
         scores["experiments"]["dominance_preserving"]["results"][method_id] = (
             evaluate_dominance_preserving(method_dir)
         )
+
+    scores["experiments"]["offset_invariance"]["results"]["uniform_payoff"] = (
+        evaluate_offset_uniform_baseline()
+    )
+    scores["experiments"]["dominance_preserving"]["results"]["zero_rating"] = (
+        evaluate_dominance_zero_baseline()
+    )
+    scores["experiments"]["dominance_preserving"]["results"]["negative_uniform_payoff"] = (
+        evaluate_dominance_negative_uniform_baseline()
+    )
     output_path = SCORING_DIR / "scores_test.json"
     output_path.write_text(json.dumps(scores, indent=2))
     print(json.dumps(scores, indent=2))

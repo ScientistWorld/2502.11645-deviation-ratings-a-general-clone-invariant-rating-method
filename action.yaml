@@ -1,4 +1,5 @@
 action: submit
 gpus: 0
+milestone: secondary_claims
 test: false
-notes: "Run scripts/evaluate_train.sh and scripts/evaluate_test.sh against checkpoints/method to produce scoring/scores_train.json and scoring/scores_test.json on CPU."
+notes: "Re-run the split evaluators on CPU after fixing offset/dominance train-test separation and declaring the new local baselines in scoring/reference.json."
