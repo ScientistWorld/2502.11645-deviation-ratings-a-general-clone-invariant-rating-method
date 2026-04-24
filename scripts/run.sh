@@ -1,10 +1,10 @@
 #!/bin/bash
 # Job script submitted via the end-of-turn YAML block.
 #
-# The split evaluators score the already-generated method artifacts under
-# /home/user/checkpoints and refresh scoring/scores_{train,test}.json.
+# These are post-hoc scorers over existing method artifacts, so this job is
+# CPU-only and simply refreshes scoring/scores_{train,test}.json.
 
-set -e
+set -euo pipefail
 
 cd /home/user
 

@@ -1,3 +1,4 @@
-action: done
+action: submit
 gpus: 0
-notes: "Metric-triangulation split; 8 train metrics and 12 test metrics populated from a real CPU run; train/test method keys match and scripts are rewired correctly; caveat: the frozen deviation-rating method saturates most property metrics at 0, so this remains a correctness-oriented low-headroom benchmark."
+test: false
+notes: "Run scripts/evaluate_train.sh and scripts/evaluate_test.sh against checkpoints/method to produce scoring/scores_train.json and scoring/scores_test.json on CPU."
