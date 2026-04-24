@@ -45,3 +45,25 @@ The deviation rating algorithm achieves exact CCE for these small games, so scor
 ## Issues Fixed
 
 1. **Scores files swapped** (fixed): `scores_train.json` had test metrics and vice versa. Swapped to correct assignment.
+
+2. **Score files must not exist at end of designer iteration**: Deleted `scores_train.json` and `scores_test.json` — they are produced later by `evaluate_train.sh` and `evaluate_test.sh`, not by the designer.
+
+## Leakage Analysis
+
+`split_common.py` is at top-level `eval/` (not inside `train/` or `test/`). A future agent reading `eval/train/` sees only the train evaluation code. The shared helper provides only discovery logic and constants — it does not contain test-specific metrics, data, or scoring shape. This is acceptable per the design rules.
+
+## Metrics Coverage
+
+The split uses **metric triangulation** rather than data partition because:
+- Small evaluation set (tiny normal-form games)
+- Property-based evaluation (invariance theorems, not statistical performance)
+- Complementary metrics across train and test
+
+All five experiments have both train and test metrics. The sets are non-overlapping, so gaming train doesn't guarantee good test scores.
+
+## Scripts
+
+- `scripts/evaluate_train.sh`: Runs `eval/train/evaluate.py`, writes `scores_train.json`
+- `scripts/evaluate_test.sh`: Runs `eval/test/evaluate.py`, writes `scores_test.json`
+
+Both scripts discover methods from `checkpoints/` and do not have hardcoded method names.
