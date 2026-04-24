@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
 milestone: secondary_claims
-test: true
-notes: "CPU-only scheduler validation after packaging cleanup: rebuild env with uv system installs, run scripts/reproduce.sh, split evals, and validate scoring."
+test: false
+notes: "Final verification passed; evaluator generalized for reusable method discovery and stale tracked files removed."

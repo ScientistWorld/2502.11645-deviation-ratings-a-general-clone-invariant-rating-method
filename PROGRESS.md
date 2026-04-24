@@ -57,3 +57,5 @@ At 2026-04-07 22:22 UTC, the packaged entrypoints were revalidated locally after
 - `python3 validate.py --compare`
 
 At 2026-04-24 09:00 UTC, the environment packaging was cleaned up to remove the `/home/user/pkgs` workaround and align with the required `uv pip install --system` workflow before the next scheduler validation run.
+
+At 2026-04-24 09:15 UTC, final verification confirmed the milestone remains `secondary_claims`, generalized [`eval/evaluate.py`](/home/user/eval/evaluate.py) to discover and score arbitrary method output layouts, and removed tracked stale files and the unused OCI tarball that were not part of the shipped gym.

@@ -1,6 +1,4 @@
-"""
-Evaluation for stored experiment outputs.
-"""
+"""Evaluate stored experiment outputs for all discovered methods."""
 
 from __future__ import annotations
 
@@ -8,20 +6,16 @@ import json
 from pathlib import Path
 from typing import Dict
 
+from eval.split_common import SCORING_DIR, _read_json, discover_method_dirs
+
 
 ROOT = Path("/home/user")
-METHOD_DIR = ROOT / "checkpoints" / "method"
 BASELINE_DIR = ROOT / "checkpoints" / "baseline"
-SCORING_DIR = ROOT / "scoring"
 
 
-def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text())
-
-
-def evaluate_shapley() -> Dict:
-    method = _load_json(METHOD_DIR / "biased_shapley_augmented.json")
-    baseline = _load_json(BASELINE_DIR / "uniform_biased_shapley.json")
+def evaluate_shapley(method_dir: Path) -> Dict:
+    method = _read_json(method_dir / "biased_shapley_augmented.json")
+    baseline = _read_json(BASELINE_DIR / "uniform_biased_shapley.json")
     names = method["action_names"]
 
     dev_values = [method["ratings"]["0"][str(i)] for i in range(len(names))]
@@ -39,8 +33,8 @@ def evaluate_shapley() -> Dict:
     }
 
 
-def evaluate_clone_invariance() -> Dict:
-    payload = _load_json(METHOD_DIR / "clone_invariance.json")
+def evaluate_clone_invariance(method_dir: Path) -> Dict:
+    payload = _read_json(method_dir / "clone_invariance.json")
     orig = payload["original"]["ratings"]["0"]
     cloned = payload["cloned"]["ratings"]["0"]
     max_diff = max(abs(cloned[str(i)] - orig[str(i)]) for i in range(3))
@@ -51,8 +45,8 @@ def evaluate_clone_invariance() -> Dict:
     }
 
 
-def evaluate_mixture_invariance() -> Dict:
-    payload = _load_json(METHOD_DIR / "mixture_invariance.json")
+def evaluate_mixture_invariance(method_dir: Path) -> Dict:
+    payload = _read_json(method_dir / "mixture_invariance.json")
     base = payload["base"]["ratings"]
     augmented = payload["augmented"]["ratings"]
 
@@ -70,8 +64,8 @@ def evaluate_mixture_invariance() -> Dict:
     }
 
 
-def evaluate_offset_invariance() -> Dict:
-    payload = _load_json(METHOD_DIR / "offset_invariance.json")
+def evaluate_offset_invariance(method_dir: Path) -> Dict:
+    payload = _read_json(method_dir / "offset_invariance.json")
     base = payload["base"]["ratings"]
     offset = payload["offset"]["ratings"]
 
@@ -87,8 +81,8 @@ def evaluate_offset_invariance() -> Dict:
     }
 
 
-def evaluate_dominance_preserving() -> Dict:
-    payload = _load_json(METHOD_DIR / "dominance_preserving.json")
+def evaluate_dominance_preserving(method_dir: Path) -> Dict:
+    payload = _read_json(method_dir / "dominance_preserving.json")
     ratings = payload["ratings"]
 
     margins = []
@@ -112,54 +106,55 @@ def evaluate_dominance_preserving() -> Dict:
 def main() -> Dict:
     SCORING_DIR.mkdir(parents=True, exist_ok=True)
 
+    method_dirs = discover_method_dirs()
     scores = {"experiments": {}}
-    shapley = evaluate_shapley()
     scores["experiments"]["biased_shapley_augmented"] = {
-        "results": {
-            "deviation_rating": {
-                "dev_gap": shapley["dev_gap"],
-                "CCE_gap": shapley["CCE_gap"],
-            },
-        }
+        "results": {}
     }
+    for method_id, method_dir in method_dirs.items():
+        shapley = evaluate_shapley(method_dir)
+        scores["experiments"]["biased_shapley_augmented"]["results"][method_id] = {
+            "dev_gap": shapley["dev_gap"],
+            "CCE_gap": shapley["CCE_gap"],
+        }
 
-    clone = evaluate_clone_invariance()
     scores["experiments"]["clone_invariance"] = {
-        "results": {
-            "deviation_rating": {
-                "max_diff": clone["max_diff"],
-            }
-        }
+        "results": {}
     }
+    for method_id, method_dir in method_dirs.items():
+        clone = evaluate_clone_invariance(method_dir)
+        scores["experiments"]["clone_invariance"]["results"][method_id] = {
+            "max_diff": clone["max_diff"],
+        }
 
-    mixture = evaluate_mixture_invariance()
     scores["experiments"]["mixture_invariance"] = {
-        "results": {
-            "deviation_rating": {
-                "original_max_diff": mixture["original_max_diff"],
-                "mixture_error": mixture["mixture_error"],
-            }
-        }
+        "results": {}
     }
+    for method_id, method_dir in method_dirs.items():
+        mixture = evaluate_mixture_invariance(method_dir)
+        scores["experiments"]["mixture_invariance"]["results"][method_id] = {
+            "original_max_diff": mixture["original_max_diff"],
+            "mixture_error": mixture["mixture_error"],
+        }
 
-    offset = evaluate_offset_invariance()
     scores["experiments"]["offset_invariance"] = {
-        "results": {
-            "deviation_rating": {
-                "max_diff": offset["max_diff"],
-            }
-        }
+        "results": {}
     }
+    for method_id, method_dir in method_dirs.items():
+        offset = evaluate_offset_invariance(method_dir)
+        scores["experiments"]["offset_invariance"]["results"][method_id] = {
+            "max_diff": offset["max_diff"],
+        }
 
-    dominance = evaluate_dominance_preserving()
     scores["experiments"]["dominance_preserving"] = {
-        "results": {
-            "deviation_rating": {
-                "dominance_violations": dominance["dominance_violations"],
-                "CCE_gap": dominance["CCE_gap"],
-            }
-        }
+        "results": {}
     }
+    for method_id, method_dir in method_dirs.items():
+        dominance = evaluate_dominance_preserving(method_dir)
+        scores["experiments"]["dominance_preserving"]["results"][method_id] = {
+            "dominance_violations": dominance["dominance_violations"],
+            "CCE_gap": dominance["CCE_gap"],
+        }
 
     (SCORING_DIR / "scores.json").write_text(json.dumps(scores, indent=2))
     print(json.dumps(scores, indent=2))

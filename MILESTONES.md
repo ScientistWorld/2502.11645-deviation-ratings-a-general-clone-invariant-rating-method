@@ -51,5 +51,10 @@
 - Removed runtime script dependence on `/home/user/pkgs` so the scheduler validation exercises the packaged container environment directly
 - Prepared a fresh CPU-only submission to validate the rebuilt environment end to end after the packaging cleanup
 
+### [2026-04-24 09:15] - secondary_claims
+- Verified the final gym package without changing the claimed reproduction scope
+- Generalized the standalone evaluator so `scripts/evaluate.sh` scores any discovered method artifact layout, not only `checkpoints/method`
+- Removed tracked stale helper files from the package so the workspace ships only the active reproduction assets
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
