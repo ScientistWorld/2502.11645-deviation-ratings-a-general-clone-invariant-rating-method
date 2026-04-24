@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
+action: done
 milestone: secondary_claims
-test: true
-notes: "CPU packaging check after fixing the canonical evaluator so scripts/evaluate.sh now emits the full declared scoring contract, including all-player metrics and baseline methods."
+notes: "Final verification passed; workspace is gym-ready at secondary_claims with limited improve-mode headroom because the scored property checks are saturated."

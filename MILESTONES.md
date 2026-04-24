@@ -61,5 +61,10 @@
 - Generalized the standalone evaluator so `scripts/evaluate.sh` scores any discovered method artifact layout, not only `checkpoints/method`
 - Removed tracked stale helper files from the package so the workspace ships only the active reproduction assets
 
+### [2026-04-24 09:25] - secondary_claims
+- Completed final verification of the packaged gym at the existing milestone
+- Aligned the method-agnostic evaluation and scoring docs with the full canonical scoring contract
+- Confirmed the workspace is ready for use with the limitation that the scored theorem checks are already saturated
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

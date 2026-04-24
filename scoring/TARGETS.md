@@ -16,10 +16,16 @@ Primary metric:
 - Direction: lower is better
 - Interpretation: `dev_gap = 0` means the four deviation ratings are equal
 
-Constraint metric in the same experiment:
+Additional scored checks in the same experiment:
 - `CCE_gap`
 - Direction: lower is better
 - Interpretation: `CCE_gap = 0` means the selected recommendation distribution satisfies the equilibrium-feasibility check
+- `all_player_dev_gap`
+- Direction: lower is better
+- Interpretation: `all_player_dev_gap = 0` means the equality result holds across both players' action sets, not only one visible slice
+- `player_symmetry_gap`
+- Direction: lower is better
+- Interpretation: `player_symmetry_gap = 0` means corresponding actions receive the same rating for both players in the symmetric benchmark
 
 ## Constraint Targets
 
@@ -33,6 +39,14 @@ Primary metric:
 - Direction: lower is better
 - Interpretation: `max_diff = 0` means exact invariance of the original ratings under cloning
 
+Additional scored checks:
+- `all_players_max_diff`
+- Direction: lower is better
+- Interpretation: `all_players_max_diff = 0` means the invariance check holds across both players
+- `clone_source_gap`
+- Direction: lower is better
+- Interpretation: `clone_source_gap = 0` means the added clone receives the same rating as its source action
+
 ### `mixture_invariance`
 
 What it tests:
@@ -44,6 +58,11 @@ Primary metrics:
 - Direction: lower is better
 - Interpretation: both metrics should be `0`
 
+Additional scored check:
+- `max_CCE_gap`
+- Direction: lower is better
+- Interpretation: `max_CCE_gap = 0` means the recommendation distributions remain equilibrium-feasible in both the base and augmented games
+
 ### `offset_invariance`
 
 What it tests:
@@ -53,6 +72,11 @@ Primary metric:
 - `max_diff`
 - Direction: lower is better
 - Interpretation: `max_diff = 0` means exact offset invariance on the scored game
+
+Additional scored check:
+- `max_CCE_gap`
+- Direction: lower is better
+- Interpretation: `max_CCE_gap = 0` means the recommendation distributions remain equilibrium-feasible before and after the offset transformation
 
 ## Secondary Property Target
 
@@ -70,6 +94,11 @@ Constraint metric in the same experiment:
 - `CCE_gap`
 - Direction: lower is better
 - Interpretation: the equilibrium-feasibility check should still be satisfied
+
+Additional scored check:
+- `min_margin`
+- Direction: higher is better
+- Interpretation: larger positive margins mean the dominant action is separated more clearly from the dominated action
 
 ## Ablation Targets
 
