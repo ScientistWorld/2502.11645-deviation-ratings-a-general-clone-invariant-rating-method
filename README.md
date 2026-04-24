@@ -93,7 +93,7 @@ The LP finds the **strictest CCE** — the equilibrium where no player can gain 
 
 ### Computational Approach
 
-The LP uses CVXPY with GLOP (OR-Tools' simplex solver) as the backend. The algorithm runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
+The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP. The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
 
 ## Main Claims
 
@@ -123,20 +123,24 @@ Since this is a rating task rather than a supervised prediction task, evaluation
 1. **Deviation equality on the augmented biased Shapley game**
    - A successful method should assign equal ratings to `R`, `P`, `S`, and the added mixed action `N`
    - The selected recommendation distribution should satisfy the benchmark's equilibrium-feasibility check (`CCE_gap = 0`)
+   - The equality check is also verified across both players and corresponding symmetric actions
 
 2. **Clone invariance**
    - If one strategy is duplicated, the ratings assigned to the original strategies should remain unchanged
-   - The scored statistic is the maximum absolute difference between original-game ratings and cloned-game ratings (`max_diff`)
+   - The scored statistics check both the visible original slice and the full two-player game, and also verify that the clone matches its source action
 
 3. **Mixture invariance**
    - If a mixed strategy is added to a game, the original ratings should remain unchanged
    - The new strategy's rating should equal the corresponding mixture of the original ratings
+   - The benchmark also checks equilibrium-feasibility on both the base and augmented games
 
 4. **Offset invariance**
    - Adding arbitrary offsets that depend only on the opponents' actions should not change ratings
+   - The benchmark also checks equilibrium-feasibility on both the base and offset-transformed games
 
 5. **Dominance preservation**
    - If one strategy dominates another, it should not receive a lower rating
+   - The benchmark records both the number of violated dominance relations and the smallest remaining dominance margin
 
 6. **Baseline contrast**
    - A simple uniform-payoff baseline is included to demonstrate that naive averaging need not satisfy the same invariance/equality behavior
@@ -160,27 +164,27 @@ Since this is a rating task rather than a supervised prediction task, evaluation
 ### Experiment 1: Biased Shapley Game
 - Construct the 4x4 biased Shapley game (R, P, S, plus Nash mixture N)
 - Compute ratings and compare all four action ratings
-- Score `dev_gap = max(ratings) - min(ratings)` and `CCE_gap`
+- Score the visible action spread, the all-player action spread, the cross-player symmetry gap, and `CCE_gap`
 
 ### Experiment 2: Clone Invariance Test
 - Take a Rock-Paper-Scissors game
 - Compute ratings for the original game
 - Add a clone of one strategy and recompute
-- Score `max_diff` over the original strategies' ratings before vs. after cloning
+- Score the visible original-slice difference, the all-player difference, and the clone-source mismatch
 
 ### Experiment 3: Mixture Invariance Test
 - Start from a small general-sum 2x2 game with non-equal ratings
 - Add one mixed strategy for player 0
-- Score the maximum change in original ratings and the error between the new rating and the expected mixed rating
+- Score the maximum change in original ratings, the error between the new rating and the expected mixed rating, and the worst equilibrium-feasibility gap across the base and augmented games
 
 ### Experiment 4: Offset Invariance Test
 - Start from the same small general-sum 2x2 game
 - Add arbitrary `b_p(a_-p)` offsets to each player's payoffs
-- Score `max_diff` between the original and offset-adjusted ratings
+- Score `max_diff` between the original and offset-adjusted ratings and the worst equilibrium-feasibility gap across the base and offset-adjusted games
 
 ### Experiment 5: Dominance Preservation Test
 - Evaluate a 2x2 game with one strictly dominant action per player
-- Score how many encoded dominance relations are violated
+- Score how many encoded dominance relations are violated, the smallest dominance margin, and the equilibrium-feasibility gap
 
 ## Packaged Scope
 
@@ -870,6 +874,78 @@ The paper also contains broader empirical claims, including LiveBench and policy
 - Verified the final gym package without changing the claimed reproduction scope
 - Generalized the standalone evaluator so `scripts/evaluate.sh` scores any discovered method artifact layout, not only `checkpoints/method`
 - Removed tracked stale helper files from the package so the workspace ships only the active reproduction assets
+
+</details>
+
+### Iteration 9: gpt-5.4 (verifier)
+- **Milestone**: `secondary_claims` | **Status**: done
+- **Working time**: 10m | **GPU**: 0.0h
+- **Jobs**: 5 total (5 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-04-07 00:00] - none
+- Read the paper and inspected the existing workspace implementation
+- Identified the paper's minimum reproducible claims as the augmented biased Shapley example and clone invariance
+
+### [2026-04-07 00:00] - method_runs
+- Implemented and corrected the sequential LP deviation-rating pipeline
+- Added reproducible method, baseline, evaluation, and end-to-end shell scripts
+- Verified the algorithm executes end-to-end without errors
+
+### [2026-04-07 00:00] - core_claim
+- Reproduced the paper's augmented biased Shapley result with `dev_gap = 0.0` and `CCE_gap = 0.0`
+- Reproduced exact clone invariance on cloned RPS with `max_diff = 0.0`
+- Validated the environment with `bash scripts/reproduce.sh` and `python validate.py --compare`
+
+### [2026-04-07 22:22] - core_claim
+- Installed the declared runtime dependencies into `/home/user/pkgs` on the login node for a real local verification pass
+- Re-ran `bash scripts/reproduce.sh` successfully and confirmed `python3 validate.py --compare` passes
+- Prepared a CPU-only submission to validate the packaged environment through `scripts/run.sh`
+
+### [2026-04-07 22:35] - core_claim
+- Verified the workspace as a gym package rather than a reproduction attempt
+- Fixed method leakage in the method-agnostic and method-safe scoring/briefing documents
+- Confirmed the existing `core_claim` milestone remains accurate after documentation cleanup
+
+### [2026-04-07 22:50] - core_claim
+- Completed final wrap-up of milestone, progress, and scoring guidance documents
+- Confirmed `python3 validate.py` passes with the final scoring contract
+- Finalized the repository as a `core_claim` research gym and closed the paper with `action: done`
+
+### [2026-04-07 23:10] - secondary_claims
+- Extended the packaged benchmark from two to five scored paper properties: clone invariance, mixture invariance, offset invariance, dominance preservation, and the augmented biased Shapley equality result
+- Fixed the sequential LP active-set update to freeze all numerically active max-deviation constraints at each optimum, not only constraints with nonzero dual marginals
+- Re-ran `bash scripts/reproduce.sh` and `python3 validate.py --compare` successfully with the new five-experiment scoring contract
+- Prepared a CPU-only scheduler validation run for the packaged environment
+
+### [2026-04-07 23:30] - secondary_claims
+- Verified that `eval/` and `data/` are cleanly separated from `method/`
+- Confirmed the scoring contract still passes with `python3 validate.py --compare`
+- Fixed `scoring/EXPERIMENTS.md` so it matches the five scored experiments exactly
+- Removed a latent undeclared LiveBench scoring path from `eval/evaluate.py`
+- Recorded the final verification judgment in `VERIFICATION.md`
+
+### [2026-04-24 09:00] - secondary_claims
+- Reworked environment packaging to use the required `uv pip install --system` flow instead of the ad hoc `/home/user/pkgs` target install
+- Removed runtime script dependence on `/home/user/pkgs` so the scheduler validation exercises the packaged container environment directly
+- Prepared a fresh CPU-only submission to validate the rebuilt environment end to end after the packaging cleanup
+
+### [2026-04-24 09:06] - secondary_claims
+- Expanded the canonical `scripts/evaluate.sh` path so `eval/evaluate.py` now scores the full declared benchmark contract instead of a reduced subset
+- Added the missing all-player/property-side metrics and packaged baseline methods to `scoring/scores.json`
+- Re-ran `python3 eval/evaluate.py` and `python3 validate.py --compare` successfully after the evaluator fix
+
+### [2026-04-24 09:15] - secondary_claims
+- Verified the final gym package without changing the claimed reproduction scope
+- Generalized the standalone evaluator so `scripts/evaluate.sh` scores any discovered method artifact layout, not only `checkpoints/method`
+- Removed tracked stale helper files from the package so the workspace ships only the active reproduction assets
+
+### [2026-04-24 09:25] - secondary_claims
+- Completed final verification of the packaged gym at the existing milestone
+- Aligned the method-agnostic evaluation and scoring docs with the full canonical scoring contract
+- Confirmed the workspace is ready for use with the limitation that the scored theorem checks are already saturated
 
 </details>
 
