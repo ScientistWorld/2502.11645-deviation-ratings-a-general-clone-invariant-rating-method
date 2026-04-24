@@ -67,3 +67,38 @@ All five experiments have both train and test metrics. The sets are non-overlapp
 - `scripts/evaluate_test.sh`: Runs `eval/test/evaluate.py`, writes `scores_test.json`
 
 Both scripts discover methods from `checkpoints/` and do not have hardcoded method names.
+
+## Stage 2 Review (Continue and Improve Pass)
+
+### Changes Made
+**None required** — the existing design was reviewed and is sound.
+
+### Review Checklist
+- [x] Split style is right for this paper (metric triangulation on property-based evaluation)
+- [x] Test slice resists shortcuts (complementary metrics require multi-property correctness)
+- [x] Metrics triangulate (8 train metrics, 13 test metrics across 5 experiments)
+- [x] No paper-agreement metrics in reference.json (all measure scientific quantities)
+- [x] Test slice is held-out (split_common.py provides only discovery, not test metrics)
+- [x] Evaluation is fast (re-scores existing artifacts, no re-execution)
+- [x] Scripts correctly wired (evaluate_test.sh invokes eval/test/, writes scores_test.json)
+- [x] No hardcoded method defaults
+- [x] Scores files absent (verified)
+- [x] Both scripts pass `bash -n` syntax check
+
+### Leakage Verified
+Both `eval/train/evaluate.py` and `eval/test/evaluate.py` import from `eval.split_common` only.
+`split_common.py` contains:
+- `SCORING_DIR` constant
+- `discover_method_dirs()` function for multi-method discovery
+- No test-specific metrics or scoring shape
+
+A future agent reading `eval/train/` sees only train metrics and cannot learn test metrics through the shared helper. This is acceptable per design rules.
+
+### Metrics in reference.json
+All metrics have `higher_is_better`, `coefficient`, and `description`. No paper-agreement metrics (no `author`, `paper`, `published`, `deviation_from_paper`, etc.). No new experiments created.
+
+### Runtime Notes for Runner Iteration
+- Both evaluators rely on method artifacts at `checkpoints/method/*.json` (legacy layout) or `checkpoints/outputs/<method_id>/*.json` (multi-method layout).
+- Method discovery is automatic via `discover_method_dirs()` — no hardcoded method names.
+- CCE gap computation uses `scipy`-style numerical computation; results should be ~0 for exact CCE.
+- `scores_train.json` and `scores_test.json` are produced by the evaluators at runtime (not pre-existing).
