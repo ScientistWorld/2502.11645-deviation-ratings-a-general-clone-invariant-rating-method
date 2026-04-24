@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
 milestone: secondary_claims
-test: false
-notes: "Removed the stale default LiveBench CSV dependency so the packaged benchmark no longer points at a missing pre-run artifact."
+test: true
+notes: "CPU-only scheduler validation after packaging cleanup: rebuild env with uv system installs, run scripts/reproduce.sh, split evals, and validate scoring."

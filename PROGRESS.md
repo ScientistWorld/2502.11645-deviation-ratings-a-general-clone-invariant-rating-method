@@ -41,7 +41,7 @@ Re-validation on April 7, 2026 confirmed the same outputs immediately before pre
 - Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.
 - The earlier active-set update relied only on nonzero dual marginals, which can miss degenerate active constraints. The current implementation also freezes constraints whose deviation gain numerically matches the optimal `epsilon`.
 - The original status files overstated LiveBench coverage. The packaged environment now reports only experiments that are actually implemented and scored.
-- The login node did not yet have `/home/user/pkgs`, so `numpy` and `scipy` were not importable until the dependencies declared in `environment/setup.sh` were installed into that path for local verification.
+- Earlier local verification depended on an ad hoc `/home/user/pkgs` target install. The packaging now follows the required `uv pip install --system` path so scheduler validation will exercise the declared environment rather than leftover login-node state.
 
 ## Deviations From Paper
 - The current reproduction focuses on exact small normal-form experiments that directly establish the method's strictest-CCE behavior and the paper's invariance and dominance properties.
@@ -55,3 +55,5 @@ The environment is usable: the paper's actual algorithm runs end-to-end, the sco
 At 2026-04-07 22:22 UTC, the packaged entrypoints were revalidated locally after installing the declared runtime dependencies into `/home/user/pkgs`:
 - `bash scripts/reproduce.sh`
 - `python3 validate.py --compare`
+
+At 2026-04-24 09:00 UTC, the environment packaging was cleaned up to remove the `/home/user/pkgs` workaround and align with the required `uv pip install --system` workflow before the next scheduler validation run.

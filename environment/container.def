@@ -12,16 +12,9 @@ From: python:3.11-slim
 
     mkdir -p /home/user/data
     mkdir -p /home/user/checkpoints
-    mkdir -p /home/user/pkgs
     mkdir -p /home/user/scoring
     chmod 755 /home/user
 
 %environment
     export HOME=/home/user
     export PYTHONUNBUFFERED=1
-    export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
-
-%startscript
-    if [ -n "$PYTHONPATH" ]; then
-        export PYTHONPATH=/home/user/pkgs:$PYTHONPATH
-    fi

@@ -46,5 +46,10 @@
 - Removed a latent undeclared LiveBench scoring path from `eval/evaluate.py`
 - Recorded the final verification judgment in `VERIFICATION.md`
 
+### [2026-04-24 09:00] - secondary_claims
+- Reworked environment packaging to use the required `uv pip install --system` flow instead of the ad hoc `/home/user/pkgs` target install
+- Removed runtime script dependence on `/home/user/pkgs` so the scheduler validation exercises the packaged container environment directly
+- Prepared a fresh CPU-only submission to validate the rebuilt environment end to end after the packaging cleanup
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

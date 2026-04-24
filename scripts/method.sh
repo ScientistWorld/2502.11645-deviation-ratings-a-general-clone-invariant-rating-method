@@ -7,7 +7,7 @@
 set -e
 
 cd /home/user
-export PYTHONPATH="/home/user:/home/user/pkgs:/home/user/test_pkgs${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONPATH="/home/user${PYTHONPATH:+:$PYTHONPATH}"
 
 python3 -m method.run_experiments --experiments \
   biased_shapley_augmented \
