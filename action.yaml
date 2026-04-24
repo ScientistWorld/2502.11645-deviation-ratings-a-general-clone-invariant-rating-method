@@ -1,5 +1,3 @@
-action: submit
+action: done
 gpus: 0
-milestone: secondary_claims
-test: false
-notes: "Re-run split evaluation on CPU after fixing legacy method-id discovery so checkpoints/method maps back to deviation_rating alongside the new train/test anti-shortcut baselines."
+notes: "visible-train plus held-out-test anti-shortcut split; 8 train metrics, 12 test metrics; deviation_rating stays at 0-gap / 0-violation on both slices while held-out offset and strict-dominance metrics separate uniform-payoff and zero-rating shortcuts from the proposed method; no remaining validation caveats."
