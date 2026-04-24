@@ -164,7 +164,7 @@ def run_livebench(output_dir: Path, csv_path: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default="/home/user/checkpoints/method")
-    parser.add_argument("--livebench-csv", default="/home/user/data/livebench/all_tasks_2024-09-30.csv")
+    parser.add_argument("--livebench-csv")
     parser.add_argument(
         "--experiments",
         nargs="+",
@@ -191,6 +191,10 @@ def main() -> None:
         elif experiment == "dominance_preserving":
             run_dominance(output_dir)
         elif experiment == "llm_rating_livebench":
+            if not args.livebench_csv:
+                raise ValueError(
+                    "llm_rating_livebench requires --livebench-csv pointing to a public leaderboard CSV"
+                )
             run_livebench(output_dir, Path(args.livebench_csv))
         else:
             raise ValueError(f"Unknown experiment: {experiment}")
