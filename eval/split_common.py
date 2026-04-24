@@ -37,6 +37,32 @@ def _expected_method_ids() -> list[str]:
     return sorted(method_ids)
 
 
+def _proposed_method_ids() -> list[str]:
+    reference_path = SCORING_DIR / "reference.json"
+    if not reference_path.exists():
+        return []
+
+    reference = _read_json(reference_path)
+    method_ids: set[str] = set()
+    for experiment in reference.get("experiments", {}).values():
+        for method_id, method_result in experiment.get("results", {}).items():
+            if method_result.get("type") == "proposed":
+                method_ids.add(method_id)
+    return sorted(method_ids)
+
+
+def _legacy_method_id() -> str:
+    proposed_method_ids = _proposed_method_ids()
+    if len(proposed_method_ids) == 1:
+        return proposed_method_ids[0]
+
+    expected_method_ids = _expected_method_ids()
+    if len(expected_method_ids) == 1:
+        return expected_method_ids[0]
+
+    return "method"
+
+
 def _has_required_artifacts(path: Path) -> bool:
     return path.is_dir() and all((path / name).exists() for name in REQUIRED_ARTIFACTS)
 
@@ -59,8 +85,7 @@ def discover_method_dirs() -> dict[str, Path]:
             if _has_required_artifacts(child):
                 discovered[child.name] = child
 
-    expected_method_ids = _expected_method_ids()
-    legacy_method_id = expected_method_ids[0] if len(expected_method_ids) == 1 else "method"
+    legacy_method_id = _legacy_method_id()
 
     for child in sorted(CHECKPOINTS_DIR.iterdir()):
         if child.name in {"baseline", "outputs"}:

@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 milestone: secondary_claims
 test: false
-notes: "Re-run the split evaluators on CPU after fixing offset/dominance train-test separation and declaring the new local baselines in scoring/reference.json."
+notes: "Re-run split evaluation on CPU after fixing legacy method-id discovery so checkpoints/method maps back to deviation_rating alongside the new train/test anti-shortcut baselines."
