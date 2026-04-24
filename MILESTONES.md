@@ -51,6 +51,11 @@
 - Removed runtime script dependence on `/home/user/pkgs` so the scheduler validation exercises the packaged container environment directly
 - Prepared a fresh CPU-only submission to validate the rebuilt environment end to end after the packaging cleanup
 
+### [2026-04-24 09:06] - secondary_claims
+- Expanded the canonical `scripts/evaluate.sh` path so `eval/evaluate.py` now scores the full declared benchmark contract instead of a reduced subset
+- Added the missing all-player/property-side metrics and packaged baseline methods to `scoring/scores.json`
+- Re-ran `python3 eval/evaluate.py` and `python3 validate.py --compare` successfully after the evaluator fix
+
 ### [2026-04-24 09:15] - secondary_claims
 - Verified the final gym package without changing the claimed reproduction scope
 - Generalized the standalone evaluator so `scripts/evaluate.sh` scores any discovered method artifact layout, not only `checkpoints/method`

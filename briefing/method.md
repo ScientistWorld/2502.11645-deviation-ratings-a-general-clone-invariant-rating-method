@@ -32,7 +32,7 @@ The LP finds the **strictest CCE** — the equilibrium where no player can gain 
 
 ### Computational Approach
 
-The LP uses CVXPY with GLOP (OR-Tools' simplex solver) as the backend. The algorithm runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
+The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP. The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
 
 ## Main Claims
 

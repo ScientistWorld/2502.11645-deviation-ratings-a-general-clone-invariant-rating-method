@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
 milestone: secondary_claims
-test: false
-notes: "Final verification passed; evaluator generalized for reusable method discovery and stale tracked files removed."
+test: true
+notes: "CPU packaging check after fixing the canonical evaluator so scripts/evaluate.sh now emits the full declared scoring contract, including all-player metrics and baseline methods."

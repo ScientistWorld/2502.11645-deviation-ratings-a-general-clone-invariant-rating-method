@@ -59,3 +59,5 @@ At 2026-04-07 22:22 UTC, the packaged entrypoints were revalidated locally after
 At 2026-04-24 09:00 UTC, the environment packaging was cleaned up to remove the `/home/user/pkgs` workaround and align with the required `uv pip install --system` workflow before the next scheduler validation run.
 
 At 2026-04-24 09:15 UTC, final verification confirmed the milestone remains `secondary_claims`, generalized [`eval/evaluate.py`](/home/user/eval/evaluate.py) to discover and score arbitrary method output layouts, and removed tracked stale files and the unused OCI tarball that were not part of the shipped gym.
+
+At 2026-04-24 09:06 UTC, the canonical evaluator in [`eval/evaluate.py`](/home/user/eval/evaluate.py) was expanded to score the full declared benchmark contract instead of the earlier reduced subset. `scores.json` now includes the all-player property metrics already declared in `reference.json` and the packaged baselines (`uniform_payoff`, `zero_rating`, and `negative_uniform_payoff`), and `python3 validate.py --compare` still passes after the change.
