@@ -2,7 +2,7 @@
   "experiments": {
     "biased_shapley_augmented": {
       "results": {
-        "deviation_rating": {
+        "method": {
           "all_player_dev_gap": 0.0,
           "player_symmetry_gap": 0.0,
           "CCE_gap": 0.0
@@ -11,7 +11,7 @@
     },
     "clone_invariance": {
       "results": {
-        "deviation_rating": {
+        "method": {
           "all_players_max_diff": 0.0,
           "clone_source_gap": 0.0
         }
@@ -19,7 +19,7 @@
     },
     "mixture_invariance": {
       "results": {
-        "deviation_rating": {
+        "method": {
           "mixture_error": 0.0,
           "max_CCE_gap": 0.0
         }
@@ -27,18 +27,32 @@
     },
     "offset_invariance": {
       "results": {
-        "deviation_rating": {
+        "method": {
           "max_diff": 0.0,
           "max_CCE_gap": 0.0
+        },
+        "uniform_payoff": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.5
         }
       }
     },
     "dominance_preserving": {
       "results": {
-        "deviation_rating": {
+        "method": {
           "dominance_violations": 0,
           "min_margin": 1.0,
           "CCE_gap": 0.0
+        },
+        "zero_rating": {
+          "dominance_violations": 2,
+          "min_margin": 0.0,
+          "CCE_gap": 1.0
+        },
+        "negative_uniform_payoff": {
+          "dominance_violations": 2,
+          "min_margin": -1.0,
+          "CCE_gap": 1.0
         }
       }
     }
