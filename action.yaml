@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
 milestone: secondary_claims
 test: false
-notes: "CPU end-to-end verification: rerun the deviation-rating method and baseline into scoring/scores.json, then regenerate scores_train.json and scores_test.json and validate the full packaged secondary-claims benchmark."
+notes: "Removed the stale default LiveBench CSV dependency so the packaged benchmark no longer points at a missing pre-run artifact."
