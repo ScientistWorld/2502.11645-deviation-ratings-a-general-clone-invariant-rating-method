@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/home/user/eval/test/evaluate.py", line 401, in <module>
-    main()
-  File "/home/user/eval/test/evaluate.py", line 382, in main
-    evaluate_dominance_preserving(method_dir)
-  File "/home/user/eval/test/evaluate.py", line 295, in evaluate_dominance_preserving
-    "min_margin": _round(min(margins)),
-                         ^^^^^^^^^^^^
-ValueError: min() iterable argument is empty
