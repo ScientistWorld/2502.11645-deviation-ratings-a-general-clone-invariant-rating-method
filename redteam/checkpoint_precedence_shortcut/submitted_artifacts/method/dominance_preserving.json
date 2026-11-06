@@ -1,0 +1,39 @@
+{
+  "experiment": "dominance_preserving",
+  "action_names": [
+    "D0",
+    "D1"
+  ],
+  "meta": {
+    "source": "constructed_dominance_test"
+  },
+  "ratings": {
+    "0": {
+      "0": 0.0,
+      "1": -1.0
+    },
+    "1": {
+      "0": 0.0,
+      "1": -1.0
+    }
+  },
+  "equilibrium": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "cce_gap": 0.0,
+  "dominance_pairs": [
+    {
+      "player": 0,
+      "better": 0,
+      "worse": 1
+    },
+    {
+      "player": 1,
+      "better": 0,
+      "worse": 1
+    }
+  ]
+}

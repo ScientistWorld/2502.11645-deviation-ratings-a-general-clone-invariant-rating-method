@@ -1,5 +1,4 @@
 action: submit
 gpus: 0
 test: false
-milestone: none
-notes: "Audit: rerun reference with three seeds and execute 29 isolated shortcut candidates against the restored hidden test."
+notes: "Run reference seeds 0/1/2 and 42 scoring shortcuts against the restored no-argument hidden test; save transactional audit evidence."

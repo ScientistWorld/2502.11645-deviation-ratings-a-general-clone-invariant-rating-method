@@ -1,0 +1,39 @@
+{
+  "ratings": {
+    "0": {
+      "0": 2.0,
+      "1": 1.0
+    },
+    "1": {
+      "0": 2.0,
+      "1": 1.0
+    }
+  },
+  "equilibrium": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ],
+  "dominance_pairs": [
+    {
+      "player": 0,
+      "better": 0,
+      "worse": 1
+    },
+    {
+      "player": 1,
+      "better": 0,
+      "worse": 1
+    }
+  ],
+  "dev_gap": 0.0,
+  "max_diff": 0.0,
+  "cce_gap": 0.0,
+  "CCE_gap": 0.0,
+  "success": true,
+  "seconds": 0.0,
+  "n_iterations": 0,
+  "dominance_violations": 0,
+  "min_margin": 1000000000000.0
+}

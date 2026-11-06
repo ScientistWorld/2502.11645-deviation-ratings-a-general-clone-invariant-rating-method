@@ -1,0 +1,257 @@
+{"shortcut": null, "seed": 0, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": null, "seed": 1, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": null, "seed": 2, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "public_answers_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "uniform_payoffs_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "constant_zero_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "copy_input_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "empty_artifacts_shortcut", "seed": null, "train": 1, "test": 1, "nonfinite": 0}
+{"shortcut": "direct_scores_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "reported_fields_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "null_ratings_shortcut", "seed": null, "train": 1, "test": 1, "nonfinite": 0}
+{"shortcut": "nan_ratings_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 7}
+{"shortcut": "nan_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "infinite_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "overflow_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "negative_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "scaled_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "zero_equilibrium_shortcut", "seed": null, "train": 1, "test": 1, "nonfinite": 0}
+{"shortcut": "short_equilibrium_shortcut", "seed": null, "train": 1, "test": 1, "nonfinite": 0}
+{"shortcut": "rating_inflation_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "unbounded_margin_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "infinite_margin_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 1}
+{"shortcut": "string_infinity_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 1}
+{"shortcut": "boolean_ratings_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "offset_translation_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "mixture_original_drift_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "clone_no_equilibrium_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "clone_arbitrary_ratings_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "short_action_set_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "empty_action_set_shortcut", "seed": null, "train": 1, "test": 1, "nonfinite": 0}
+{"shortcut": "missing_player_shortcut", "seed": null, "train": 0, "test": 1, "nonfinite": 0}
+{"shortcut": "reverse_dominance_pairs_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "single_dominance_pair_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "empty_dominance_pairs_shortcut", "seed": null, "train": 0, "test": 1, "nonfinite": 0}
+{"shortcut": "phantom_dominance_action_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "zero_mixture_weights_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "onehot_mixture_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "extrapolated_mixture_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "rounding_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "baseline_replace_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "data_replace_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "reference_override_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "python_startup_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "checkpoint_precedence_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{"shortcut": "method_id_collision_shortcut", "seed": null, "train": 0, "test": 0, "nonfinite": 0}
+{
+  "public_answers_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "uniform_payoffs_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "constant_zero_shortcut": {
+    "test": 0,
+    "changed": 2,
+    "nonfinite": 0
+  },
+  "copy_input_shortcut": {
+    "test": 0,
+    "changed": 5,
+    "nonfinite": 0
+  },
+  "empty_artifacts_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "direct_scores_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "reported_fields_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "null_ratings_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "nan_ratings_shortcut": {
+    "test": 0,
+    "changed": 7,
+    "nonfinite": 7
+  },
+  "nan_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "infinite_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "overflow_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "negative_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "scaled_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "zero_equilibrium_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "short_equilibrium_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "rating_inflation_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 0
+  },
+  "unbounded_margin_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 0
+  },
+  "infinite_margin_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 1
+  },
+  "string_infinity_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 1
+  },
+  "boolean_ratings_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "offset_translation_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "mixture_original_drift_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "clone_no_equilibrium_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "clone_arbitrary_ratings_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "short_action_set_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "empty_action_set_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "missing_player_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "reverse_dominance_pairs_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "single_dominance_pair_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "empty_dominance_pairs_shortcut": {
+    "test": 1,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "phantom_dominance_action_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 0
+  },
+  "zero_mixture_weights_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "onehot_mixture_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "extrapolated_mixture_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "rounding_shortcut": {
+    "test": 0,
+    "changed": 0,
+    "nonfinite": 0
+  },
+  "baseline_replace_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "data_replace_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "reference_override_shortcut": {
+    "test": 0,
+    "changed": 6,
+    "nonfinite": 0
+  },
+  "python_startup_shortcut": {
+    "test": 0,
+    "changed": 4,
+    "nonfinite": 0
+  },
+  "checkpoint_precedence_shortcut": {
+    "test": 0,
+    "changed": 1,
+    "nonfinite": 0
+  },
+  "method_id_collision_shortcut": {
+    "test": 0,
+    "changed": 9,
+    "nonfinite": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "shortcut": "baseline_replace_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.2675242428667843
+  },
+  "edited_files": {
+    "baseline/run_uniform.py": "1de5abc3b73f548b2367d27d8346dbc79115e487b58ffaf83e18e277a19f58e4"
+  },
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.16568505601026118
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.11450972501188517
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

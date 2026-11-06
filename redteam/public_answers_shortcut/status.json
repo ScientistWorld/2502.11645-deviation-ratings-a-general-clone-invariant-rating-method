@@ -1,0 +1,24 @@
+{
+  "shortcut": "public_answers_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.5285201610531658
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.16549888788722456
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.16593276080675423
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

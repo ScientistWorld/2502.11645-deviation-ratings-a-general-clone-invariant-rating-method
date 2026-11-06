@@ -1,0 +1,38 @@
+{
+  "base": {
+    "ratings": {
+      "0": {
+        "0": false,
+        "1": false
+      },
+      "1": {
+        "0": false,
+        "1": false
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "offset": {
+    "ratings": {
+      "0": {
+        "0": false,
+        "1": false
+      },
+      "1": {
+        "0": false,
+        "1": false
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  }
+}

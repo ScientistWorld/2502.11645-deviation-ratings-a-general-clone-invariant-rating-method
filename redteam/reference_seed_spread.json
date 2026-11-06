@@ -1,0 +1,102 @@
+{
+  "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "biased_shapley_augmented/deviation_rating/player_symmetry_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "biased_shapley_augmented/deviation_rating/CCE_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "clone_invariance/deviation_rating/all_players_max_diff": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "clone_invariance/deviation_rating/clone_source_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "mixture_invariance/deviation_rating/mixture_error": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "mixture_invariance/deviation_rating/max_CCE_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "offset_invariance/deviation_rating/max_diff": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "offset_invariance/deviation_rating/max_CCE_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "offset_invariance/uniform_payoff/max_diff": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "offset_invariance/uniform_payoff/max_CCE_gap": {
+    "min": 0.5,
+    "max": 0.5,
+    "spread": 0.0
+  },
+  "dominance_preserving/deviation_rating/dominance_violations": {
+    "min": 0,
+    "max": 0,
+    "spread": 0
+  },
+  "dominance_preserving/deviation_rating/min_margin": {
+    "min": 1.0,
+    "max": 1.0,
+    "spread": 0.0
+  },
+  "dominance_preserving/deviation_rating/CCE_gap": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "dominance_preserving/zero_rating/dominance_violations": {
+    "min": 2,
+    "max": 2,
+    "spread": 0
+  },
+  "dominance_preserving/zero_rating/min_margin": {
+    "min": 0.0,
+    "max": 0.0,
+    "spread": 0.0
+  },
+  "dominance_preserving/zero_rating/CCE_gap": {
+    "min": 1.0,
+    "max": 1.0,
+    "spread": 0.0
+  },
+  "dominance_preserving/negative_uniform_payoff/dominance_violations": {
+    "min": 2,
+    "max": 2,
+    "spread": 0
+  },
+  "dominance_preserving/negative_uniform_payoff/min_margin": {
+    "min": -1.0,
+    "max": -1.0,
+    "spread": 0.0
+  },
+  "dominance_preserving/negative_uniform_payoff/CCE_gap": {
+    "min": 1.0,
+    "max": 1.0,
+    "spread": 0.0
+  }
+}

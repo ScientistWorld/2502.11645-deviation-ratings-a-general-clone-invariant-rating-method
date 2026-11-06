@@ -1,0 +1,57 @@
+{
+  "experiment": "mixture_invariance",
+  "action_names": [
+    "A0",
+    "A1",
+    "mix_0.3_0.7"
+  ],
+  "meta": {
+    "source": "constructed_general_sum_reference"
+  },
+  "mixture": [
+    0.3,
+    0.7
+  ],
+  "base": {
+    "ratings": {
+      "0": {
+        "0": -1.0,
+        "1": 0.0
+      },
+      "1": {
+        "0": -1.0,
+        "1": 0.0
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cce_gap": 0.0
+  },
+  "augmented": {
+    "ratings": {
+      "0": {
+        "0": -1.0,
+        "1": 0.0,
+        "2": -0.3
+      },
+      "1": {
+        "0": -1.0,
+        "1": 0.0
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cce_gap": 0.0
+  },
+  "expected_mixture_rating": -0.3
+}

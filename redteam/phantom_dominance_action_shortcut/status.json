@@ -1,0 +1,24 @@
+{
+  "shortcut": "phantom_dominance_action_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.6257706400938332
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.16594731691293418
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.1654799140524119
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

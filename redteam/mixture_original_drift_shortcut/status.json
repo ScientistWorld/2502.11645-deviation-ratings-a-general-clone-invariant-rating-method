@@ -1,0 +1,24 @@
+{
+  "shortcut": "mixture_original_drift_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 2.2759201878216118
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.215526593150571
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.21969757904298604
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

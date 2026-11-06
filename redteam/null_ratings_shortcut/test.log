@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/user/eval/test/evaluate.py", line 401, in <module>
+    main()
+  File "/home/user/eval/test/evaluate.py", line 369, in main
+    scores["experiments"]["biased_shapley_augmented"]["results"][method_id] = evaluate_biased_shapley(
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 204, in evaluate_biased_shapley
+    all_ratings = [
+                  ^
+  File "/home/user/eval/test/evaluate.py", line 205, in <listcomp>
+    _rating(payload, None, player, action)
+  File "/home/user/eval/test/evaluate.py", line 30, in _rating
+    return float(source["ratings"][str(player)][str(action)])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'

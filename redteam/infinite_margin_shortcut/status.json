@@ -1,0 +1,26 @@
+{
+  "shortcut": "infinite_margin_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.6703827970195562
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.11478880606591702
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.11457638489082456
+  },
+  "nonfinite_test_fields": [
+    ".experiments.dominance_preserving.results.deviation_rating.min_margin"
+  ],
+  "scores_produced": true
+}
