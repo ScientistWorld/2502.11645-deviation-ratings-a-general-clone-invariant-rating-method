@@ -1,0 +1,24 @@
+{
+  "shortcut": "masked_nan_ratings_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.2699564991053194
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.11462837317958474
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.11456595198251307
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

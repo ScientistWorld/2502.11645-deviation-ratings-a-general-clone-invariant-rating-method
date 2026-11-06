@@ -1,0 +1,30 @@
+{
+  "ratings": {
+    "0": {
+      "0": 0.0,
+      "1": -1.0
+    },
+    "1": {
+      "0": 0.0,
+      "1": NaN
+    }
+  },
+  "equilibrium": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "dominance_pairs": [
+    {
+      "player": 0,
+      "better": 0,
+      "worse": 1
+    },
+    {
+      "player": 1,
+      "better": 0,
+      "worse": 1
+    }
+  ]
+}

@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "Run reference seeds 0/1/2 and 42 scoring shortcuts against the restored no-argument hidden test; save transactional audit evidence."
+notes: "Audit follow-up: schema-preserving startup shortcut, global rating scaling, and masked NaN numeric/string shortcuts; refresh all 45 comparisons."

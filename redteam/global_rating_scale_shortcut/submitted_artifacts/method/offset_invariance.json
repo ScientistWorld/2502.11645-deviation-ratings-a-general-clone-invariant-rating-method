@@ -1,0 +1,58 @@
+{
+  "experiment": "offset_invariance",
+  "action_names": [
+    "A0",
+    "A1"
+  ],
+  "meta": {
+    "source": "constructed_general_sum_reference"
+  },
+  "offsets": [
+    [
+      10.0,
+      -4.0
+    ],
+    [
+      7.0,
+      -3.0
+    ]
+  ],
+  "base": {
+    "ratings": {
+      "0": {
+        "0": -1000000.0,
+        "1": 0.0
+      },
+      "1": {
+        "0": -1000000.0,
+        "1": 0.0
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cce_gap": 0.0
+  },
+  "offset": {
+    "ratings": {
+      "0": {
+        "0": -1000000.0,
+        "1": 0.0
+      },
+      "1": {
+        "0": -1000000.0,
+        "1": 0.0
+      }
+    },
+    "equilibrium": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cce_gap": 0.0
+  }
+}
