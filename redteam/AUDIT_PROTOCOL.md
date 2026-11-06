@@ -9,8 +9,8 @@ complete test scores stay in that shortcut's folder. Failed runs retain tracebac
 and status rather than a made-up numeric score.
 
 The shortcut producer's inputs are only `data/game_data.py`, the visible train
-artifact contract and scoring documents. The checkpoint-precedence shortcut also
-reruns the provided method (improve mode). The producer never reads hidden test
+artifact contract and scoring documents. The checkpoint-precedence and global
+rating-scale shortcuts also rerun the provided method (improve mode). The producer never reads hidden test
 code, score files, scoring/reference.json, old checkpoints, git history or other
 audit outputs. It creates its own reference override rather than reading one.
 The harness can read hidden outputs to record the actual result.

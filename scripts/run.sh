@@ -1,7 +1,14 @@
 #!/bin/bash
+# Job script submitted via the end-of-turn YAML block.
+#
+# Run the packaged reproduction end to end, then refresh the train/test split
+# on the freshly generated artifacts and validate both scoring paths.
+
 set -euo pipefail
+
 cd /home/user
-for shortcut in python_startup_shortcut global_rating_scale_shortcut masked_nan_ratings_shortcut masked_nan_strings_shortcut; do
-  bash "redteam/${shortcut}/run.sh"
-done > redteam/followup_job.log 2>&1
-python3 redteam/summarize_shortcuts.py >> redteam/followup_job.log
+
+bash scripts/reproduce.sh
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
+python3 validate.py

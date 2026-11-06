@@ -1,0 +1,55 @@
+{
+  "restoration": "passed",
+  "sha256_checks": {
+    "eval/test/evaluate.py": {
+      "starting_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+      "final_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+      "matches": true
+    },
+    "eval/train/evaluate.py": {
+      "starting_sha256": "f887baa4e0f1c4885f0f6937f6f228bfff1b841c0418b31796c544c63206dd8f",
+      "final_sha256": "f887baa4e0f1c4885f0f6937f6f228bfff1b841c0418b31796c544c63206dd8f",
+      "matches": true
+    },
+    "eval/split_common.py": {
+      "starting_sha256": "1536153840644dc136ebda69e435933f55a0a424c723b5d9d7aca655fe864491",
+      "final_sha256": "1536153840644dc136ebda69e435933f55a0a424c723b5d9d7aca655fe864491",
+      "matches": true
+    },
+    "scripts/evaluate_test.sh": {
+      "starting_sha256": "a52dfea08dcacc4322a798553da9857108ddd68c95b136faa47cb937f542490e",
+      "final_sha256": "a52dfea08dcacc4322a798553da9857108ddd68c95b136faa47cb937f542490e",
+      "matches": true
+    },
+    "scripts/run.sh": {
+      "starting_sha256": "749c51f106707902bb029538b25e77d22398b543d979903821d220466300e68b",
+      "final_sha256": "749c51f106707902bb029538b25e77d22398b543d979903821d220466300e68b",
+      "matches": true
+    },
+    "data/game_data.py": {
+      "starting_sha256": "3e26dffb35fe675b6ff08d5f0e5dd19abcbdd53d18b6d069ec17aa40eb37d269",
+      "final_sha256": "3e26dffb35fe675b6ff08d5f0e5dd19abcbdd53d18b6d069ec17aa40eb37d269",
+      "matches": true
+    },
+    "baseline/run_uniform.py": {
+      "starting_sha256": "14f7dff42596da3d90b23b59286becd17bb1d62ae17554cb0ee778f4b85adeb8",
+      "final_sha256": "14f7dff42596da3d90b23b59286becd17bb1d62ae17554cb0ee778f4b85adeb8",
+      "matches": true
+    },
+    "method/run_experiments.py": {
+      "starting_sha256": "78ed07cafdcb0151f72c8479cd6e22e759831a178e7abfaeadd74293b07986c7",
+      "final_sha256": "78ed07cafdcb0151f72c8479cd6e22e759831a178e7abfaeadd74293b07986c7",
+      "matches": true
+    },
+    "method/deviation_rating.py": {
+      "starting_sha256": "bc801cfef9c6004d02e82848a8dc76e30a948c2b295fe0fc26fe26a90213d5a2",
+      "final_sha256": "bc801cfef9c6004d02e82848a8dc76e30a948c2b295fe0fc26fe26a90213d5a2",
+      "matches": true
+    }
+  },
+  "startup_shortcut_removed": true,
+  "temporary_snapshot_removed": true,
+  "job_script_restored_via_git": true,
+  "job_logs_archived_inside_redteam": true,
+  "note": "Starting staged README/manifest deletions and absent trajectory logs preserved. action.yaml is the required completion signal, not a research change."
+}

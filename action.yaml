@@ -1,4 +1,2 @@
-action: submit
-gpus: 0
-test: false
-notes: "Audit follow-up: schema-preserving startup shortcut, global rating scaling, and masked NaN numeric/string shortcuts; refresh all 45 comparisons."
+action: done
+notes: "Audited 45 executed shortcuts: 20 match the full reference, finite margin reaches 1e100; baseline reproduction passes, three-seed spread is zero. Report and evidence committed; gym sources restored."

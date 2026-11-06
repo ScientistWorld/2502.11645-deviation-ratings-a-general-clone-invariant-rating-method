@@ -1,0 +1,12 @@
+[hive] This stdout log is managed by Hive.
+[hive] job_id: b2a460f0
+[hive] host: node
+[hive] node_id: 23f29b0a36e186d54cbe4f2c625b14c35716f9d620134ffd9b3a9de6
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu-test
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 3600
+[hive] started_at: 2026-11-06 18:34:26 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2502.11645:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'

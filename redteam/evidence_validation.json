@@ -1,0 +1,15 @@
+{
+  "validation": "passed",
+  "counts": {
+    "shortcuts": 45,
+    "test_success": 38,
+    "test_failure": 7,
+    "finite_scores": 35,
+    "exact_reference": 20
+  },
+  "strict_json_artifacts_checked": 5,
+  "all_report_links_exist": true,
+  "all_reference_scores_equal_gym_scores_test": true,
+  "all_seed_component_spreads": 0,
+  "hidden_source_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61"
+}
