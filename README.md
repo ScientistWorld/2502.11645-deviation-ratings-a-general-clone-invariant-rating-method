@@ -42,7 +42,7 @@ The paper introduces **deviation rating** — the first N-player general-sum clo
 ## Run it
 
 ```bash
-pip install git+https://github.com/zlab-princeton/scientist_world_cli
+pip install sciworld
 sw research 2502.11645 --mode innovate --agent claude-code
 sw evaluate 2502.11645
 ```
