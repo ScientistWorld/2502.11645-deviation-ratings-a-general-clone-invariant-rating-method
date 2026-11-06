@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/user/eval/train/evaluate.py", line 313, in <module>
+    main()
+  File "/home/user/eval/train/evaluate.py", line 280, in main
+    for method_id, method_dir in discover_method_dirs().items():
+                                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/split_common.py", line 104, in discover_method_dirs
+    raise FileNotFoundError(
+FileNotFoundError: No scored method artifacts found. Expected one of: /home/user/checkpoints/method, /home/user/checkpoints/outputs
