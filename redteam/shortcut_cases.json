@@ -40,5 +40,8 @@
   "reference_override_shortcut",
   "python_startup_shortcut",
   "checkpoint_precedence_shortcut",
-  "method_id_collision_shortcut"
+  "method_id_collision_shortcut",
+  "global_rating_scale_shortcut",
+  "masked_nan_ratings_shortcut",
+  "masked_nan_strings_shortcut"
 ]
