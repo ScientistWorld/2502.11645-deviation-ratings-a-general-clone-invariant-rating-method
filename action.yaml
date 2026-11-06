@@ -1,2 +1,8 @@
-action: done
-notes: "Audited 45 executed shortcuts: 20 match the full reference, finite margin reaches 1e100; baseline reproduction passes, three-seed spread is zero. Report and evidence committed; gym sources restored."
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
+milestone: secondary_claims
+notes: ""
