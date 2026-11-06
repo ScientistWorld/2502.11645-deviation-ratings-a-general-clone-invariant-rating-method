@@ -1,7 +1,0 @@
-D  README.md
-D  manifest.json
- D trajectory/turn_0001_raw.jsonl
- D trajectory/turn_0002_raw.jsonl
- D trajectory/turn_0003_raw.jsonl
- D trajectory/turn_0004_raw.jsonl
-?? redteam/
