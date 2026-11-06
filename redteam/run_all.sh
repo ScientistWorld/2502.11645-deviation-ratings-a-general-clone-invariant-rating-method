@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+cd /home/user
+export PYTHONDONTWRITEBYTECODE=1
+bash redteam/reference/run.sh
+bash redteam/uniform_baseline/run.sh
+bash redteam/public_table_shortcut/run.sh
+bash redteam/rating_inflation/run.sh
+bash redteam/constant_zero/run.sh
+bash redteam/copy_input/run.sh
+bash redteam/fixed_artifact_replace/run.sh
+bash redteam/infinite_margin/run.sh
+bash redteam/nan_equilibrium/run.sh
+bash redteam/overflow_equilibrium/run.sh
+bash redteam/negative_equilibrium/run.sh
+bash redteam/nan_ratings/run.sh
+bash redteam/null_ratings/run.sh
+bash redteam/empty_artifacts/run.sh
+bash redteam/empty_action_set/run.sh
+bash redteam/short_action_set/run.sh
+bash redteam/reverse_dominance_pairs/run.sh
+bash redteam/single_dominance_pair/run.sh
+bash redteam/empty_dominance_pairs/run.sh
+bash redteam/zero_mixture_weights/run.sh
+bash redteam/mixture_original_drift/run.sh
+bash redteam/offset_translation/run.sh
+bash redteam/clone_no_equilibrium/run.sh
+bash redteam/reported_fields/run.sh
+bash redteam/direct_scores/run.sh
+bash redteam/baseline_replace/run.sh
+bash redteam/data_replace/run.sh
+bash redteam/reference_override/run.sh
+bash redteam/method_id_collision/run.sh
+bash redteam/python_startup/run.sh
