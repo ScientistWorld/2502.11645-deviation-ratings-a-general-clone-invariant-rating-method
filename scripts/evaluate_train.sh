@@ -1,16 +1,13 @@
 #!/bin/bash
 # Visible train-slice evaluation for this benchmark.
 #
-# Mirrors scripts/evaluate.sh: read pre-generated method artifacts and write
-# scoring/scores_train.json.
+# Runs the rating program scripts/rate.sh on the five documented public games
+# and writes scoring/scores_train.json.
 
 set -e
 
 cd /home/user
-export PYTHONPATH="/home/user${PYTHONPATH:+:$PYTHONPATH}"
-
 mkdir -p scoring
 
-python3 eval/train/evaluate.py
-
-echo "Train evaluation complete. Results written to scoring/scores_train.json"
+# -I: ignore PYTHONPATH, user site-packages and the working directory.
+exec python3 -I eval/train/evaluate.py

@@ -72,12 +72,18 @@ def deviation_rating(
     tol: float = 1e-9,
     active_tol: float = 1e-8,
     max_iterations: Optional[int] = None,
+    freeze_rule: str = "active",
+    lp_options: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
     Compute deviation ratings by iteratively minimizing the maximum deviation gain.
 
     The auxiliary variable epsilon is intentionally unbounded below so the solver can
     find strict equilibria with negative deviation gains.
+
+    ``freeze_rule="dual"`` freezes only constraints with a nonzero dual (Section 4.1);
+    the default ``"active"`` additionally freezes every constraint that is numerically
+    tight at the returned optimum. ``lp_options`` is passed to SciPy's HiGHS backend.
     """
     if max_iterations is None:
         max_iterations = sum(action_dims)
@@ -151,6 +157,7 @@ def deviation_rating(
             b_eq=b_eq,
             bounds=bounds,
             method="highs",
+            options=dict(lp_options or {}),
         )
         if not result.success:
             raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
@@ -179,11 +186,14 @@ def deviation_rating(
         # Freeze every constraint that is active at the optimum, not only those
         # selected by nonzero duals. Degenerate optima can have active max
         # constraints with zero dual marginals.
-        for p, ap in unfrozen_constraints:
-            delta = float(np.dot(coeff[p, ap], sigma_star))
-            if abs(delta - epsilon_star) <= active_tol:
-                ratings[p, ap] = delta
-                new_active_set.add((p, ap))
+        if freeze_rule == "active":
+            for p, ap in unfrozen_constraints:
+                delta = float(np.dot(coeff[p, ap], sigma_star))
+                if abs(delta - epsilon_star) <= active_tol:
+                    ratings[p, ap] = delta
+                    new_active_set.add((p, ap))
+        elif freeze_rule != "dual":
+            raise ValueError(f"Unknown freeze_rule: {freeze_rule}")
 
         if not new_active_set:
             best = None

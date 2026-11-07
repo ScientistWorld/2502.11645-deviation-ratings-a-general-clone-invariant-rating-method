@@ -1,17 +1,13 @@
 #!/bin/bash
 # Evaluation script — the standard way to evaluate work in this environment.
 #
-# This script runs all evaluation experiments and writes scoring/scores.json.
-#
-# OUTPUT: scoring/scores.json with per-experiment, per-method results.
+# Runs the rating program scripts/rate.sh on the five documented public games
+# and writes scoring/scores.json (same protocol as the visible train slice).
 
 set -e
 
 cd /home/user
-export PYTHONPATH="/home/user${PYTHONPATH:+:$PYTHONPATH}"
-
 mkdir -p scoring
 
-python3 -m eval.evaluate
-
-echo "Evaluation complete. Results written to scoring/scores.json"
+# -I: ignore PYTHONPATH, user site-packages and the working directory.
+exec python3 -I eval/evaluate.py

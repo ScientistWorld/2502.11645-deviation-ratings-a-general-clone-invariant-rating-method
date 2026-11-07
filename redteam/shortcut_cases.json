@@ -43,5 +43,11 @@
   "method_id_collision_shortcut",
   "global_rating_scale_shortcut",
   "masked_nan_ratings_shortcut",
-  "masked_nan_strings_shortcut"
+  "masked_nan_strings_shortcut",
+  "single_lp_shortcut",
+  "feasibility_cce_shortcut",
+  "pure_nash_shortcut",
+  "uniform_gains_shortcut",
+  "detached_rewriter_shortcut",
+  "script_append_shortcut"
 ]

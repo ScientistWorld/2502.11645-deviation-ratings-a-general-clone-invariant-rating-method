@@ -5,16 +5,35 @@
       "weight": 0.35,
       "primary_metric": "dev_gap",
       "metrics": {
-        "dev_gap": {"higher_is_better": false, "coefficient": -1.0},
-        "CCE_gap": {"higher_is_better": false, "coefficient": -0.2},
-        "all_player_dev_gap": {"higher_is_better": false, "coefficient": -0.6, "description": "Maximum rating spread across both players' four augmented Shapley actions; catches methods that only equalize one player."},
-        "player_symmetry_gap": {"higher_is_better": false, "coefficient": -0.3, "description": "Maximum same-action rating mismatch between the two players in the symmetric augmented game."}
+        "dev_gap": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Largest spread of player 0's ratings within one cyclic game (paper Table 2 game and, on the hidden test, transformed/populated cyclic games whose deviation ratings are provably all equal)."
+        },
+        "CCE_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Largest total CCE regret of the submitted equilibrium, recomputed from the payoffs."
+        },
+        "all_player_dev_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.6,
+          "description": "Largest rating spread across both players' actions within one cyclic game; catches methods that only equalize one player."
+        },
+        "player_symmetry_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Largest same-strategy rating mismatch between the two players in the symmetric cyclic games."
+        }
       },
       "results": {
         "deviation_rating": {
           "type": "proposed",
           "dev_gap": 0.0,
           "CCE_gap": 0.0
+        },
+        "uniform_payoff": {
+          "type": "baseline"
         }
       }
     },
@@ -23,14 +42,29 @@
       "weight": 0.2,
       "primary_metric": "max_diff",
       "metrics": {
-        "max_diff": {"higher_is_better": false, "coefficient": -1.0},
-        "all_players_max_diff": {"higher_is_better": false, "coefficient": -0.7, "description": "Maximum clone-induced rating change over all original actions for both players, not just the cloned player's visible slice."},
-        "clone_source_gap": {"higher_is_better": false, "coefficient": -0.5, "description": "Absolute rating mismatch between the added clone and its source action."}
+        "max_diff": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Largest clone-induced change in the ratings of the other players' strategies, i.e. the strategies that face the clone."
+        },
+        "all_players_max_diff": {
+          "higher_is_better": false,
+          "coefficient": -0.7,
+          "description": "Largest clone-induced rating change over all original actions of all players."
+        },
+        "clone_source_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest rating mismatch between an added clone and its source action."
+        }
       },
       "results": {
         "deviation_rating": {
           "type": "proposed",
           "max_diff": 0.0
+        },
+        "uniform_payoff": {
+          "type": "baseline"
         }
       }
     },
@@ -39,15 +73,30 @@
       "weight": 0.15,
       "primary_metric": "original_max_diff",
       "metrics": {
-        "original_max_diff": {"higher_is_better": false, "coefficient": -1.0},
-        "mixture_error": {"higher_is_better": false, "coefficient": -1.0},
-        "max_CCE_gap": {"higher_is_better": false, "coefficient": -0.2, "description": "Largest recomputed equilibrium regret gap across the base and mixed-strategy augmented games."}
+        "original_max_diff": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Largest change in any original action's rating (all players) after adding a mixed strategy with evaluator-fixed weights."
+        },
+        "mixture_error": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Largest error between the mixed strategy's rating and the same mixture of the original ratings."
+        },
+        "max_CCE_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Largest recomputed equilibrium regret gap across the base and mixed-strategy augmented games."
+        }
       },
       "results": {
         "deviation_rating": {
           "type": "proposed",
           "original_max_diff": 0.0,
           "mixture_error": 0.0
+        },
+        "uniform_payoff": {
+          "type": "baseline"
         }
       }
     },
@@ -56,8 +105,16 @@
       "weight": 0.15,
       "primary_metric": "max_diff",
       "metrics": {
-        "max_diff": {"higher_is_better": false, "coefficient": -1.0},
-        "max_CCE_gap": {"higher_is_better": false, "coefficient": -0.2, "description": "Largest recomputed equilibrium regret gap across the base and offset-transformed games."}
+        "max_diff": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Largest absolute (uncentered) change in any rating after adding evaluator-fixed offsets b_p(a_-p)."
+        },
+        "max_CCE_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Largest recomputed equilibrium regret gap across the base and offset-transformed games."
+        }
       },
       "results": {
         "deviation_rating": {
@@ -74,9 +131,21 @@
       "weight": 0.15,
       "primary_metric": "dominance_violations",
       "metrics": {
-        "dominance_violations": {"higher_is_better": false, "coefficient": -1.0},
-        "CCE_gap": {"higher_is_better": false, "coefficient": -0.2},
-        "min_margin": {"higher_is_better": true, "coefficient": 0.3, "description": "Smallest rating advantage of a dominant action over its dominated counterpart; catches barely or directionally incorrect dominance handling."}
+        "dominance_violations": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Number of strictly dominated (player, better, worse) pairs, found by the evaluator in the game itself, whose rating advantage is not positive."
+        },
+        "CCE_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Largest total CCE regret of the submitted equilibrium, recomputed from the payoffs."
+        },
+        "min_margin": {
+          "higher_is_better": true,
+          "coefficient": 0.3,
+          "description": "Smallest ratio of rating advantage to guaranteed payoff advantage over the evaluator's dominance pairs. Every game contains a pair with a constant payoff gap, on which a rating that is the deviation gain of any distribution has ratio exactly 1, so the value cannot exceed 1."
+        }
       },
       "results": {
         "deviation_rating": {
@@ -88,6 +157,9 @@
           "type": "baseline"
         },
         "negative_uniform_payoff": {
+          "type": "baseline"
+        },
+        "uniform_payoff": {
           "type": "baseline"
         }
       }

@@ -1,5 +1,6 @@
 #!/bin/bash
-# Replay this shortcut, run visible evaluation, then the restored hidden test.
+# Replay this shortcut: install it, run the visible evaluation, restore the
+# gym eval/ tree and test script, run the hidden test with no arguments.
 set -euo pipefail
 cd /home/user
 python3 redteam/shortcut_harness.py --shortcut zero_mixture_weights_shortcut
