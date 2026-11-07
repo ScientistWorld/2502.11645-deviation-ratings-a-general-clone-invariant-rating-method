@@ -1,3 +1,8 @@
-action: done
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
 milestone: secondary_claims
-notes: "Audit committed as 473a7fa: 17 exact hidden evaluations, two shortcut ties, 20 saturated metrics, zero measured seed spread, reproduction direction confirmed; report and replay evidence in REDTEAM.md and redteam/current_audit/."
+notes: ""
