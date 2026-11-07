@@ -53,7 +53,7 @@ TOL = 1.0e-6
 DECIMALS = 6
 FAIL_LOWER = 1.0e6
 FAIL_HIGHER = -1.0e6
-CALL_TIMEOUT_SECONDS = 600
+CALL_TIMEOUT_SECONDS = 300
 TOTAL_TIMEOUT_SECONDS = 2400
 MAX_OUTPUT_BYTES = 64 * 1024 * 1024
 
@@ -1773,6 +1773,8 @@ def evaluate_hidden(seed: int = HIDDEN_SEED, command: Optional[Sequence[str]] = 
             games[gid] = presented
             loop_ids.append((gid, presented, to_presented))
         out, error = call(games)
+        if error:
+            print(f"  call {calls} failed: {error}", flush=True)
         for gid in slots[index]:
             if out is None:
                 call_errors[gid] = error
@@ -1796,6 +1798,8 @@ def evaluate_hidden(seed: int = HIDDEN_SEED, command: Optional[Sequence[str]] = 
             slots = slots[index + 1:]
             break
         loop.advance(ratings)
+        if (index + 1) % 16 == 0:
+            print(f"  population iteration {index + 1}/{POP_ITERATIONS}, {time.monotonic() - started:.0f} s", flush=True)
     else:
         slots = []
     rest = [gid for slot in slots for gid in slot]
@@ -1858,8 +1862,8 @@ def write_scores(path: Path, scores: dict) -> None:
 
 def main() -> dict:
     killed = terminate_foreign_processes()
-    if killed:
-        print(f"stopped {len(killed)} leftover process(es) of the submission before testing")
+    print(f"isolation: {'on' if isolation_active() else 'off'}; stopped {len(killed)} leftover process(es) "
+          f"of the submission before testing", flush=True)
     scores_path = ROOT / "scoring" / "scores_test.json"
     if scores_path.exists() or scores_path.is_symlink():
         scores_path.unlink()

@@ -122,6 +122,7 @@ def deviation_rating(
     sigma_star = np.full(num_joint, 1.0 / num_joint, dtype=float)
 
     num_solves = 0
+    fallbacks = 0
     for iteration in range(max_iterations):
         if len(active_constraints) == total_constraints:
             break
@@ -174,7 +175,8 @@ def deviation_rating(
                     rhs_ub += [targets[c] + band, -(targets[c] - band)]
             rows_eq.append(simplex_row)
             rhs_eq.append(1.0)
-            options = dict(lp_options or {})
+            options = {"time_limit": 60.0}  # a stalled solve fails over to the next attempt
+            options.update(lp_options or {})
             options.update(extra or {})
             result = linprog(
                 c=objective,
@@ -191,6 +193,7 @@ def deviation_rating(
                     for c in frozen:
                         ratings[c] = targets[c]
                 break
+            fallbacks += 1
         if result is None or not result.success:
             raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
         num_solves += 1
@@ -264,6 +267,7 @@ def deviation_rating(
         "n_iterations": num_solves,
         "active_constraints": sorted(active_constraints),
         "epsilon_history": epsilon_history,
+        "fallback_attempts": fallbacks,
     }
 
 

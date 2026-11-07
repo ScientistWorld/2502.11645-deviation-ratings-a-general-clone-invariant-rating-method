@@ -1,25 +1,21 @@
 #!/bin/bash
-# Hardening job 3: property diagnostics (reference and cheap selections on the
-# hidden and 4 alternative seeds), the reference end to end from the final code
-# (paper artifacts, baseline, public/train/hidden evaluation, validation), then
-# as many shortcut replays through the final hidden test as the time allows
-# (redteam/replay_all.py resumes in later jobs).
+# Hardening job 4: diagnose job 3's stalled hidden test (the hidden seed's
+# population loop rated in-process under a per-game alarm), the reference
+# through the hidden test from the final code, validation, then as many shortcut
+# replays as the time allows (redteam/replay_all.py resumes in later jobs).
 set -uo pipefail
 cd /home/user
 export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-OUT=redteam/job3
+OUT=redteam/job4
 mkdir -p "$OUT"
 
-echo "=== property diagnostics"
-( time timeout 900 python3 redteam/property_diagnostics.py ) > "$OUT/property_diagnostics.log" 2>&1
-grep -E "^\[|real" "$OUT/property_diagnostics.log" | cut -c1-400
+echo "=== hidden population loop, in-process"
+( time timeout 900 python3 redteam/hidden_population_check.py ) > "$OUT/hidden_population_check.log" 2>&1
+tail -12 "$OUT/hidden_population_check.log"
 
-echo "=== reference end to end"
-( time bash scripts/reproduce.sh ) > "$OUT/reproduce.log" 2>&1
-tail -5 "$OUT/reproduce.log"
-( time bash scripts/evaluate_train.sh ) > "$OUT/train.log" 2>&1
-grep -E "==|FAILED|gate failure|deviation_rating|real" "$OUT/train.log" | cut -c1-300
-( time bash scripts/evaluate_test.sh ) > "$OUT/test.log" 2>&1
+echo "=== hidden test (reference)"
+( time timeout 1500 bash scripts/evaluate_test.sh ) > "$OUT/test.log" 2>&1
+echo "exit $?"
 cat "$OUT/test.log"
 python3 validate.py > "$OUT/validate.log" 2>&1; tail -20 "$OUT/validate.log"
 
