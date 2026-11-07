@@ -22,6 +22,7 @@ import ctypes
 import itertools
 import json
 import math
+import operator
 import os
 import random
 import shutil
@@ -29,6 +30,8 @@ import signal
 import stat
 import subprocess
 import tempfile
+import time
+from array import array
 from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -49,6 +52,7 @@ EXPERIMENT_METRICS: Dict[str, Tuple[str, ...]] = {
     "mixture_invariance": ("original_max_diff", "mixture_error", "max_CCE_gap"),
     "offset_invariance": ("max_diff", "max_CCE_gap"),
     "dominance_preserving": ("dominance_violations", "min_margin", "CCE_gap"),
+    "population_improvement": ("final_gap_ratio", "mean_gap_ratio", "invariance_violation"),
 }
 HIGHER_IS_BETTER = frozenset({"min_margin"})
 INTEGER_METRICS = frozenset({"dominance_violations"})
@@ -58,6 +62,7 @@ BASELINES: Dict[str, Tuple[str, ...]] = {
     "mixture_invariance": ("uniform_payoff",),
     "offset_invariance": ("uniform_payoff",),
     "dominance_preserving": ("uniform_payoff", "zero_rating", "negative_uniform_payoff"),
+    "population_improvement": ("uniform_payoff", "random_selection"),
 }
 
 
@@ -840,7 +845,7 @@ class _Suite:
         self.rng = random.Random(seed)
         self.id_rng = random.Random(seed ^ 0x5DEECE66D)
         self.games: Dict[str, Game] = {}
-        self.instances: Dict[str, List[dict]] = {name: [] for name in EXPERIMENT_METRICS}
+        self.instances: Dict[str, List[dict]] = {name: [] for name in METRIC_FUNCTIONS}
 
     def add(self, game: Game) -> str:
         while True:
@@ -1001,6 +1006,525 @@ def _dominance_family(suite: _Suite) -> None:
     suite.instances["dominance_preserving"].append({"game": suite.add(public)})
 
 
+# ── Population improvement (paper Section 5.3) ──────────────────────────────
+#
+# A rating drives a simple population search in an extensive-form game: start
+# with POP_SIZE random stochastic policies per player; every iteration build the
+# meta-game of expected payoffs between the policies, rate it, discard each
+# player's POP_DROP lowest-rated policies (the bottom quarter) and replace them
+# by fresh random policies. Progress is the CCE gap of the population in the
+# full game, measured under the meta-game's maximum-entropy CCE (paper footnote
+# 6), relative to the gap of the initial population. Everything except the
+# ratings (game, policies, replacement stream, tie-breaking, meta-game
+# distribution, the scored gap) is fixed here, and every method sees the same
+# stream of candidate policies.
+#
+# Every meta-game the method rates is presented with its actions relabeled and
+# together with a clone-, mixture- or offset-transformed copy. The selection
+# must use a rating that is invariant on the very games it rates: a violation
+# beyond the tolerance fails the experiment, like any other gate.
+
+
+POPULATION_EXPERIMENT = "population_improvement"
+POP_SIZE = 8
+POP_DROP = 2
+POP_ITERATIONS = 128
+POP_CHECKPOINT_EVERY = 16
+POP_RUNS = 8
+MECCE_EPS_REL = 1.0e-4
+POP_CALL_TIMEOUT_SECONDS = 300
+POP_TOTAL_SECONDS = 1800
+# Paper Appendix C.1: item penalty 1, item value 5, max bribe 2, max items 10,
+# 2 rounds, sheriff penalty 1 (OpenSpiel "sheriff" rules).
+SHERIFF_PARAMETERS = {"item_penalty": 1.0, "item_value": 5.0, "sheriff_penalty": 1.0,
+                      "max_bribe": 2, "max_items": 10, "num_rounds": 2}
+
+
+def _mix(*parts: int) -> int:
+    value = 0x9E3779B97F4A7C15
+    for part in parts:
+        value = (value * 1_000_003 + int(part) + 0x632BE59BD9B4E019) % (1 << 61)
+    return value
+
+
+class Sheriff:
+    """Two-player general-sum bargaining game (OpenSpiel ``sheriff``, Farina et al. 2019).
+
+    Player 0 (smuggler) loads 0..max_items illegal items, unseen by player 1
+    (sheriff). Each of num_rounds rounds: the smuggler announces a bribe in
+    0..max_bribe, the sheriff announces not-inspect (0) or inspect (1). Only the
+    last round counts: not inspected -> (items*value - bribe, bribe); inspected
+    with items -> (-items*penalty, items*penalty); inspected and empty ->
+    (sheriff_penalty, -sheriff_penalty).
+    """
+
+    def __init__(self, item_penalty: float, item_value: float, sheriff_penalty: float,
+                 max_bribe: int, max_items: int, num_rounds: int):
+        self.params = (float(item_penalty), float(item_value), float(sheriff_penalty),
+                       int(max_bribe), int(max_items), int(num_rounds))
+        self._keys: List[Dict[tuple, int]] = [{}, {}]
+        self.info_actions: List[List[int]] = [[], []]
+        self.node_player: List[int] = []
+        self.node_info: List[int] = []
+        self.node_children: List[List[int]] = []
+        self.node_depth: List[int] = []
+        self.node_terminal: List[int] = []
+        self.term_paths: List[List[List[Tuple[int, int]]]] = [[], []]
+        self.term_payoffs: List[List[float]] = [[], []]
+        self._build(0, None, (), (), ())
+        self.num_terminals = len(self.term_payoffs[0])
+        self._levels: Dict[int, List[int]] = {}
+        for node, depth in enumerate(self.node_depth):
+            self._levels.setdefault(depth, []).append(node)
+
+    def _info(self, player: int, key: tuple, actions: int) -> int:
+        table = self._keys[player]
+        if key not in table:
+            table[key] = len(self.info_actions[player])
+            self.info_actions[player].append(actions)
+        return table[key]
+
+    def _node(self, player: int, info: int, depth: int) -> int:
+        self.node_player.append(player)
+        self.node_info.append(info)
+        self.node_children.append([])
+        self.node_depth.append(depth)
+        self.node_terminal.append(-1)
+        return len(self.node_player) - 1
+
+    def _build(self, depth, items, bribes, feedback, path) -> int:
+        penalty, value, sheriff_penalty, max_bribe, max_items, rounds = self.params
+        if items is None:
+            info = self._info(0, ("items",), max_items + 1)
+            node = self._node(0, info, depth)
+            for n in range(max_items + 1):
+                self.node_children[node].append(self._build(depth + 1, n, (), (), path + ((0, info, n),)))
+            return node
+        if len(bribes) == len(feedback):
+            if len(bribes) == rounds:
+                node = self._node(-1, -1, depth)
+                self.node_terminal[node] = len(self.term_payoffs[0])
+                bribe, inspect = bribes[-1], feedback[-1]
+                if inspect:
+                    pay = (-items * penalty, items * penalty) if items > 0 else (sheriff_penalty, -sheriff_penalty)
+                else:
+                    pay = (items * value - bribe, float(bribe))
+                for p in (0, 1):
+                    self.term_payoffs[p].append(float(pay[p]) + 0.0)
+                    self.term_paths[p].append([(i, a) for q, i, a in path if q == p])
+                return node
+            info = self._info(0, ("bribe", items, bribes, feedback), max_bribe + 1)
+            node = self._node(0, info, depth)
+            for b in range(max_bribe + 1):
+                self.node_children[node].append(
+                    self._build(depth + 1, items, bribes + (b,), feedback, path + ((0, info, b),))
+                )
+            return node
+        info = self._info(1, ("inspect", bribes, feedback), 2)
+        node = self._node(1, info, depth)
+        for f in (0, 1):
+            self.node_children[node].append(
+                self._build(depth + 1, items, bribes, feedback + (f,), path + ((1, info, f),))
+            )
+        return node
+
+    def random_policy(self, rng: random.Random, player: int) -> List[List[float]]:
+        """A behaviour policy with each information set's distribution uniform on the simplex."""
+        policy = []
+        for actions in self.info_actions[player]:
+            draws = [-math.log(1.0 - rng.random()) for _ in range(actions)]
+            total = math.fsum(draws)
+            policy.append([d / total for d in draws])
+        return policy
+
+    def realization(self, player: int, policy: List[List[float]]) -> array:
+        """Probability that ``player``'s own actions lead to each terminal history."""
+        out = array("d")
+        for path in self.term_paths[player]:
+            prob = 1.0
+            for info, action in path:
+                prob *= policy[info][action]
+            out.append(prob)
+        return out
+
+    def best_response_value(self, player: int, opponent_reach: Sequence[float]) -> float:
+        """max over deterministic policies of sum_z own(z) * opponent_reach(z) * u_player(z)."""
+        values = [0.0] * len(self.node_player)
+        payoff = self.term_payoffs[player]
+        for depth in sorted(self._levels, reverse=True):
+            nodes = self._levels[depth]
+            q: Dict[int, List[float]] = {}
+            for node in nodes:
+                terminal = self.node_terminal[node]
+                if terminal >= 0:
+                    values[node] = opponent_reach[terminal] * payoff[terminal]
+                elif self.node_player[node] == player:
+                    row = q.setdefault(self.node_info[node], [0.0] * len(self.node_children[node]))
+                    for action, child in enumerate(self.node_children[node]):
+                        row[action] += values[child]
+                else:
+                    values[node] = math.fsum(values[child] for child in self.node_children[node])
+            best = {info: max(range(len(row)), key=row.__getitem__) for info, row in q.items()}
+            for node in nodes:
+                if self.node_terminal[node] < 0 and self.node_player[node] == player:
+                    values[node] = values[self.node_children[node][best[self.node_info[node]]]]
+        return values[0]
+
+
+def _cce_rows(game: Game) -> List[List[float]]:
+    rows = []
+    for p in range(game.n):
+        table, stride, own = game.tables[p], game.strides[p], game._own[p]
+        for action in range(game.dims[p]):
+            rows.append([table[j + (action - own[j]) * stride] - table[j] for j in range(game.size)])
+    return rows
+
+
+def _solve_spd(matrix: List[List[float]], rhs: List[float]) -> Optional[List[float]]:
+    size = len(rhs)
+    low = [[0.0] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(i + 1):
+            total = matrix[i][j] - math.fsum(low[i][k] * low[j][k] for k in range(j))
+            if i == j:
+                if not total > 0.0:
+                    return None
+                low[i][i] = math.sqrt(total)
+            else:
+                low[i][j] = total / low[j][j]
+    y = [0.0] * size
+    for i in range(size):
+        y[i] = (rhs[i] - math.fsum(low[i][k] * y[k] for k in range(i))) / low[i][i]
+    x = [0.0] * size
+    for i in range(size - 1, -1, -1):
+        x[i] = (y[i] - math.fsum(low[k][i] * x[k] for k in range(i + 1, size))) / low[i][i]
+    return x
+
+
+def max_entropy_cce(game: Game, eps_rel: float = MECCE_EPS_REL, max_iter: int = 400) -> List[float]:
+    """Maximum-entropy eps-CCE of ``game`` (eps = eps_rel * payoff scale).
+
+    Solves the dual min_{lam >= 0} log sum_a exp(-sum_c lam_c A_c(a)) + eps * sum(lam)
+    by projected Newton with a trust region on the change of log-probabilities.
+    The small eps keeps the problem strictly feasible; the paper uses eps = 0.
+    """
+    rows = _cce_rows(game)
+    m, size = len(rows), game.size
+    cols = [[rows[c][j] for c in range(m)] for j in range(size)]
+    eps = eps_rel * game.scale()
+    tol = 1.0e-9 * game.scale()
+    mul = operator.mul
+
+    def evaluate(lam):
+        logits = [-sum(map(mul, lam, col)) for col in cols]
+        top = max(logits)
+        weights = [math.exp(v - top) for v in logits]
+        total = math.fsum(weights)
+        sigma = [w / total for w in weights]
+        mean = [sum(map(mul, row, sigma)) for row in rows]
+        return math.log(total) + top + eps * math.fsum(lam), [eps - v for v in mean], sigma, mean
+
+    lam = [0.0] * m
+    value, grad, sigma, mean = evaluate(lam)
+    for _ in range(max_iter):
+        if max(abs(grad[c]) if lam[c] > 0.0 else max(0.0, -grad[c]) for c in range(m)) <= tol:
+            break
+        free = [c for c in range(m) if not (lam[c] == 0.0 and grad[c] > 0.0)]
+        step = [0.0] * m
+        if free:
+            weighted = [[sigma[j] * rows[c][j] for j in range(size)] for c in free]
+            hess = [[sum(map(mul, weighted[a], rows[free[b]])) - mean[free[a]] * mean[free[b]]
+                     for b in range(len(free))] for a in range(len(free))]
+            ridge = 1.0e-12 * max(max(hess[a][a] for a in range(len(free))), 1.0e-300)
+            solution = None
+            while solution is None:
+                shifted = [[hess[a][b] + (ridge if a == b else 0.0) for b in range(len(free))]
+                           for a in range(len(free))]
+                solution = _solve_spd(shifted, [-grad[c] for c in free])
+                ridge *= 100.0
+            for a, c in enumerate(free):
+                step[c] = solution[a]
+            if math.fsum(grad[c] * step[c] for c in free) >= 0.0:
+                step = [(-grad[c] if c in free else 0.0) for c in range(m)]
+        change = [-sum(map(mul, step, col)) for col in cols]
+        spread = max(change) - min(change)
+        t = 1.0 if spread <= 4.0 else 4.0 / spread
+        accepted = False
+        for _ in range(60):
+            trial = [max(0.0, lam[c] + t * step[c]) for c in range(m)]
+            t_value, t_grad, t_sigma, t_mean = evaluate(trial)
+            decrease = math.fsum(grad[c] * (lam[c] - trial[c]) for c in range(m))
+            if t_value <= value - 1.0e-4 * decrease and t_value <= value:
+                accepted = True
+                break
+            t *= 0.5
+        if not accepted:
+            break
+        lam, value, grad, sigma, mean = trial, t_value, t_grad, t_sigma, t_mean
+    return sigma
+
+
+class _CandidatePool:
+    """Stream of random candidate policies for one run, shared by every method."""
+
+    def __init__(self, sheriff: Sheriff, seed: int, count: int):
+        self.reach: List[List[array]] = [[], []]
+        self.weighted: List[List[array]] = []  # smuggler realization times each player's payoff
+        for player in (0, 1):
+            rng = random.Random(_mix(seed, player))
+            for _ in range(count):
+                self.reach[player].append(sheriff.realization(player, sheriff.random_policy(rng, player)))
+        payoffs = sheriff.term_payoffs
+        self.weighted = [
+            [array("d", map(operator.mul, r, payoffs[p])) for p in (0, 1)] for r in self.reach[0]
+        ]
+
+
+class _Population:
+    def __init__(self, pool: _CandidatePool):
+        self.pool = pool
+        self.members = [list(range(POP_SIZE)), list(range(POP_SIZE))]
+        self.next = [POP_SIZE, POP_SIZE]
+        self.tables = [[0.0] * (POP_SIZE * POP_SIZE) for _ in (0, 1)]
+        for i in range(POP_SIZE):
+            for j in range(POP_SIZE):
+                self._entry(i, j)
+
+    def _entry(self, i: int, j: int) -> None:
+        smuggler = self.pool.weighted[self.members[0][i]]
+        sheriff = self.pool.reach[1][self.members[1][j]]
+        for p in (0, 1):
+            self.tables[p][i * POP_SIZE + j] = sum(map(operator.mul, smuggler[p], sheriff)) + 0.0
+
+    def game(self) -> Game:
+        return Game((POP_SIZE, POP_SIZE), self.tables)
+
+    def replace(self, player: int, slots: Sequence[int]) -> None:
+        for slot in slots:
+            self.members[player][slot] = self.next[player]
+            self.next[player] += 1
+            for other in range(POP_SIZE):
+                self._entry(slot, other) if player == 0 else self._entry(other, slot)
+
+    def full_game_gap(self, sheriff: Sheriff) -> float:
+        """CCE gap in the full game of the meta-game's maximum-entropy CCE."""
+        game = self.game()
+        sigma = max_entropy_cce(game)
+        marg = [[math.fsum(sigma[i * POP_SIZE + j] for j in range(POP_SIZE)) for i in range(POP_SIZE)],
+                [math.fsum(sigma[i * POP_SIZE + j] for i in range(POP_SIZE)) for j in range(POP_SIZE)]]
+        gap = 0.0
+        for p in (0, 1):
+            opponent = 1 - p
+            reach = [0.0] * sheriff.num_terminals
+            for slot, member in enumerate(self.members[opponent]):
+                weight = marg[opponent][slot]
+                if weight > 0.0:
+                    vec = self.pool.reach[opponent][member]
+                    reach = [r + weight * v for r, v in zip(reach, vec)]
+            current = math.fsum(s * v for s, v in zip(sigma, game.tables[p]))
+            gap += max(0.0, sheriff.best_response_value(p, reach) - current)
+        return gap
+
+
+def _drop_slots(ratings: Sequence[float], keys: Sequence[float], scale: float) -> List[int]:
+    """The POP_DROP lowest-rated slots; ratings within the tolerance tie, ties are broken by ``keys``."""
+    order = sorted(range(len(ratings)), key=lambda a: ratings[a])
+    groups: List[List[int]] = []
+    for slot in order:
+        if groups and ratings[slot] - ratings[groups[-1][0]] <= TOL * scale:
+            groups[-1].append(slot)
+        else:
+            groups.append([slot])
+    ranked = [slot for group in groups for slot in sorted(group, key=lambda a: keys[a])]
+    return ranked[:POP_DROP]
+
+
+def _present(game: Game, rng: random.Random) -> dict:
+    """Relabel the meta-game and build one clone-, mixture- or offset-transformed copy."""
+    perms = _random_perms(rng, game.dims)
+    presented, to_presented = permute_actions(game, perms)
+    kind = rng.choice(("clone", "mixture", "offset"))
+    player = rng.randrange(game.n)
+    inst = {"game": game, "presented": presented, "to_presented": to_presented, "kind": kind, "player": player}
+    if kind == "clone":
+        source = rng.randrange(game.dims[player])
+        position = rng.randrange(game.dims[player] + 1)
+        variant, first = clone_action(game, player, source, position)
+        inst["source"] = source
+    elif kind == "mixture":
+        k = rng.choice((2, 3))
+        support = sorted(rng.sample(range(game.dims[player]), k))
+        inst["weights"] = {a: w / 1000.0 for a, w in zip(support, _composition(rng, k))}
+        position = rng.randrange(game.dims[player] + 1)
+        variant, first = mixture_action(game, player, inst["weights"], position)
+    else:
+        bound = round(game.scale(), 3)
+        offsets = []
+        for p in range(game.n):
+            others = [range(d) for q, d in enumerate(game.dims) if q != p]
+            offsets.append({joint: round(rng.uniform(-bound, bound), 3) + 0.0 for joint in itertools.product(*others)})
+        variant, first, position = add_offsets(game, offsets), identity_maps(game), None
+    inst["variant"], second = permute_actions(variant, _random_perms(rng, variant.dims))
+    inst["maps"] = compose_maps(first, second)
+    if position is not None:
+        inst["new_pos"] = second[player][position]
+    return inst
+
+
+def _invariance_violation(inst: dict, original: List[List[float]], variant: List[List[float]]) -> float:
+    game = inst["game"]
+    scale = max(game.scale(), inst["variant"].scale())
+    worst = 0.0
+    for p in range(game.n):
+        for action in range(game.dims[p]):
+            worst = max(worst, _err(variant[p][inst["maps"][p][action]] - original[p][action], scale))
+    player = inst["player"]
+    if inst["kind"] == "clone":
+        worst = max(worst, _err(variant[player][inst["new_pos"]] - original[player][inst["source"]], scale))
+    elif inst["kind"] == "mixture":
+        expected = math.fsum(w * original[player][a] for a, w in inst["weights"].items())
+        worst = max(worst, _err(variant[player][inst["new_pos"]] - expected, scale))
+    return worst
+
+
+class PopulationFailure(Exception):
+    pass
+
+
+def _rate_with_program(call: Callable[[Dict[str, Game], List[str]], Tuple[Optional[dict], str]], seed: int):
+    """Rating step for a rating program: ``call(games, order) -> (results, error)``."""
+    id_rng = random.Random(_mix(seed, 0x1D))
+
+    def rate(batch: List[dict]) -> Tuple[List[List[List[float]]], float]:
+        games: Dict[str, Game] = {}
+        for inst in batch:
+            for key in ("presented", "variant"):
+                while True:
+                    gid = f"{id_rng.getrandbits(48):012x}"
+                    if gid not in games:
+                        break
+                games[gid] = inst[key]
+                inst[key + "_id"] = gid
+        order = list(games)
+        id_rng.shuffle(order)
+        results, error = call(games, order)
+        if results is None:
+            raise PopulationFailure(error)
+        out, worst = [], 0.0
+        for inst in batch:
+            checks = {}
+            for key in ("presented", "variant"):
+                checks[key] = validate_result(inst[key], results.get(inst[key + "_id"]))
+                if not checks[key]["ok"]:
+                    raise PopulationFailure(checks[key]["reason"])
+            to_presented = inst["to_presented"]
+            presented = checks["presented"]["ratings"]
+            original = [[presented[p][to_presented[p][a]] for a in range(inst["game"].dims[p])]
+                        for p in range(inst["game"].n)]
+            violation = _invariance_violation(inst, original, checks["variant"]["ratings"])
+            if violation > 0.0:
+                raise PopulationFailure(
+                    f"ratings change under a {inst['kind']} of a population meta-game (by {violation:.3e})"
+                )
+            out.append(original)
+        return out, worst
+
+    return rate
+
+
+def _rate_uniform(batch: List[dict]) -> Tuple[List[List[List[float]]], float]:
+    out, worst = [], 0.0
+    for inst in batch:
+        original = uniform_ratings(inst["game"])
+        worst = max(worst, _invariance_violation(inst, original, uniform_ratings(inst["variant"])))
+        out.append(original)
+    return out, worst
+
+
+def _rate_random(batch: List[dict]) -> Tuple[List[List[List[float]]], float]:
+    return [[[0.0] * d for d in inst["game"].dims] for inst in batch], 0.0
+
+
+def population_loop(sheriff: Sheriff, pools: List[_CandidatePool], seed: int, rate) -> Tuple[List[List[float]], float]:
+    """Run the improvement loop on every run in lockstep; returns (gap curves, invariance violation)."""
+    populations = [_Population(pool) for pool in pools]
+    curves = [[pop.full_game_gap(sheriff)] for pop in populations]
+    worst = 0.0
+    for iteration in range(1, POP_ITERATIONS + 1):
+        batch = []
+        for run, pop in enumerate(populations):
+            batch.append(_present(pop.game(), random.Random(_mix(seed, run, iteration, 1))))
+        ratings, violation = rate(batch)
+        worst = max(worst, violation)
+        for run, pop in enumerate(populations):
+            scale = batch[run]["game"].scale()
+            key_rng = random.Random(_mix(seed, run, iteration, 2))
+            for player in (0, 1):
+                keys = [key_rng.random() for _ in range(POP_SIZE)]
+                pop.replace(player, _drop_slots(ratings[run][player], keys, scale))
+        if iteration % POP_CHECKPOINT_EVERY == 0:
+            for run, pop in enumerate(populations):
+                curves[run].append(pop.full_game_gap(sheriff))
+    return curves, worst
+
+
+def population_metrics(curves: List[List[float]], violation: float) -> Dict[str, float]:
+    initial = math.fsum(curve[0] for curve in curves) / len(curves)
+    final = math.fsum(curve[-1] for curve in curves) / len(curves)
+    later = [v for curve in curves for v in curve[1:]]
+    return {
+        "final_gap_ratio": final / initial,
+        "mean_gap_ratio": math.fsum(later) / len(later) / initial,
+        "invariance_violation": violation,
+    }
+
+
+def make_pools(seed: int, runs: int = POP_RUNS) -> Tuple[Sheriff, List[_CandidatePool]]:
+    sheriff = Sheriff(**SHERIFF_PARAMETERS)
+    count = POP_SIZE + POP_DROP * POP_ITERATIONS
+    return sheriff, [_CandidatePool(sheriff, _mix(seed, run), count) for run in range(runs)]
+
+
+def evaluate_population(seed: int, command: Optional[Sequence[str]] = None) -> Tuple[dict, dict]:
+    """Score the rating program and the evaluator's baselines on the improvement loop."""
+    sheriff, pools = make_pools(seed)
+    deadline = time.monotonic() + POP_TOTAL_SECONDS
+    calls = {"count": 0}
+
+    def call(games, order):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return None, f"population experiment exceeded {POP_TOTAL_SECONDS} s"
+        calls["count"] += 1
+        results, error, log_tail = run_rater(games, order, command=command,
+                                             timeout=min(POP_CALL_TIMEOUT_SECONDS, remaining))
+        if error and log_tail:
+            print("rating program output (tail):")
+            print(log_tail)
+        return results, error
+
+    results = {}
+    diagnostics = {"rater_calls": 0, "failure": ""}
+    try:
+        curves, violation = population_loop(sheriff, pools, seed, _rate_with_program(call, seed))
+        results[PROPOSED_ID] = _finish(population_metrics(curves, violation))
+        diagnostics["curves"] = {PROPOSED_ID: _mean_curve(curves)}
+    except PopulationFailure as failure:
+        results[PROPOSED_ID] = failed_metrics(POPULATION_EXPERIMENT)
+        diagnostics["failure"] = str(failure)
+        diagnostics["curves"] = {}
+    diagnostics["rater_calls"] = calls["count"]
+    for name, rate in (("uniform_payoff", _rate_uniform), ("random_selection", _rate_random)):
+        curves, violation = population_loop(sheriff, pools, seed, rate)
+        results[name] = _finish(population_metrics(curves, violation))
+        diagnostics["curves"][name] = _mean_curve(curves)
+    return {"results": results}, diagnostics
+
+
+def _mean_curve(curves: List[List[float]]) -> List[float]:
+    return [round(math.fsum(c[i] for c in curves) / len(curves), 4) for i in range(len(curves[0]))]
+
+
 def build_hidden_suite(seed: int = HIDDEN_SEED) -> Tuple[Dict[str, Game], Dict[str, List[dict]], List[str]]:
     suite = _Suite(seed)
     _shapley_family(suite)
@@ -1019,7 +1543,24 @@ def evaluate_hidden(seed: int = HIDDEN_SEED, command: Optional[Sequence[str]] = 
     if error and log_tail:
         print("rating program output (tail):")
         print(log_tail)
-    return score_suite(games, instances, results, error)
+    scores, diagnostics = score_suite(games, instances, results, error)
+    population, pop_diag = evaluate_population(_mix(seed, 0x50), command=command)
+    scores["experiments"][POPULATION_EXPERIMENT] = population
+    diagnostics["population"] = pop_diag
+    return scores, diagnostics
+
+
+def print_population(scores: dict, diagnostics: dict) -> None:
+    diag = diagnostics["population"]
+    status = "FAILED" if diag["failure"] else "ok"
+    print(f"[{POPULATION_EXPERIMENT}] Sheriff, {POP_RUNS} runs x {POP_ITERATIONS} iterations, "
+          f"{diag['rater_calls']} rating-program calls, proposed method: {status}")
+    if diag["failure"]:
+        print(f"    gate failure: {diag['failure']}")
+    for method, metrics in scores["experiments"][POPULATION_EXPERIMENT]["results"].items():
+        print(f"    {method:<26} {json.dumps(metrics)}")
+    for method, curve in diag["curves"].items():
+        print(f"    mean full-game CCE gap every {POP_CHECKPOINT_EVERY} iterations, {method}: {curve}")
 
 
 def main() -> dict:
@@ -1027,7 +1568,12 @@ def main() -> dict:
     if scores_path.exists() or scores_path.is_symlink():
         scores_path.unlink()
     scores, diagnostics = evaluate_hidden()
-    print_report(scores, diagnostics, "hidden test")
+    print_report(
+        {"experiments": {k: v for k, v in scores["experiments"].items() if k != POPULATION_EXPERIMENT}},
+        diagnostics,
+        "hidden test",
+    )
+    print_population(scores, diagnostics)
     write_scores(scores_path, scores)
     print(f"Test evaluation complete. Results written to {scores_path}")
     return scores
