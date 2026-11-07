@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: secondary_claims
-notes: "Supplemental CPU audit: public bystander-ladder witness for the three-LP shortcut; repeated exact coefficient-construction timings. Main 17-case hidden-test bundle is complete."
+notes: "Audit committed as 473a7fa: 17 exact hidden evaluations, two shortcut ties, 20 saturated metrics, zero measured seed spread, reproduction direction confirmed; report and replay evidence in REDTEAM.md and redteam/current_audit/."
