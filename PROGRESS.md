@@ -64,4 +64,14 @@ At 2026-04-24 09:06 UTC, the canonical evaluator in [`eval/evaluate.py`](/home/u
 
 ## Hardening (2026-11-07)
 
-The scored benchmark now runs the rating program `scripts/rate.sh` on games supplied by the evaluators. The hidden test generates about 190 games at test time and gates every output: finite, a normalized CCE, and ratings equal to its deviation gains. The reference scores 0 on every invariance metric on the hidden test and on 10 further sampled suites. `HARDENING.md` lists every shortcut with its score before and after.
+The scored benchmark runs the rating program `scripts/rate.sh` on games supplied by the evaluators, once per population iteration (96 calls).
+
+The hidden test generates about 210 property games and a Sheriff population run at test time. It gates every output: finite, a normalized CCE, and ratings equal to its deviation gains.
+
+Six experiments are scored. The five property experiments now also score `strictness_gap`. The sixth, `population_improvement` (paper Section 5.3), is the headroom experiment.
+
+Reference results:
+- **Property experiments:** 0 on every metric, on the hidden test and on 4 further suites.
+- **Population (late gap ratio):** reference 0.577, uniform 0.668, random selection 0.968.
+
+`HARDENING.md` lists every shortcut with its score before and after.
