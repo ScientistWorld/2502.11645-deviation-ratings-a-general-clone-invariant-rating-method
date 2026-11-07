@@ -1,0 +1,11 @@
+{
+  "start_commit": "f4fc8775d3f15e8030cbc71952b59544f1e63198",
+  "reference_and_evaluator_trees_match_start": true,
+  "no_untracked_candidate_files_outside_redteam": true,
+  "original_run_script_restored": true,
+  "report_links_checked": true,
+  "hidden_runs_with_isolation_on_and_zero_leftovers": 17,
+  "precommit_git_status": " M README.md\n M REDTEAM.md\n M manifest.json\n M scripts/run.sh\n D trajectory/session.json\n D trajectory/turn_0001_raw.jsonl\n D trajectory/turn_0002_raw.jsonl\n D trajectory/turn_0003_raw.jsonl\n D trajectory/turn_0004_raw.jsonl\n D trajectory/turn_0005_raw.jsonl\n D trajectory/turn_0006_raw.jsonl\n D trajectory/turn_0007_raw.jsonl\n D trajectory/turn_0008_raw.jsonl\n D trajectory/turn_0009_raw.jsonl\n D trajectory/turn_0010_raw.jsonl\n D trajectory/turn_0011_raw.jsonl\n D trajectory/turn_0012_raw.jsonl\n D trajectory/turn_0013_raw.jsonl\n?? redteam/current_audit/summarize.py\n?? redteam/current_audit/summary.json\n",
+  "note": "README.md and manifest.json special-file differences and old trajectory deletions predate this audit; their starting status is preserved. action.yaml is the required job-control exception.",
+  "system_managed_restore_limit": "trajectory/session.json was additionally removed by the job system after the starting snapshot. git restore was attempted and warned: unable to unlink trajectory/session.json: Read-only file system. No audit code modified trajectory/."
+}
