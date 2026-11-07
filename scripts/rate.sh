@@ -6,8 +6,11 @@
 #   bash scripts/rate.sh GAMES_JSON RATINGS_JSON
 #
 # GAMES_JSON:   {"games": [{"id": ..., "payoffs": [N][A_1]...[A_N]}, ...]}
+#               (noisy observations also carry "noise_bound": b)
 # RATINGS_JSON: {"results": {id: {"ratings": [[r_p(a) ...] per player],
 #                                 "equilibrium": [flat C-order joint distribution]}}}
+#               (for a noisy observation, optionally "payoffs": the rated game,
+#                every entry within b of the observed payoffs)
 #
 # Contract and validity checks: briefing/evaluation.md and eval/protocol.py.
 

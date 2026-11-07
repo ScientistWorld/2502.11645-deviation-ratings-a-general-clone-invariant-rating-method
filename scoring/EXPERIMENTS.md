@@ -1,11 +1,11 @@
 # Experiment Overview
 
-Every experiment runs the rating program `scripts/rate.sh` on games supplied by the evaluator. The program is called once per population iteration (96 calls). Each call carries the iteration's population meta-games and a share of the property games; the two games of an invariance pair are always in different calls, and calls must be stateless.
+Every experiment runs the rating program `scripts/rate.sh` on games supplied by the evaluator. The program is called once per population iteration (96 calls). Each call carries the iteration's population meta-games and a share of the property games and noisy observations; the two games of an invariance pair, and the two observations of one true game, are always in different calls, and calls must be stateless.
 
-The visible evaluators use the five documented public games plus families generated from a visible seed. The hidden test generates about 250 property games when it runs:
-- 2- to 5-player games, some with one or two bystander players whose payoff depends only on their own action, and some that are products of two independent 2-player games;
+The visible evaluators use the five documented public games plus families generated from a visible seed. The hidden test generates about 280 property games and 192 noisy observations when it runs:
+- 2- to 5-player games, some with one or two bystander players whose payoff depends only on their own action (some bystanders have 40-150 actions), and some that are products of two independent 2-player games;
 - meta-games of random Sheriff populations;
-- 3-player games above 1,000 and above 2,000 joint actions, and a cyclic population with 48 strategies per player (2,304 joint actions).
+- 3-player games above 1,000 and above 2,000 joint actions, 3- to 5-player games above 4,096 joint actions (up to about 6,500), and cyclic populations with 48 strategies per player (2,304 joint actions, and 4,608 with a bystander).
 
 Each property metric is the maximum over the experiment's games (dominance violations are summed). Outputs must pass the validity gates in [TARGETS.md](/home/user/scoring/TARGETS.md), or the experiment is scored as failed.
 
@@ -81,3 +81,19 @@ Scored outputs:
 - `mean_gap_ratio`: mean gap over all checkpoints divided by the initial gap
 
 Baselines: `uniform_payoff` (drop the lowest mean payoffs) and `random_selection`.
+
+## noisy_clone_resilience
+
+Tests how close ratings computed from noisy evaluation data that contain near-copies stay to the deviation ratings of the true game (the setting that motivates clone invariance in paper Sections 1 and 5.2).
+
+Each of 96 hidden instances (visible: 96 of the same kinds from the visible seed) is a small true game with payoffs in `[-1, 1]`: random 2-player and 3-player general-sum games, random zero-sum games, and the paper's model vs model vs task game built from a model x task score matrix. The method sees two noisy observations of it, in different calls, both with `noise_bound` 0.05 (every observed payoff within 0.05 of the truth):
+- **padded**: one action of one player (for the model vs model vs task game, one task) is repeated 3-10 extra times before measuring, so the copies are near-copies with their own noise;
+- **clean**: the true game, measured once more.
+
+For these games the method may return `payoffs`, the game it rated (its estimate of the true game), if every entry is within the noise bound of the observation; the CCE and rating gates then use that game. The target is the exact deviation rating of the true game, computed by the evaluator in rational arithmetic.
+
+Scored outputs:
+- `rating_error` (primary): mean over padded observations of the mean absolute rating error over all actions (near-copies against the action they copy), in units of the noise bound
+- `clean_rating_error`: the same over clean observations
+
+Baseline: `uniform_payoff`, here the deviation gains of the uniform joint distribution (uniform averaging on the deviation-rating scale).

@@ -6,6 +6,11 @@ computes deviation ratings with the sequential LP of Algorithm 1
 ``{"results": {id: {"ratings": [[...] per player], "equilibrium": [flat C-order]}}}``.
 The equilibrium is the final LP's distribution, under which every rating is the
 corresponding deviation gain.
+
+Games of the noisy-redundancy experiment also carry ``noise_bound``. As in the
+paper, the reference rates the observed payoffs as given (it does not return the
+optional estimated ``payoffs``), so its ratings are the deviation ratings of the
+observation.
 """
 
 from __future__ import annotations

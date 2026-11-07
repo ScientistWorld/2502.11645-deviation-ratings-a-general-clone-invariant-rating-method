@@ -35,3 +35,4 @@ A rating method should:
 - **Scale to N players and general-sum games**: no restrictions on number of players or payoff structure
 - **Be efficiently computable**: polynomial time in the size of the game, and practical on games with a thousand or more joint strategies
 - **Be directional**: when a rating is used to decide which strategies to keep in an evolving population, the population should move toward an equilibrium of the underlying game rather than toward strategies that only look good on average
+- **Hold up on measured data**: evaluation payoffs are estimates (a model's score on a task comes from finitely many prompts), and redundant strategies are near-copies rather than exact clones. Ratings computed from noisy data that contain near-copies should stay close to the ratings of the true game

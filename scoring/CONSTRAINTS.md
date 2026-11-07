@@ -10,31 +10,34 @@ The method is the rating program `scripts/rate.sh GAMES_JSON RATINGS_JSON`. The 
 
 The distribution must be a coarse correlated equilibrium, and each rating must equal that distribution's deviation gain for the action. Outputs that break this contract are scored as failed rather than ranked.
 
+Games of `noisy_clone_resilience` also carry `noise_bound`: their payoffs are measurements within that bound of the truth. For them, and only them, the output may add `payoffs`, the game the method rated (its estimate of the true game). Every entry must be within the noise bound of the observed payoff. The CCE and rating requirements then refer to that game. Using the noise bound is part of the problem, not a special case: it is information about the data.
+
 The program is called about 96 times per evaluation, with a few games per call. Each call must:
 - finish within 300 s, with at most 2400 s over all calls;
 - leave no files behind or changed outside its temporary directory (`$TMPDIR`);
 - leave no processes behind.
 
-Calls are independent: the two games of an invariance pair arrive in different calls, and inside the job container any state carried from one call to another fails the call. The same program rates the population meta-games and the property games, and the program cannot tell which is which.
+Calls are independent: the two games of an invariance pair, and the two observations of one true game, arrive in different calls, and inside the job container any state carried from one call to another fails the call. The same program rates the population meta-games and the property games, and the program cannot tell which is which.
 
 ## Data
 
 The evaluators supply the scored games; the method does not choose or edit them:
 - `bash scripts/evaluate.sh` and `bash scripts/evaluate_train.sh` use the five documented public games plus families and a population run from a visible seed. `data/game_data.py` contains the public game definitions for development use.
-- `bash scripts/evaluate_test.sh` generates its own hidden games at test time. It reads nothing from `data/`, `checkpoints/`, `baseline/` or `scoring/reference.json`. Before it starts it stops every other process of the submission.
+- `bash scripts/evaluate_test.sh` generates its own hidden games at test time, including the true games behind the noisy observations and their exact deviation ratings. It reads nothing from `data/`, `checkpoints/`, `baseline/` or `scoring/reference.json`. Before it starts it stops every other process of the submission.
 
 No external datasets are needed or used.
 
 ## Evaluation Protocol
 
-The scientist must keep the six scored experiments and their entrypoints:
-- `biased_shapley_augmented`, `clone_invariance`, `mixture_invariance`, `offset_invariance`, `dominance_preserving`, `population_improvement`
+The scientist must keep the seven scored experiments and their entrypoints:
+- `biased_shapley_augmented`, `clone_invariance`, `mixture_invariance`, `offset_invariance`, `dominance_preserving`, `population_improvement`, `noisy_clone_resilience`
 - `bash scripts/evaluate.sh` (standard), `bash scripts/evaluate_train.sh`, `bash scripts/evaluate_test.sh` (hidden, no arguments)
 
 `eval/` and `scripts/evaluate*.sh` belong to the benchmark. They fix:
 - baselines, transformations, mixture weights, offsets and dominance pairs;
 - the strictest achievable deviation gain;
 - the Sheriff game, its candidate policies and the gap measure;
+- the true games behind the noisy observations, their noise, the noise bound and the exact target ratings;
 - tolerances, time limits and the test size.
 
 ## Method Boundary
@@ -45,14 +48,15 @@ The scientist may NOT:
 - Hardcode the benchmark's target numbers or special-case recognizable games (including population meta-games)
 - Ignore the game structure and score the experiments with table-specific rules
 - Change the scored game definitions, evaluators, tolerances, time limits or baselines while still claiming improvement on this benchmark
-- Change the meaning of `dev_gap`, `CCE_gap`, `max_diff`, `mixture_error`, `dominance_violations`, `min_margin`, `strictness_gap` or the gap ratios
+- Change the meaning of `dev_gap`, `CCE_gap`, `max_diff`, `mixture_error`, `dominance_violations`, `min_margin`, `strictness_gap`, the gap ratios or the rating errors
 - Skip any scored experiment, or read or modify the hidden evaluator from the rating program
 - Keep state between calls, leave processes running, or touch score files
 
 ## Compliance Checklist
-- [ ] `scripts/rate.sh` rates any finite normal-form game it is given, with any number of players (the test uses 2 to 5), including players with a single action and games above 2,000 joint actions
+- [ ] `scripts/rate.sh` rates any finite normal-form game it is given, with any number of players (the test uses 2 to 5), including players with a single action or up to 150 actions, and games up to about 6,500 joint actions (the tested range; larger games are not tested)
 - [ ] Ratings are the deviation gains of the returned CCE
 - [ ] Each call is stateless and finishes within 300 s
-- [ ] All six scored experiments are evaluated through the provided entrypoints
+- [ ] All seven scored experiments are evaluated through the provided entrypoints
+- [ ] On noisy observations, any returned `payoffs` stay within the noise bound of the observed payoffs
 - [ ] Clone, mixture, offset and dominance properties hold on the hidden games, not only the public ones
 - [ ] The selected equilibrium is strictest at every level, not only the top: in games built from independent sub-games it must be strictest on each of them

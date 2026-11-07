@@ -12,7 +12,9 @@ A rating method is the program ``scripts/rate.sh GAMES_JSON RATINGS_JSON``.
     {"games": [{"id": "<opaque id>", "payoffs": P}, ...]}
 
 ``P`` is a nested list of shape ``[N, A_1, ..., A_N]``: ``P[p][a_1]...[a_N]``
-is player ``p``'s payoff at joint action ``(a_1, ..., a_N)``.
+is player ``p``'s payoff at joint action ``(a_1, ..., a_N)``. A game of the
+noisy-redundancy experiment also carries ``"noise_bound": b``: its payoffs are
+measurements, each within ``b`` of the true payoff.
 
 ``RATINGS_JSON`` (written by the method)::
 
@@ -20,7 +22,10 @@ is player ``p``'s payoff at joint action ``(a_1, ..., a_N)``.
 
 ``R[p][a]`` is the rating of player ``p``'s action ``a`` (one list per player,
 one real number per action). ``S`` is the selected joint distribution as a
-flat list of ``A_1 * ... * A_N`` probabilities in C (row-major) order.
+flat list of ``A_1 * ... * A_N`` probabilities in C (row-major) order. For a
+game with a noise bound the entry may also carry ``"payoffs": Q``, the game the
+method rated (its estimate of the true game, same shape as ``P``); every entry
+of ``Q`` must lie within ``b`` of ``P``, and the checks below then use ``Q``.
 
 Checks applied to every game before any metric is computed (a game that fails
 any check fails every experiment it belongs to):
@@ -44,8 +49,11 @@ rock-paper-scissors with player 1's rock cloned; the 2x2 general-sum reference
 game with a [0.3, 0.7] mixture for player 0 and with offsets [[10, -4], [7, -3]];
 the 2x2 dominance game) plus generated families of the same kinds as the hidden
 test (random 2- and 3-player games, one or two bystander players, products of
-two independent games, Sheriff population meta-games, games above 1000 and
-above 2000 joint actions), and the population-improvement experiment, all from the visible seed TRAIN_SEED. The rating program is called
+two independent games, Sheriff population meta-games, bystanders with 40-150
+actions, games above 1000, 2000 and 4096 joint actions), the population-improvement
+experiment, and the noisy-redundancy experiment (noisy observations of small true
+games, some padded with noisy near-copies of one action, scored against the exact
+deviation ratings of the true game), all from the visible seed TRAIN_SEED. The rating program is called
 once per population iteration; each call carries the iteration's meta-games and
 a share of the property games, and the two games of an invariance pair always
 go to different calls.
@@ -67,6 +75,7 @@ import subprocess
 import tempfile
 import time
 from array import array
+from fractions import Fraction
 from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -83,6 +92,7 @@ TOTAL_TIMEOUT_SECONDS = 2400
 MAX_OUTPUT_BYTES = 64 * 1024 * 1024
 
 POPULATION_EXPERIMENT = "population_improvement"
+NOISY_EXPERIMENT = "noisy_clone_resilience"
 PROPERTY_METRICS: Dict[str, Tuple[str, ...]] = {
     "biased_shapley_augmented": ("dev_gap", "all_player_dev_gap", "player_symmetry_gap", "CCE_gap", "strictness_gap"),
     "clone_invariance": ("max_diff", "all_players_max_diff", "clone_source_gap", "strictness_gap"),
@@ -90,8 +100,10 @@ PROPERTY_METRICS: Dict[str, Tuple[str, ...]] = {
     "offset_invariance": ("max_diff", "max_CCE_gap", "strictness_gap"),
     "dominance_preserving": ("dominance_violations", "min_margin", "CCE_gap", "strictness_gap"),
 }
+NOISY_METRICS: Tuple[str, ...] = ("rating_error", "clean_rating_error")
+SUITE_EXPERIMENTS: Tuple[str, ...] = tuple(PROPERTY_METRICS) + (NOISY_EXPERIMENT,)
 EXPERIMENT_METRICS: Dict[str, Tuple[str, ...]] = dict(
-    PROPERTY_METRICS, **{POPULATION_EXPERIMENT: ("late_gap_ratio", "mean_gap_ratio")}
+    PROPERTY_METRICS, **{POPULATION_EXPERIMENT: ("late_gap_ratio", "mean_gap_ratio"), NOISY_EXPERIMENT: NOISY_METRICS}
 )
 HIGHER_IS_BETTER = frozenset({"min_margin"})
 INTEGER_METRICS = frozenset({"dominance_violations"})
@@ -102,6 +114,7 @@ BASELINES: Dict[str, Tuple[str, ...]] = {
     "offset_invariance": ("uniform_payoff",),
     "dominance_preserving": ("uniform_payoff", "zero_rating", "negative_uniform_payoff"),
     POPULATION_EXPERIMENT: ("uniform_payoff", "random_selection"),
+    NOISY_EXPERIMENT: ("uniform_payoff",),
 }
 
 
@@ -393,6 +406,132 @@ def strictest_epsilon(game: Game, players: Optional[Sequence[int]] = None) -> Op
     return lower * scale, upper * scale
 
 
+# ── Exact deviation ratings (ground truth of the noisy-redundancy experiment) ──
+
+
+def _exact_simplex(rows: List[List[Fraction]], rhs: List[Fraction], cost: List[Fraction]):
+    """min cost.x s.t. rows x = rhs, x >= 0, in exact rational arithmetic.
+
+    Dense two-phase simplex with Bland's rule (no cycling). Returns (x, reduced costs
+    of the original columns at the optimal basis), or None if infeasible.
+    """
+    m, n = len(rows), len(cost)
+    zero, one = Fraction(0), Fraction(1)
+    tab = []
+    for i, (row, b) in enumerate(zip(rows, rhs)):
+        sign = -1 if b < 0 else 1
+        line = [v * sign for v in row] + [zero] * m + [b * sign]
+        line[n + i] = one
+        tab.append(line)
+    basis = [n + i for i in range(m)]
+    width = n + m
+
+    def pivot(r: int, col: int) -> None:
+        inv = 1 / tab[r][col]
+        tab[r] = [v * inv for v in tab[r]]
+        prow = tab[r]
+        for i in range(m):
+            f = tab[i][col]
+            if i != r and f:
+                tab[i] = [a - f * b for a, b in zip(tab[i], prow)]
+        basis[r] = col
+
+    def run(costs: List[Fraction], allowed: List[bool]) -> List[Fraction]:
+        while True:
+            weights = [(i, costs[basis[i]]) for i in range(m) if costs[basis[i]]]
+            reduced = [costs[j] - sum((w * tab[i][j] for i, w in weights), zero) for j in range(width)]
+            col = next((j for j in range(width) if allowed[j] and reduced[j] < 0), -1)
+            if col < 0:
+                return reduced
+            r, best = -1, None
+            for i in range(m):
+                a = tab[i][col]
+                if a > 0:
+                    ratio = tab[i][-1] / a
+                    if r < 0 or ratio < best or (ratio == best and basis[i] < basis[r]):
+                        r, best = i, ratio
+            if r < 0:
+                raise RuntimeError("unbounded linear program")
+            pivot(r, col)
+
+    run([zero] * n + [one] * m, [True] * width)
+    if any(basis[i] >= n and tab[i][-1] != 0 for i in range(m)):
+        return None
+    for i in range(m):
+        if basis[i] >= n:
+            col = next((j for j in range(n) if tab[i][j] != 0), -1)
+            if col >= 0:
+                pivot(i, col)
+    reduced = run(list(cost) + [zero] * m, [True] * n + [False] * m)
+    x = [zero] * n
+    for i in range(m):
+        if basis[i] < n:
+            x[basis[i]] = tab[i][-1]
+    return x, reduced[:n]
+
+
+def exact_deviation_ratings(dims: Sequence[int], tables: Sequence[Sequence[Fraction]]) -> List[List[Fraction]]:
+    """Deviation ratings (the strictest CCE's deviation gains) of a small game, exactly.
+
+    Algorithm 1 of the paper in rational arithmetic: repeatedly minimise the largest
+    unfrozen deviation gain, epsilon, over joint distributions with the frozen gains held
+    at their values, and freeze the constraints with a nonzero dual. Every level's
+    optimum is unique, so the result does not depend on which optimal vertex or dual
+    the simplex returns. ``tables[p]`` is player p's flat C-order payoff table.
+    """
+    n = len(dims)
+    size = 1
+    for d in dims:
+        size *= d
+    strides = [1] * n
+    acc = 1
+    for p in range(n - 1, -1, -1):
+        strides[p] = acc
+        acc *= dims[p]
+    rows: List[List[Fraction]] = []
+    for p in range(n):
+        own = [(j // strides[p]) % dims[p] for j in range(size)]
+        table = tables[p]
+        for action in range(dims[p]):
+            rows.append([table[j + (action - own[j]) * strides[p]] - table[j] for j in range(size)])
+    count = len(rows)
+    lowest = min(min(row) for row in rows)
+    zero, one = Fraction(0), Fraction(1)
+    frozen: Dict[int, Fraction] = {}
+    sigma: List[Fraction] = []
+    while len(frozen) < count:
+        free = [c for c in range(count) if c not in frozen]
+        slack = len(free)
+        lp_rows, lp_rhs = [], []
+        # epsilon = lowest + t with t >= 0: row . sigma - t + s_c = lowest for every unfrozen c.
+        for k, c in enumerate(free):
+            line = rows[c] + [-one] + [zero] * slack
+            line[size + 1 + k] = one
+            lp_rows.append(line)
+            lp_rhs.append(lowest)
+        for c, value in frozen.items():
+            lp_rows.append(rows[c] + [zero] * (1 + slack))
+            lp_rhs.append(value)
+        lp_rows.append([one] * size + [zero] * (1 + slack))
+        lp_rhs.append(one)
+        solved = _exact_simplex(lp_rows, lp_rhs, [zero] * size + [one] + [zero] * slack)
+        if solved is None:
+            raise RuntimeError("exact deviation-rating LP infeasible")
+        x, reduced = solved
+        sigma = x[:size]
+        gains = {c: sum((a * s for a, s in zip(rows[c], sigma) if s), zero) for c in free}
+        newly = [c for k, c in enumerate(free) if reduced[size + 1 + k] != 0]
+        if not newly:
+            newly = [max(free, key=lambda c: gains[c])]
+        for c in newly:
+            frozen[c] = gains[c]
+    ratings, index = [], 0
+    for p in range(n):
+        ratings.append([frozen[index + a] for a in range(dims[p])])
+        index += dims[p]
+    return ratings
+
+
 # ── Process control and rater execution ─────────────────────────────────────
 
 
@@ -571,16 +710,27 @@ def run_rater(
     order: Sequence[str],
     command: Optional[Sequence[str]] = None,
     timeout: float = CALL_TIMEOUT_SECONDS,
+    noise: Optional[Dict[str, float]] = None,
 ) -> Tuple[Optional[dict], str, str]:
-    """Run a rating program on ``games``; return (results, error, log tail)."""
+    """Run a rating program on ``games``; return (results, error, log tail).
+
+    ``noise[gid]`` is the noise bound of a noisy observation (sent as ``noise_bound``).
+    """
     command = list(command) if command is not None else ["bash", str(RATER)]
+    noise = noise or {}
     workdir = Path(tempfile.mkdtemp(prefix="rating_eval_"))
     log_tail = ""
     try:
         in_path = workdir / "games.json"
         out_path = workdir / "ratings.json"
         log_path = workdir / "rater.log"
-        in_path.write_text(json.dumps({"games": [{"id": gid, "payoffs": games[gid].payload()} for gid in order]}))
+        entries = []
+        for gid in order:
+            entry = {"id": gid, "payoffs": games[gid].payload()}
+            if noise.get(gid):
+                entry["noise_bound"] = noise[gid]
+            entries.append(entry)
+        in_path.write_text(json.dumps({"games": entries}))
         if command[:1] == ["bash"] and len(command) > 1 and not Path(command[1]).is_file():
             return None, f"rating program {command[1]} not found", log_tail
         if timeout <= 0:
@@ -673,10 +823,46 @@ def _real(value) -> Optional[float]:
     return number if math.isfinite(number) else None
 
 
-def validate_result(game: Game, entry) -> dict:
-    """Check one game's output. Returns {'ok', 'reason', 'ratings', 'cce_gap', 'max_gain', ...}."""
+def _parse_payoffs(value, game: Game) -> Optional[List[List[float]]]:
+    """A submitted nested payoff array of ``game``'s shape as flat C-order tables, or None."""
+    if not isinstance(value, list) or len(value) != game.n:
+        return None
+    tables = []
+    for p in range(game.n):
+        flat: List[float] = []
+        stack = [(value[p], 0)]
+        while stack:
+            node, depth = stack.pop()
+            if depth == game.n:
+                number = _real(node)
+                if number is None:
+                    return None
+                flat.append(number)
+                continue
+            if not isinstance(node, list) or len(node) != game.dims[depth]:
+                return None
+            stack.extend((child, depth + 1) for child in reversed(node))
+        tables.append(flat)
+    return tables
+
+
+def validate_result(game: Game, entry, noise_bound: float = 0.0) -> dict:
+    """Check one game's output. Returns {'ok', 'reason', 'ratings', 'cce_gap', 'max_gain', ...}.
+
+    For a noisy observation (``noise_bound`` > 0) the output may carry ``payoffs``: the
+    game the method rated, its estimate of the true game. Every entry must lie within
+    ``noise_bound`` of the observed payoffs; the CCE and rating checks then use it.
+    """
     if not isinstance(entry, dict):
         return {"ok": False, "reason": "no result object for this game"}
+    if noise_bound > 0.0 and entry.get("payoffs") is not None:
+        tables = _parse_payoffs(entry.get("payoffs"), game)
+        if tables is None:
+            return {"ok": False, "reason": "'payoffs' must be finite numbers with the game's shape [N][A_1]...[A_N]"}
+        moved = max(abs(a - b) for mine, seen in zip(tables, game.tables) for a, b in zip(mine, seen))
+        if moved > noise_bound + 1.0e-9 * game.scale():
+            return {"ok": False, "reason": f"'payoffs' move an observed payoff by {moved:.3e}, more than the noise bound"}
+        game = Game(game.dims, tables)
     ratings = entry.get("ratings")
     if not isinstance(ratings, list) or len(ratings) != game.n:
         return {"ok": False, "reason": f"'ratings' must be a list with one list per player ({game.n})"}
@@ -837,12 +1023,34 @@ def dominance_metrics(instances: List[dict], games: Dict[str, Game], view: View)
     }
 
 
+def noisy_metrics(instances: List[dict], games: Dict[str, Game], view: View) -> Dict[str, float]:
+    """Accuracy of ratings computed from noisy observations, against the true game's exact deviation ratings.
+
+    Per observation: the mean absolute difference, over every action of every player,
+    between the submitted rating and the true deviation rating of the true action it
+    observes (a near-copy is compared with the action it copies), in units of the
+    noise bound. ``rating_error`` averages it over the observations padded with
+    near-copies, ``clean_rating_error`` over the observations without them.
+    """
+    errors: Dict[str, List[float]] = {"variant": [], "base": []}
+    for inst in instances:
+        truth = inst["truth"]
+        for key in ("variant", "base"):
+            ratings, _, _ = view(inst[key])
+            maps = inst[key + "_maps"]
+            diffs = [abs(ratings[q][a] - truth[q][maps[q][a]]) for q in range(len(ratings)) for a in range(len(ratings[q]))]
+            errors[key].append(math.fsum(diffs) / len(diffs) / inst["noise_bound"])
+    return {"rating_error": math.fsum(errors["variant"]) / len(errors["variant"]),
+            "clean_rating_error": math.fsum(errors["base"]) / len(errors["base"])}
+
+
 METRIC_FUNCTIONS = {
     "biased_shapley_augmented": shapley_metrics,
     "clone_invariance": clone_metrics,
     "mixture_invariance": mixture_metrics,
     "offset_invariance": offset_metrics,
     "dominance_preserving": dominance_metrics,
+    NOISY_EXPERIMENT: noisy_metrics,
 }
 
 
@@ -861,10 +1069,25 @@ def block_strictness(game: Game, blocks: Optional[Sequence[Sequence[int]]]) -> L
     strictest on every block: within each block its largest gain is the block's own
     epsilon*. Blocks other than the one with the largest epsilon* sit below the top
     of the lexicographic order, so this certifies the selection below the top level.
+    Each block's value is computed on its own sub-game (every other player fixed at
+    action 0), which has the same deviation constraints as the block in the full game.
     """
     if not blocks or len(blocks) == 1:
         return [(tuple(range(game.n)), strictest_epsilon(game))]
-    return [(tuple(b), strictest_epsilon(game, b)) for b in blocks]
+    return [(tuple(b), strictest_epsilon(_block_subgame(game, b))) for b in blocks]
+
+
+def _block_subgame(game: Game, block: Sequence[int]) -> Game:
+    """The block's players' payoffs over the block's own joint actions, everyone else at action 0."""
+    block = tuple(block)
+
+    def payoff(i: int, joint: Tuple[int, ...]) -> float:
+        full = [0] * game.n
+        for p, a in zip(block, joint):
+            full[p] = a
+        return game.value(block[i], tuple(full))
+
+    return Game.from_function([game.dims[p] for p in block], payoff)
 
 
 def strictness_gap(gids: Sequence[str], games: Dict[str, Game], view: View, strictest: Strictest) -> float:
@@ -890,6 +1113,8 @@ def strictness_gap(gids: Sequence[str], games: Dict[str, Game], view: View, stri
 
 def instance_game_ids(experiment: str, instances: List[dict]) -> List[str]:
     keys = ("game",) if experiment in ("biased_shapley_augmented", "dominance_preserving") else ("base", "variant")
+    if experiment == NOISY_EXPERIMENT:
+        keys = ("variant", "base")
     ids: List[str] = []
     for inst in instances:
         for key in keys:
@@ -906,7 +1131,9 @@ def baseline_view(name: str, games: Dict[str, Game]) -> View:
             game = games[gid]
             uniform = uniform_ratings(game)
             gains = deviation_gains(game, uniform_distribution(game))
-            if name == "uniform_payoff":
+            if name == "uniform_gains":
+                ratings = gains
+            elif name == "uniform_payoff":
                 ratings = uniform
             elif name == "zero_rating":
                 ratings = [[0.0] * d for d in game.dims]
@@ -943,35 +1170,42 @@ def score_suite(
     results: Dict[str, object],
     call_errors: Dict[str, str],
     strictest: Strictest,
+    noise: Optional[Dict[str, float]] = None,
 ) -> Tuple[dict, dict]:
-    """Return (scores, diagnostics) for the property experiments.
+    """Return (scores, diagnostics) for the property and noisy-redundancy experiments.
 
     ``results[gid]`` is the submitted entry for each game; ``call_errors[gid]``
-    is set when the call carrying that game failed as a whole.
+    is set when the call carrying that game failed as a whole; ``noise[gid]`` is
+    the noise bound of a noisy observation.
     """
+    noise = noise or {}
     checks = {}
     for gid, game in games.items():
         if gid in call_errors:
             checks[gid] = {"ok": False, "reason": call_errors[gid]}
         else:
-            checks[gid] = validate_result(game, results.get(gid))
+            checks[gid] = validate_result(game, results.get(gid), noise.get(gid, 0.0))
     valid_view: View = lambda gid: (checks[gid]["ratings"], checks[gid]["cce_gap"], checks[gid]["player_max"])
     scores = {"experiments": {}}
     diagnostics = {"experiments": {}}
     for experiment, insts in instances.items():
         gids = instance_game_ids(experiment, insts)
+        noisy = experiment == NOISY_EXPERIMENT
         failures = [(gid, checks[gid]["reason"]) for gid in gids if not checks[gid]["ok"]]
         exp_results = {}
         if failures:
             exp_results[PROPOSED_ID] = failed_metrics(experiment)
         else:
             metrics = METRIC_FUNCTIONS[experiment](insts, games, valid_view)
-            metrics["strictness_gap"] = strictness_gap(gids, games, valid_view, strictest)
+            if not noisy:
+                metrics["strictness_gap"] = strictness_gap(gids, games, valid_view, strictest)
             exp_results[PROPOSED_ID] = _finish(metrics)
         for baseline in BASELINES[experiment]:
-            view = baseline_view(baseline, games)
+            # Noisy observations: uniform averaging on the deviation-gain scale (gains of the uniform distribution).
+            view = baseline_view("uniform_gains" if noisy else baseline, games)
             metrics = METRIC_FUNCTIONS[experiment](insts, games, view)
-            metrics["strictness_gap"] = strictness_gap(gids, games, view, strictest)
+            if not noisy:
+                metrics["strictness_gap"] = strictness_gap(gids, games, view, strictest)
             exp_results[baseline] = _finish(metrics)
         scores["experiments"][experiment] = {"results": exp_results}
         valid_infos = [checks[g] for g in gids if "mismatch" in checks[g]]
@@ -1399,26 +1633,35 @@ RPS_MATRIX = [[0.0, -1.0, 1.0], [1.0, 0.0, -1.0], [-1.0, 1.0, 0.0]]
 # by3: a random 2-player game plus a bystander (see _with_bystander); pr4: two
 # independent random 2-player games side by side (see _product_game); pb5: pr4 plus
 # a bystander; bb4: a random 2-player game with a strict CCE plus two bystanders, so
-# its strictest equilibrium lies many iterations below the top; sh2: the meta-game of a random Sheriff population (as rated in the
-# population experiment); L3: 3-player games above 1000 joint actions; XL3: 3-player
-# games above 2000 joint actions.
+# its strictest equilibrium lies many iterations below the top; db3: a random 2-player
+# game with a strict CCE plus one bystander with 40-150 actions, so its strictest
+# equilibrium lies 40-150 iterations below the top; sh2: the meta-game of a random
+# Sheriff population (as rated in the population experiment); L3: 3-player games above
+# 1000 joint actions; XL3: 3-player games above 2000 joint actions; XXL: 3- to
+# 5-player games of 4,600-5,400 joint actions (up to about 6,500 with an added action).
 CLONE_KINDS = ("gs2", "by3", "zs2", "gs3", "gs2", "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2",
                "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2", "by3", "gs2", "gs2", "gs3", "gs2",
-               "sh2", "sh2", "sh2", "L3", "L3", "pr4", "pb5", "pr4", "pb5", "bb4", "bb4", "XL3")
+               "sh2", "sh2", "sh2", "L3", "L3", "pr4", "pb5", "pr4", "pb5", "bb4", "bb4", "XL3",
+               "db3", "db3", "XXL")
 MIXTURE_KINDS = ("gs2", "gs3", "by3", "zs2", "gs2", "cc2", "by3", "gs3", "gs2", "by3", "gs2", "zs2", "gs3",
                  "by3", "gs2", "gs2", "cc2", "gs3", "by3", "gs2", "zs2", "gs2", "gs3", "by3", "gs2", "gs2",
-                 "sh2", "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "bb4", "XL3")
+                 "sh2", "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "bb4", "XL3", "db3", "db3", "XXL")
 OFFSET_KINDS = ("gs2", "zs2", "by3", "gs3", "gs2", "cc2", "by3", "gs3", "gs2", "zs2", "by3", "gs2", "gs3",
                 "gs2", "by3", "gs3", "cc2", "gs2", "by3", "zs2", "gs3", "gs2", "by3", "gs2", "gs2", "gs3",
-                "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "XL3")
+                "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "XL3", "db3", "db3", "XXL")
 DOMINANCE_KINDS = ("gs2", "gs3", "by3", "gs2", "gs2", "gs3", "by3", "gs2", "gs3", "gs2", "by3", "gs2",
-                   "gs3", "gs2", "sh2", "L3", "pr4", "pb5", "bb4", "bb4", "XL3")
+                   "gs3", "gs2", "sh2", "L3", "pr4", "pb5", "bb4", "bb4", "XL3", "db3", "db3", "XXL")
 LARGE_DIMS = {"L3": ((11, 11, 9), (10, 11, 10), (11, 10, 10)),
-              "XL3": ((13, 13, 13), (12, 13, 14), (14, 12, 13))}
+              "XL3": ((13, 13, 13), (12, 13, 14), (14, 12, 13)),
+              "XXL": ((6, 6, 6, 5, 5), (9, 8, 8, 8), (17, 17, 16))}
 # Bystander gain levels, as fractions of the base game's strictest epsilon: most lie
 # between 0 and it (each one is a separate earlier iteration of Algorithm 1), a few below.
 BYSTANDER_FRACTIONS = tuple(round(0.05 * i, 2) for i in range(1, 19)) + (1.15, 1.3, 1.45, 1.6)
 BYSTANDER_SIZES = (3, 4, 5, 6, 7, 8, 9, 10)
+# Deep bystanders: every level strictly between 0 and the base game's strictest epsilon,
+# so reaching the other players' strictest equilibrium takes one iteration per level.
+DEEP_BYSTANDER_SIZES = (40, 60, 80, 100, 120, 150)
+DEEP_MAX_JOINT = 2400
 
 Blocks = List[Tuple[int, ...]]
 
@@ -1468,6 +1711,47 @@ def _with_bystander(rng, game: Game, blocks: Blocks, sizes: Sequence[int] = BYST
 
     new_blocks = [tuple(p if p < seat else p + 1 for p in block) for block in blocks] + [(seat,)]
     return Game.from_function(dims, payoff), seat, new_blocks
+
+
+def _with_deep_bystander(rng, game: Game, blocks: Blocks, anchor: float) -> Tuple[Game, int, Blocks]:
+    """Seat a bystander with 40-150 actions whose gain levels all lie strictly between 0 and ``anchor`` < 0.
+
+    The other players' strictest equilibrium is then reached only after one
+    iteration of Algorithm 1 per level, i.e. after 40-150 iterations.
+    """
+    sizes = [k for k in DEEP_BYSTANDER_SIZES if game.size * k <= DEEP_MAX_JOINT] or [DEEP_BYSTANDER_SIZES[0]]
+    k = rng.choice(sizes)
+    steps = sorted(rng.sample(range(1, 4 * k), k - 1))
+    levels = [round(anchor * s / (4 * k), 6) + 0.0 for s in steps]
+    base = _uniform_payoff(rng)
+    own = [base] + [round(base + level, 6) + 0.0 for level in levels]
+    rng.shuffle(own)
+    seat = rng.randrange(game.n + 1)
+    dims = list(game.dims)
+    dims.insert(seat, k)
+
+    def payoff(p: int, joint: Tuple[int, ...]) -> float:
+        if p == seat:
+            return own[joint[seat]]
+        return game.value(p if p < seat else p - 1, tuple(joint[:seat]) + tuple(joint[seat + 1 :]))
+
+    new_blocks = [tuple(p if p < seat else p + 1 for p in block) for block in blocks] + [(seat,)]
+    return Game.from_function(dims, payoff), seat, new_blocks
+
+
+def _strict_base(rng, threshold: float) -> Tuple[Game, float]:
+    """A random 2-player general-sum game whose strictest epsilon is below ``threshold`` * scale."""
+    best: Optional[Tuple[Game, float]] = None
+    for _ in range(200):
+        base = _random_game(rng, "gs2")[0]
+        bounds = strictest_epsilon(base)
+        if bounds is None:
+            continue
+        if best is None or bounds[1] < best[1]:
+            best = (base, bounds[1])
+        if bounds[1] < threshold * base.scale():
+            break
+    return best
 
 
 def _product_game(rng, parts: Sequence[Game]) -> Tuple[Game, Blocks]:
@@ -1524,6 +1808,10 @@ def _random_game(rng, kind: str, sheriff: Optional[_SheriffSource] = None,
         anchor = bounds[1] if bounds is not None else 0.0
         game, _, blocks = _with_bystander(rng, base, [(0, 1)], anchor=anchor)
         game, _, blocks = _with_bystander(rng, game, blocks, anchor=anchor)
+        return game, blocks
+    if kind == "db3":
+        base, anchor = _strict_base(rng, -0.1)
+        game, _, blocks = _with_deep_bystander(rng, base, [(0, 1)], anchor)
         return game, blocks
     if kind == "pr4":
         parts = [_random_game(rng, rng.choice(("gs2", "zs2", "cc2")), sides=(2, 3))[0] for _ in range(2)]
@@ -1585,7 +1873,8 @@ class _Suite:
         self.sheriff = _SheriffSource(_mix(seed, 0x5E))
         self.games: Dict[str, Game] = {}
         self.blocks: Dict[str, Blocks] = {}
-        self.instances: Dict[str, List[dict]] = {name: [] for name in PROPERTY_METRICS}
+        self.noise: Dict[str, float] = {}
+        self.instances: Dict[str, List[dict]] = {name: [] for name in SUITE_EXPERIMENTS}
 
     def new_id(self) -> str:
         while True:
@@ -1608,7 +1897,8 @@ def _shapley_family(suite: _Suite) -> None:
     def mixture3() -> List[float]:
         return [x / 1000.0 for x in _composition(rng, 3)]
 
-    def add(matrix, population, labels, offsets=False, scale=None, clone=False, bystander=False):
+    def add(matrix, population, labels, offsets=False, scale=None, clone=False, bystander=False,
+            bystander_sizes=BYSTANDER_SIZES):
         game = symmetric_population_game(matrix, population)
         labs = [list(labels), list(labels)]
         players = [0, 1]
@@ -1619,8 +1909,11 @@ def _shapley_family(suite: _Suite) -> None:
             bounds = strictest_epsilon(game)
             anchor = bounds[1] if bounds is not None else 0.0
             blocks = [(0, 1)]
-            for _ in range(int(bystander)):
-                game, seat, blocks = _with_bystander(rng, game, blocks, anchor=anchor)
+            for _ in range(1 if bystander == "deep" else int(bystander)):
+                if bystander == "deep":
+                    game, seat, blocks = _with_deep_bystander(rng, game, blocks, anchor)
+                else:
+                    game, seat, blocks = _with_bystander(rng, game, blocks, sizes=bystander_sizes, anchor=anchor)
                 labs.insert(seat, [f"b{a}" for a in range(game.dims[seat])])
                 players = [p if p < seat else p + 1 for p in players]
         if offsets:
@@ -1658,6 +1951,13 @@ def _shapley_family(suite: _Suite) -> None:
     # Large populations (above 1000 and above 2000 joint actions): random mixtures besides R, P, S.
     add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(30)], ["R", "P", "S"] + [f"m{i}" for i in range(30)])
     add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(45)], ["R", "P", "S"] + [f"m{i}" for i in range(45)])
+    # Above 4,096 joint actions: the 48-strategy population with a two-action bystander.
+    add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(45)], ["R", "P", "S"] + [f"m{i}" for i in range(45)],
+        bystander=True, bystander_sizes=(2,))
+    # The paper's Table 2 game with a bystander of 40-150 levels above its value -680/241.
+    add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], bystander="deep")
+    add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(2)], ["R", "P", "S", "m0", "m1"], offsets=True,
+        bystander="deep")
     add(RPS_MATRIX, pure3, ["R", "P", "S"])
     for with_offsets in (False, True):
         a, b, c = (round(rng.uniform(0.5, 3.0), 2) for _ in range(3))
@@ -1814,6 +2114,117 @@ def _public_games(suite: _Suite) -> None:
     suite.instances["dominance_preserving"].append({"game": suite.add(dominance_test_game())})
 
 
+# Noisy-redundancy experiment: every observed payoff is within NOISE_BOUND of the true
+# one (independent, bounded measurement error); payoffs lie in [-1, 1]. gs2/gs3/zs2: as
+# above; lb3: the paper's model vs model vs task game (Section 5.2) built from a model x
+# task score matrix in [0, 1], whose scores are what is measured with noise. The padded
+# observation adds 3-10 near-copies of one action (for lb3, of one task: similar prompts).
+NOISE_BOUND = 0.05
+NOISE_UNITS = 1_000_000
+NOISY_KINDS = ("gs2", "lb3", "gs3", "gs2", "zs2", "lb3", "gs2", "gs3") * 12
+NEAR_COPIES = (3, 4, 5, 6, 7, 8, 9, 10)
+
+
+def _exact_unit(rng, low: int = -NOISE_UNITS) -> Fraction:
+    return Fraction(rng.randint(low, NOISE_UNITS), NOISE_UNITS)
+
+
+def _noise(rng, bound: float) -> Fraction:
+    units = int(round(bound * NOISE_UNITS))
+    return Fraction(rng.randint(-units, units), NOISE_UNITS)
+
+
+def _flat_joints(dims: Sequence[int]) -> List[Tuple[int, ...]]:
+    return list(itertools.product(*[range(d) for d in dims]))
+
+
+def _score_game(scores: List[List[Fraction]], models: Sequence[int], tasks: Sequence[int]) -> List[List[Fraction]]:
+    """Paper Section 5.2: G_A(m_A, m_B, t) = T(m_A, t) - T(m_B, t), G_B = -G_A, G_T = |G_A|."""
+    tables: List[List[Fraction]] = [[], [], []]
+    for a, b, t in itertools.product(models, models, tasks):
+        g = scores[a][t] - scores[b][t]
+        tables[0].append(g)
+        tables[1].append(-g)
+        tables[2].append(abs(g))
+    return tables
+
+
+def _noisy_instance(rng, kind: str) -> dict:
+    """One true game with its exact deviation ratings and two noisy observations of it.
+
+    ``variant``: the true game padded with exact copies of one action, observed with noise
+    (the copies become near-copies); ``base``: the true game observed with independent
+    noise. ``*_maps[p][a]`` is the true action that observed action ``a`` measures.
+    """
+    k = rng.choice(NEAR_COPIES)
+    if kind == "lb3":
+        models, tasks = rng.choice((3, 4)), rng.choice((3, 4))
+        scores = [[_exact_unit(rng, 0) for _ in range(tasks)] for _ in range(models)]
+        dims = (models, models, tasks)
+        true_tables = _score_game(scores, range(models), range(tasks))
+        player, source = 2, rng.randrange(tasks)
+        origin = [list(range(models)), list(range(models)), list(range(tasks)) + [source] * k]
+
+        def observe(origin_maps):
+            # Each measured score is the true score plus bounded noise (half the bound: a game entry
+            # is a difference of two scores, so it stays within NOISE_BOUND of the truth).
+            measured = [[scores[m][t] + _noise(rng, NOISE_BOUND / 2) for t in origin_maps[2]] for m in range(models)]
+            return _score_game(measured, range(models), range(len(origin_maps[2])))
+    else:
+        if kind == "gs3":
+            dims = tuple(rng.choice((2, 3)) for _ in range(3))
+            if dims[0] * dims[1] * dims[2] < 12:
+                dims = (2, 2, 3)
+        else:
+            dims = (rng.choice((3, 4)), rng.choice((3, 4)))
+        size = 1
+        for d in dims:
+            size *= d
+        first = [_exact_unit(rng) for _ in range(size)]
+        if kind == "zs2":
+            true_tables = [first, [-v for v in first]]
+        else:
+            true_tables = [first] + [[_exact_unit(rng) for _ in range(size)] for _ in range(len(dims) - 1)]
+        player = rng.randrange(len(dims))
+        source = rng.randrange(dims[player])
+        origin = [list(range(d)) for d in dims]
+        origin[player] = list(range(dims[player])) + [source] * k
+        strides = [1] * len(dims)
+        for q in range(len(dims) - 2, -1, -1):
+            strides[q] = strides[q + 1] * dims[q + 1]
+
+        def observe(origin_maps):
+            joints = _flat_joints([len(o) for o in origin_maps])
+            sources = [sum(origin_maps[q][a] * strides[q] for q, a in enumerate(joint)) for joint in joints]
+            return [[true_tables[p][j] + _noise(rng, NOISE_BOUND) for j in sources] for p in range(len(dims))]
+    truth = exact_deviation_ratings(dims, true_tables)
+    observations = {}
+    for key, origin_maps in (("variant", origin), ("base", [list(range(d)) for d in dims])):
+        tables = observe(origin_maps)
+        game = Game([len(o) for o in origin_maps], [[float(v) for v in t] for t in tables])
+        perms = _random_perms(rng, game.dims)
+        presented, _ = permute_actions(game, perms)
+        maps = [[origin_maps[p][perms[p][pos]] for pos in range(game.dims[p])] for p in range(game.n)]
+        observations[key] = (presented, maps)
+    return {"kind": kind, "copies": k, "player": player, "truth": [[float(v) for v in row] for row in truth],
+            "observations": observations}
+
+
+def _noisy_family(suite: _Suite) -> None:
+    rng = suite.rng
+    for kind in NOISY_KINDS:
+        made = _noisy_instance(rng, kind)
+        inst = {"kind": made["kind"], "copies": made["copies"], "player": made["player"], "truth": made["truth"],
+                "noise_bound": NOISE_BOUND}
+        for key in ("variant", "base"):
+            presented, maps = made["observations"][key]
+            gid = suite.add(presented)
+            suite.noise[gid] = NOISE_BOUND
+            inst[key] = gid
+            inst[key + "_maps"] = maps
+        suite.instances[NOISY_EXPERIMENT].append(inst)
+
+
 def build_visible_suite(seed: int = TRAIN_SEED) -> _Suite:
     suite = _Suite(seed)
     _public_games(suite)
@@ -1822,6 +2233,7 @@ def build_visible_suite(seed: int = TRAIN_SEED) -> _Suite:
     _mixture_family(suite)
     _offset_family(suite)
     _dominance_family(suite)
+    _noisy_family(suite)
     return suite
 
 
@@ -1855,7 +2267,8 @@ def _split_pairs(suite: _Suite, gids: Iterable[str]) -> List[List[str]]:
 def evaluate_suite(seed: int = TRAIN_SEED, command: Optional[Sequence[str]] = None) -> Tuple[dict, dict]:
     started = time.monotonic()
     suite = build_visible_suite(seed)
-    strictest = {gid: block_strictness(game, suite.blocks.get(gid)) for gid, game in suite.games.items()}
+    strictest = {gid: block_strictness(game, suite.blocks.get(gid))
+                 for gid, game in suite.games.items() if gid not in suite.noise}
     sheriff, pools = make_pools(_mix(seed, 0x50))
     loop: Optional[PopulationLoop] = PopulationLoop(sheriff, pools, _mix(seed, 0x50))
     plan_rng = random.Random(_mix(seed, 0x51))
@@ -1871,7 +2284,8 @@ def evaluate_suite(seed: int = TRAIN_SEED, command: Optional[Sequence[str]] = No
         order = list(games)
         plan_rng.shuffle(order)
         remaining = TOTAL_TIMEOUT_SECONDS - (time.monotonic() - started)
-        out, error, log_tail = run_rater(games, order, command=command, timeout=min(CALL_TIMEOUT_SECONDS, remaining))
+        out, error, log_tail = run_rater(games, order, command=command, timeout=min(CALL_TIMEOUT_SECONDS, remaining),
+                                         noise=suite.noise)
         if error and log_tail:
             print("rating program output (tail):")
             print(log_tail)
@@ -1929,7 +2343,7 @@ def evaluate_suite(seed: int = TRAIN_SEED, command: Optional[Sequence[str]] = No
             else:
                 results[gid] = out.get(gid)
 
-    scores, diagnostics = score_suite(suite.games, suite.instances, results, call_errors, strictest)
+    scores, diagnostics = score_suite(suite.games, suite.instances, results, call_errors, strictest, suite.noise)
     population: Dict[str, Dict[str, float]] = {}
     curves: Dict[str, List[float]] = {}
     if loop is not None and loop.iteration == POP_ITERATIONS:

@@ -14,6 +14,7 @@ These are pass/fail conditions, not traded-off metrics. A game fails if:
 - the distribution is negative or does not sum to 1;
 - the distribution is not a coarse correlated equilibrium;
 - the ratings differ from the distribution's deviation gains by more than `1e-6 * payoff scale`;
+- for a noisy observation (experiment `noisy_clone_resilience`) that returns its own estimate `payoffs`: the estimate has the wrong shape, is not finite, or moves an observed payoff by more than the noise bound (the two checks above then use the estimate);
 - the call carrying it crashed, timed out (300 s per call, 2400 s in total), wrote malformed output, or created, changed or deleted files outside its temporary directory.
 
 When a game fails, every experiment containing it is scored as failed: lower-is-better metrics are set to `1e6` and `min_margin` to `-1e6`. A failure on any population meta-game fails `population_improvement`. Metrics are recomputed from the payoffs and the submitted distribution, never taken from numbers the method reports.
@@ -47,7 +48,20 @@ Primary metric:
 Additional scored check:
 - `mean_gap_ratio` (lower is better): mean gap over all checkpoints divided by the initial gap.
 
-This is the one experiment where the reproduced method is not at the bound of the metric. The paper reports that deviation ratings reduce the gap where uniform averaging stalls; a better rating can reduce it further.
+The reproduced method is not at the bound of this metric. The paper reports that deviation ratings reduce the gap where uniform averaging stalls; a better rating can reduce it further. Changing the equilibrium selection to do so usually costs `strictness_gap` or invariance in the property experiments.
+
+### `noisy_clone_resilience`
+
+What it tests:
+- Whether ratings computed from noisy evaluation data that contain near-copies of a strategy stay close to the deviation ratings of the true game. 96 hidden instances: random 2- and 3-player general-sum and zero-sum games and the paper's model vs model vs task game, each observed twice with every payoff within the noise bound 0.05 of the truth, once padded with 3-10 near-copies of one action (one task) and once without.
+
+Primary metric:
+- `rating_error` (lower is better): mean over the padded observations of the mean absolute difference between each action's rating and the true game's exact deviation rating of the action it observes, in units of the noise bound.
+
+Additional scored check:
+- `clean_rating_error` (lower is better): the same over the observations without near-copies, measured with independent noise.
+
+Rating the observation as given is valid but not optimal: a method may rate its own estimate of the true game, within the noise bound. 0 is unattainable from noisy data, so a better method can always score higher. These games carry `noise_bound`, so nothing a method does differently on them changes its results on the exact games of the other experiments.
 
 ## Constraint Targets
 
@@ -106,7 +120,7 @@ Additional scored checks:
 
 ## Baselines
 
-`uniform_payoff` is scored in every experiment. `zero_rating` and `negative_uniform_payoff` are scored in dominance, and `random_selection` in the population experiment. All are computed by the evaluator on the same games.
+`uniform_payoff` is scored in every experiment (in `noisy_clone_resilience` as the deviation gains of the uniform joint distribution, so it is on the deviation-rating scale). `zero_rating` and `negative_uniform_payoff` are scored in dominance, and `random_selection` in the population experiment. All are computed by the evaluator on the same games.
 
 ## Ablation Targets
 
@@ -119,4 +133,4 @@ No separate ablation experiment is scored. The hardening audit (`HARDENING.md`, 
 
 They are diagnostics, not scored experiments.
 
-The benchmark contains exactly the six scored experiments above, which correspond one-to-one with `scoring/scores.json`.
+The benchmark contains exactly the seven scored experiments above, which correspond one-to-one with `scoring/scores.json`.

@@ -12,7 +12,9 @@ Input (written by the evaluator):
 {"games": [{"id": "<opaque id>", "payoffs": P}, ...]}
 ```
 
-`P` has shape `[N][A_1]...[A_N]`: `P[p][a_1]...[a_N]` is player `p`'s payoff at the joint action `(a_1, ..., a_N)`. Games have 2 to 5 players, can include players with a single action, and range from 2x2 up to about 2,400 joint actions.
+`P` has shape `[N][A_1]...[A_N]`: `P[p][a_1]...[a_N]` is player `p`'s payoff at the joint action `(a_1, ..., a_N)`. Games have 2 to 5 players, can include players with a single action or with up to 150 actions, and range from 2x2 up to about 6,500 joint actions.
+
+Games of the noisy-redundancy experiment (7 below) carry one more field, `"noise_bound": b`. Their payoffs are measurements: each observed payoff is within `b` of the true payoff.
 
 Output (written by the method):
 
@@ -23,9 +25,11 @@ Output (written by the method):
 
 `ratings[p][a]` is the rating of player `p`'s action `a`. `equilibrium` is the joint recommendation distribution the ratings come from, as a flat list of `A_1 * ... * A_N` probabilities in C (row-major) order.
 
+For a game with a `noise_bound`, the entry may also carry `"payoffs": Q`: the game the method actually rated, its estimate of the true game, with the same shape as `P`. Every entry of `Q` must be within `b` of the corresponding entry of `P`. The checks below then apply to `Q` instead of `P`. Without `payoffs`, the observed game `P` is used. For every other game a `payoffs` field is ignored.
+
 ### Calls
 
-The program is called many times per evaluation: once per iteration of the population experiment (96 calls). Each call carries that iteration's population meta-games plus a share of the property games, shuffled and anonymised. The two games of an invariance pair (a game and its cloned, mixed or offset copy) are always in **different** calls. Each call runs in a fresh temporary directory (also `$TMPDIR`). A call may take at most 300 s, and all calls together at most 2400 s.
+The program is called many times per evaluation: once per iteration of the population experiment (96 calls). Each call carries that iteration's population meta-games plus a share of the property games and noisy observations, shuffled and anonymised. The two games of an invariance pair (a game and its cloned, mixed or offset copy), and the two observations of one true game in experiment 7, are always in **different** calls. Each call runs in a fresh temporary directory (also `$TMPDIR`). A call may take at most 300 s, and all calls together at most 2400 s.
 
 Calls must be **stateless**. Inside the job container a call fails if it creates, changes or deletes any file outside its temporary directory: in the workspace, `/tmp`, `/var/tmp` or `/dev/shm`. Every process a call starts is killed before its output is read. The hidden test also stops every other process of the submission before it begins. So one call cannot learn which games another call saw.
 
@@ -36,7 +40,8 @@ Every game's output must pass all of these:
 - every rating and probability is a finite JSON number (no `NaN`, `Infinity`, strings, booleans or nulls), with exactly one rating per action of every player;
 - the distribution is non-negative and sums to 1 (tolerance 1e-6);
 - the distribution is a coarse correlated equilibrium: every deviation gain `sum_a s(a) [G_p(a'_p, a_-p) - G_p(a)]` is at most `1e-6 * scale`;
-- the ratings **are** those deviation gains of the submitted distribution, within `1e-6 * scale`.
+- the ratings **are** those deviation gains of the submitted distribution, within `1e-6 * scale`;
+- for a noisy observation that returns `payoffs`: they have the game's shape, are finite, and move no observed payoff by more than the noise bound (plus `1e-9 * scale`). `G` above is then the returned game.
 
 Here `scale = max(1, largest absolute payoff in the game)`. If any game fails a gate, every experiment containing that game is **scored as failed**: its lower-is-better metrics are set to `1e6` and `min_margin` to `-1e6`. A crashed, timed-out, stateful or malformed call fails every game it carried. A failure on any population meta-game fails the population experiment.
 
@@ -48,9 +53,9 @@ Every scored number is recomputed from the payoffs and the submitted distributio
 |---|---|---|
 | `bash scripts/evaluate.sh` | the five documented public games plus families generated from a visible seed, and the population experiment on a visible seed | `scoring/scores.json` |
 | `bash scripts/evaluate_train.sh` | the same visible suite | `scoring/scores_train.json` |
-| `bash scripts/evaluate_test.sh` (hidden, no arguments) | about 250 property games and the population experiment, all generated at test time from a seed that exists only in the hidden test | `scoring/scores_test.json` |
+| `bash scripts/evaluate_test.sh` (hidden, no arguments) | about 280 property games, the population experiment and 192 noisy observations, all generated at test time from a seed that exists only in the hidden test | `scoring/scores_test.json` |
 
-The evaluators run with `python3 -I`, ignoring `PYTHONPATH`, user site-packages and the working directory. They do not read `checkpoints/`, `data/`, `baseline/` or `scoring/reference.json`. Baselines are computed by the evaluator itself. One evaluation takes about 4-4.5 minutes with the reproduced method, mostly program start-up across the 96 calls.
+The evaluators run with `python3 -I`, ignoring `PYTHONPATH`, user site-packages and the working directory. They do not read `checkpoints/`, `data/`, `baseline/` or `scoring/reference.json`. Baselines are computed by the evaluator itself. One evaluation takes about 6-8 minutes with the reproduced method, mostly program start-up across the 96 calls.
 
 ## Experiments
 
@@ -60,8 +65,8 @@ Property experiments: each metric is a maximum over the experiment's games (domi
    - Public game: the paper's Table 2 biased Shapley game augmented with its Nash mixture `N`.
    - Hidden games are games whose deviation ratings are provably all equal:
      - the biased Shapley game with and without `N`;
-     - symmetric populations of random mixtures of R/P/S, including ones with 33 and 48 strategies per player;
-     - scaled, offset, cloned and relabeled variants, and variants with one or two extra bystander players (see below);
+     - symmetric populations of random mixtures of R/P/S, including ones with 33 and 48 strategies per player (one of them with a two-action bystander, 4,608 joint actions);
+     - scaled, offset, cloned and relabeled variants, and variants with one or two extra bystander players, including bystanders with 40-150 actions (see below);
      - zero-sum rock-paper-scissors, randomly weighted RPS, and RPS-lizard-Spock.
    - `dev_gap`: rating spread of the first cyclic player's actions.
    - `all_player_dev_gap`: spread across both cyclic players.
@@ -70,7 +75,7 @@ Property experiments: each metric is a maximum over the experiment's games (domi
 
 2. **`clone_invariance`: duplicating a strategy changes nothing.**
    - Public game: rock-paper-scissors with player 1's rock cloned.
-   - Hidden games: random 2- and 3-player general-sum, zero-sum and common-interest games, games with one or two bystanders, products of two independent 2-player games (with or without a bystander), meta-games of random Sheriff populations (as in experiment 6), and 3-player games above 1,000 and above 2,000 joint actions. Each gets a clone of one action inserted at a random position, and every player's actions are relabeled.
+   - Hidden games: random 2- and 3-player general-sum, zero-sum and common-interest games, games with one or two bystanders (including bystanders with 40-150 actions), products of two independent 2-player games (with or without a bystander), meta-games of random Sheriff populations (as in experiment 6), 3-player games above 1,000 and above 2,000 joint actions, and 3- to 5-player games above 4,096 joint actions. Each gets a clone of one action inserted at a random position, and every player's actions are relabeled.
    - `max_diff`: change in the ratings of the other players' strategies, the ones that face the clone.
    - `all_players_max_diff`: change over all original actions of all players.
    - `clone_source_gap`: clone's rating versus its source.
@@ -105,6 +110,18 @@ Property experiments: each metric is a maximum over the experiment's games (domi
    - `mean_gap_ratio`: the same over all checkpoints.
    - Lower is better; 1 means no progress. Neither metric is bounded by any known method's value.
 
+7. **`noisy_clone_resilience`: ratings from noisy evaluation data with near-copies.**
+   - Real evaluation data are measurements: an LLM's score on a task is estimated from finitely many prompts, and redundant strategies are near-copies (similar prompts), not exact clones. This experiment asks how close the ratings computed from such data stay to the deviation ratings of the true game.
+   - Each instance is a small true game: a random 2-player game (3-4 actions each), a random 3-player game (2-3 actions each), a random zero-sum game, or the paper's model vs model vs task game (3-4 models, 3-4 tasks) built from a model x task score matrix in `[0, 1]`: `G_A = T(m_A, t) - T(m_B, t)`, `G_B = -G_A`, `G_T = |G_A|`. True payoffs lie in `[-1, 1]`.
+   - The method sees two observations of each true game, in different calls, each with `noise_bound` 0.05 and every payoff within 0.05 of the truth (independent bounded noise; for the model vs model vs task game the scores are measured, each within 0.025):
+     - the **padded** observation: one action of one player is repeated 3-10 extra times before measuring (for the model vs model vs task game, one task), so the copies are near-copies with their own noise;
+     - the **clean** observation: the true game measured once more, with independent noise.
+     Actions are relabeled in both.
+   - The target is the evaluator's exact deviation rating of the true game, computed in rational arithmetic (a near-copy's target is the rating of the action it copies).
+   - `rating_error` (primary): mean over the padded observations of the mean absolute rating error over every action of every player, in units of the noise bound.
+   - `clean_rating_error`: the same over the clean observations.
+   - Lower is better; 0 is unattainable from noisy data. The baseline `uniform_payoff` here is the deviation gains of the uniform joint distribution of the observation, i.e. uniform averaging on the deviation-rating scale.
+
 ### `strictness_gap`
 
 The selection being tested is the strictest equilibrium: minimize the largest deviation gain, then the next largest, and so on. `strictness_gap` checks it at every level the evaluator can certify.
@@ -117,13 +134,13 @@ The selection being tested is the strictest equilibrium: minimize the largest de
 
 ### Bystander players
 
-Some hidden games add one or two players whose payoff depends only on their own action (3-10 actions each). Such a player does not change the other players' deviation ratings. Its best action has deviation gain 0 under every CCE, though, which pins the first "minimize the largest deviation gain" LP at 0. Most of its other actions' gains lie between 0 and the original players' strictest value, so the original players' strictest equilibrium is reached only after many further selection steps, one per such level. A method must keep selecting among the remaining equilibria until every gain is fixed.
+Some hidden games add one or two players whose payoff depends only on their own action (3-10 actions each, and in some games one bystander with 40-150 actions). Such a player does not change the other players' deviation ratings. Its best action has deviation gain 0 under every CCE, though, which pins the first "minimize the largest deviation gain" LP at 0. Most of its other actions' gains lie between 0 and the original players' strictest value, so the original players' strictest equilibrium is reached only after many further selection steps, one per such level: up to about 150 in the largest bystanders. A method must keep selecting among the remaining equilibria until every gain is fixed.
 
 ## Baselines
 
 All baselines are computed by the evaluator on the same games, never by the submission:
 
-- `uniform_payoff` (every experiment): mean payoff over all opponent profiles. Its CCE and strictness gaps are those of the uniform joint distribution. In the population experiment it drops the policies with the lowest mean payoff.
+- `uniform_payoff` (every experiment): mean payoff over all opponent profiles. Its CCE and strictness gaps are those of the uniform joint distribution. In the population experiment it drops the policies with the lowest mean payoff. In the noisy-redundancy experiment it is the deviation gains of the uniform joint distribution (mean payoff minus the overall mean), which is uniform averaging on the deviation-rating scale.
 - `zero_rating` and `negative_uniform_payoff` (dominance only): constant zero ratings and negated uniform ratings.
 - `random_selection` (population only): drops random policies.
 
@@ -133,8 +150,10 @@ Baseline rows are reference points and are not subject to the method gates.
 
 The property experiments check the properties the paper proves (Table 1 and Section 5.1), and the strictness of the selected equilibrium at the top level and on every independent block, on games no submission can see beforehand. They do not check which algorithm produced the distribution. Below the top level, strictness is certified directly only on product games, through their blocks. Within a game that has no product structure, equilibria that differ only below the top level are distinguished through the invariance checks, not directly.
 
-The population experiment measures how well a rating drives a simple evolutionary search, the paper's directional claim. Only there can a method score better than the reproduced method. A method that changes its equilibrium selection to do so will usually pay for it in `strictness_gap` or the invariance metrics, which is the trade-off the benchmark is meant to expose.
+The population experiment measures how well a rating drives a simple evolutionary search, the paper's directional claim. A method that changes its equilibrium selection to score better there will usually pay for it in `strictness_gap` or the invariance metrics, which is the trade-off the benchmark is meant to expose.
+
+The noisy-redundancy experiment measures how well the deviation ratings of the true game are recovered from noisy data that contain near-copies. Exact clone invariance says nothing about near-copies with measurement noise. Rating the observed payoffs as given is one valid method, not the best possible: the returned `payoffs` field lets a method rate its own estimate of the true game, within the stated noise bound. Methods can score better than the reproduced one here without changing anything on the exact games of experiments 1-6, which carry no noise bound.
 
 ## Packaged scope
 
-The paper's LiveBench and Atari analyses and the 3-player Kuhn poker run of Section 5.3 are not part of the scored benchmark.
+The paper's LiveBench and Atari analyses and the 3-player Kuhn poker run of Section 5.3 are not part of the scored benchmark. Experiment 7 uses the paper's model vs model vs task construction on small synthetic score matrices, not the LiveBench data.
