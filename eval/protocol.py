@@ -428,9 +428,15 @@ def _child_pids() -> List[int]:
     return children
 
 
-def _kill_descendants() -> None:
-    """Kill and reap every remaining descendant, including detached daemons."""
-    for _ in range(200):
+def _kill_descendants(limit_seconds: float = 30.0) -> None:
+    """Kill and reap every remaining descendant, including detached daemons.
+
+    Reaping never blocks: a process stuck in uninterruptible I/O keeps its pending
+    SIGKILL and dies as soon as that I/O returns, without running any more of its
+    own code, so the evaluator does not wait on it beyond ``limit_seconds``.
+    """
+    deadline = time.monotonic() + limit_seconds
+    while True:
         children = _child_pids()
         if not children:
             return
@@ -441,9 +447,13 @@ def _kill_descendants() -> None:
                 pass
         for pid in children:
             try:
-                os.waitpid(pid, 0)
+                os.waitpid(pid, os.WNOHANG)
             except OSError:
                 pass
+        if time.monotonic() > deadline:
+            print(f"warning: {len(children)} killed rating process(es) not yet reaped", flush=True)
+            return
+        time.sleep(0.01)
 
 
 def _in_private_pid_namespace() -> bool:
