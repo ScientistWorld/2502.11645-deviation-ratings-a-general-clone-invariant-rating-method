@@ -1,0 +1,19 @@
+{
+  "name": "batch_transport_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "d975a9a2c0321ed50eea35a0ec346726d1c630ec0ab7e7ed31b99548790c2da5",
+  "from_scratch_install": true,
+  "train": {
+    "exit_code": 0,
+    "seconds": 116.3399
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 114.6325
+  },
+  "score_sha256": "a50aa8871ecba9124c3c72bc7fc85a3f3096fc87dafe0b208263e77d3b9dd284",
+  "shortcut_writer_marker_at_capture": false
+}

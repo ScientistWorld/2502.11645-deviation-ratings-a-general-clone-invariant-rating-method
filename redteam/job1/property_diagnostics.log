@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/user/redteam/property_diagnostics.py", line 144, in <module>
+    main()
+  File "/home/user/redteam/property_diagnostics.py", line 95, in main
+    out = rule(game)
+          ^^^^^^^^^^
+  File "/home/user/redteam/property_diagnostics.py", line 79, in <lambda>
+    "reference": lambda g: rate_game(g.payload()),
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/method/rate.py", line 29, in rate_game
+    result = deviation_rating(array, num_players, action_dims)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/method/deviation_rating.py", line 170, in deviation_rating
+    raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
+RuntimeError: LP failed in iteration 34: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is Infeasible)
+
+real	0m12.851s
+user	0m12.517s
+sys	0m0.354s

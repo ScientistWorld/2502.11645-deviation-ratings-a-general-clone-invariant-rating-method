@@ -1,3 +1,8 @@
-action: done
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: submit
+gpus: 0
+test: false
 milestone: secondary_claims
-notes: "Completed audit of 62 shortcuts: five substantive reference-score ties, zero three-seed score spread, reference beats baseline. Gym restored; report and evidence committed as 060fb02. Existing reproduction milestone retained."
+notes: "Hardening job 1: reference through the new train/hidden evaluators (timing), property and population diagnostics on non-hidden seeds, replays of REDTEAM's five paying shortcuts"

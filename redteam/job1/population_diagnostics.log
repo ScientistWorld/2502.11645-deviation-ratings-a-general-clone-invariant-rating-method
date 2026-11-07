@@ -1,0 +1,27 @@
+101 {'uniform_payoff': {'mean_gap_ratio': 0.716813, 'final_gap_ratio': 0.689811}, 'random_selection': {'mean_gap_ratio': 1.024591, 'final_gap_ratio': 0.982954}, 'reference': {'mean_gap_ratio': 0.686133, 'final_gap_ratio': 0.690949}} 30.3 s
+202 {'uniform_payoff': {'mean_gap_ratio': 0.699423, 'final_gap_ratio': 0.639329}, 'random_selection': {'mean_gap_ratio': 1.002263, 'final_gap_ratio': 1.026589}, 'reference': {'mean_gap_ratio': 0.698464, 'final_gap_ratio': 0.604979}} 31.1 s
+Traceback (most recent call last):
+  File "/home/user/redteam/population_diagnostics.py", line 161, in <module>
+    main()
+  File "/home/user/redteam/population_diagnostics.py", line 145, in main
+    report["rules"].setdefault("reference", {})[str(seed)] = run_loop(seed, reference_rate, args.iterations)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/redteam/population_diagnostics.py", line 88, in run_loop
+    loop.advance([rate(game) for game in loop.meta_games()])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/redteam/population_diagnostics.py", line 88, in <listcomp>
+    loop.advance([rate(game) for game in loop.meta_games()])
+                  ^^^^^^^^^^
+  File "/home/user/redteam/population_diagnostics.py", line 109, in reference_rate
+    out = rate_game(game.payload())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/method/rate.py", line 29, in rate_game
+    result = deviation_rating(array, num_players, action_dims)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/method/deviation_rating.py", line 170, in deviation_rating
+    raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
+RuntimeError: LP failed in iteration 9: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is Infeasible)
+
+real	1m31.518s
+user	1m30.593s
+sys	0m0.515s
