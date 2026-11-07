@@ -1,0 +1,43 @@
+[hive] This stdout log is managed by Hive.
+[hive] job_id: f6622ba2
+[hive] host: node
+[hive] node_id: 0e2da7d46377be01720740f5d6216c84c1cfd312d41e238f04a3568a
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 21600
+[hive] started_at: 2026-11-07 15:47:32 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2502.11645:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'
+public population diagnostic 16/96, 5s
+public population diagnostic 32/96, 9s
+public population diagnostic 48/96, 14s
+public population diagnostic 64/96, 18s
+public population diagnostic 80/96, 22s
+public population diagnostic 96/96, 26s
+{"games": 768, "pure_reference_games": 53, "unique_pure_CCE_games": 53, "population_metrics": {"late_gap_ratio": 0.7126380582835152, "mean_gap_ratio": 0.7784609979546965}, "curve": [25.9831, 23.6768, 23.1929, 20.5991, 23.0817, 21.087, 19.985, 20.1785, 18.1716, 18.7152, 19.1481, 17.2386, 17.6472], "minimum_dual_mass": -0.0}
+START reference_seed_0, elapsed=36s
+END reference_seed_0
+START reference_seed_1, elapsed=732s
+END reference_seed_1
+START reference_seed_2, elapsed=1064s
+END reference_seed_2
+START vectorized_solver, elapsed=1403s
+END vectorized_solver
+START weaker_one_lp, elapsed=1973s
+END weaker_one_lp
+START welfare_cce_variant, elapsed=2432s
+END welfare_cce_variant
+START exact_cce_certificate, elapsed=2985s
+END exact_cce_certificate
+START tolerant_cce_certificate, elapsed=3019s
+END tolerant_cce_certificate
+START feasibility_only_shortcut, elapsed=3053s
+Traceback (most recent call last):
+  File "/home/user/redteam/audit_20261107/harness.py", line 158, in <module>
+    main()
+  File "/home/user/redteam/audit_20261107/harness.py", line 120, in main
+    from data.game_data import augmented_biased_shapley_game
+ModuleNotFoundError: No module named 'data'
+

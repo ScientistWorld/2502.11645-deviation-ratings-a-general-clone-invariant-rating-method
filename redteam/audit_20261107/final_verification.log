@@ -1,0 +1,39 @@
+{
+  "base_commit": "565d60c2e9259ae79c6ce4c13268ce0d476b98dd",
+  "completed_hidden_tests": 21,
+  "explicit_shortcuts": 13,
+  "scored_metrics_per_test": 22,
+  "test_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+  "seed_rank_spread": 0,
+  "all_baseline_rows_unchanged": true,
+  "cap32_standalone_witness_replayed_exactly": true,
+  "size_limit_standalone_empty_equilibrium_verified": true,
+  "unexpected_index_changes_outside_audit": [],
+  "unexpected_workspace_changes_outside_audit": [],
+  "required_control_file_exception": "action.yaml completion signal",
+  "external_readonly_masks": [
+    "README.md",
+    "manifest.json",
+    "trajectory/session.json",
+    "trajectory/turn_0001_raw.jsonl",
+    "trajectory/turn_0002_raw.jsonl",
+    "trajectory/turn_0003_raw.jsonl",
+    "trajectory/turn_0004_raw.jsonl",
+    "trajectory/turn_0005_raw.jsonl",
+    "trajectory/turn_0006_raw.jsonl",
+    "trajectory/turn_0007_raw.jsonl",
+    "trajectory/turn_0008_raw.jsonl",
+    "trajectory/turn_0009_raw.jsonl",
+    "trajectory/turn_0010_raw.jsonl",
+    "trajectory/turn_0011_raw.jsonl",
+    "trajectory/turn_0012_raw.jsonl",
+    "trajectory/turn_0013_raw.jsonl"
+  ],
+  "external_masks_original_git_blobs_in_index": true,
+  "restoration_error": "README.md and manifest.json are /dev/null read-only mounts; trajectory is an empty read-only mount. git restore cannot replace them.",
+  "mount_evidence": [
+    "236433 204411 0:6 /null /home/user/README.md ro,nosuid,nodev master:154751 - devtmpfs devtmpfs rw,seclabel,size=527777644k,nr_inodes=131944411,mode=755,inode64",
+    "236434 204411 0:697 /lab/projects/researchgym/workspaces/workspaces/2502.11645/.empty_trajectory /home/user/trajectory ro,nosuid,nodev,relatime master:155473 - gpfs gpfs rw,context=system_u:object_r:nfs_t:s0",
+    "236616 204411 0:6 /null /home/user/manifest.json ro,nosuid,nodev master:154751 - devtmpfs devtmpfs rw,seclabel,size=527777644k,nr_inodes=131944411,mode=755,inode64"
+  ]
+}

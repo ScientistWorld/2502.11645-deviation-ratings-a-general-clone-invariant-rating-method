@@ -1,4 +1,3 @@
-action: submit
-gpus: 0
-test: false
-notes: "Resume audit after fixing harness-only import path: retain 8 completed evaluations, run the remaining 13 shortcut replays, and summarize exact weighted ranks."
+action: done
+milestone: secondary_claims
+notes: "Audit complete: 21 hidden tests, 13 shortcut attempts, 2 shortcut ties; weaker ablation loses, faster exact solver ties, reference seed spread 0. REDTEAM.md and replay evidence committed; original Git blobs restored outside audit, with pre-existing read-only mounts documented."

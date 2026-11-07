@@ -1,0 +1,70 @@
+[hive] This stdout log is managed by Hive.
+[hive] job_id: af693525
+[hive] host: node
+[hive] node_id: 0e2da7d46377be01720740f5d6216c84c1cfd312d41e238f04a3568a
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 21600
+[hive] started_at: 2026-11-07 16:42:13 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2502.11645:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2502.11645/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'
+SKIP completed reference_seed_0
+SKIP completed reference_seed_1
+SKIP completed reference_seed_2
+SKIP completed vectorized_solver
+SKIP completed weaker_one_lp
+SKIP completed welfare_cce_variant
+SKIP completed exact_cce_certificate
+SKIP completed tolerant_cce_certificate
+START feasibility_only_shortcut, elapsed=0s
+END feasibility_only_shortcut
+START cap32_shortcut, elapsed=328s
+END cap32_shortcut
+START cap12_shortcut, elapsed=727s
+END cap12_shortcut
+START size_limit_shortcut, elapsed=1049s
+END size_limit_shortcut
+START visible_answers_shortcut, elapsed=1418s
+END visible_answers_shortcut
+START reported_fields_shortcut, elapsed=1496s
+END reported_fields_shortcut
+START direct_scores_shortcut, elapsed=1526s
+END direct_scores_shortcut
+START baseline_move_shortcut, elapsed=1555s
+END baseline_move_shortcut
+START artifact_replace_shortcut, elapsed=1586s
+END artifact_replace_shortcut
+START constant_zero_shortcut, elapsed=1613s
+END constant_zero_shortcut
+START empty_output_shortcut, elapsed=1637s
+END empty_output_shortcut
+START impossible_values_shortcut, elapsed=1664s
+END impossible_values_shortcut
+START copy_input_shortcut, elapsed=1695s
+END copy_input_shortcut
+{
+  "artifact_replace_shortcut": -2227999.8560762,
+  "baseline_move_shortcut": -2227999.8560762,
+  "cap12_shortcut": -0.008964032,
+  "cap32_shortcut": 0.0,
+  "constant_zero_shortcut": -2227999.8560762,
+  "copy_input_shortcut": -2227999.8560762,
+  "direct_scores_shortcut": -2227999.8560762,
+  "empty_output_shortcut": -2227999.8560762,
+  "exact_cce_certificate": -2227999.8560762,
+  "feasibility_only_shortcut": -0.0421172,
+  "impossible_values_shortcut": -2227999.8560762,
+  "reference_seed_0": 0.0,
+  "reference_seed_1": 0.0,
+  "reference_seed_2": 0.0,
+  "reported_fields_shortcut": -2227999.8560762,
+  "size_limit_shortcut": 0.0,
+  "tolerant_cce_certificate": -2227999.8560762,
+  "vectorized_solver": 0.0,
+  "visible_answers_shortcut": -2227999.8560762,
+  "weaker_one_lp": -3.1964371720000004,
+  "welfare_cce_variant": -5.899502052
+}
+seed rank spread 0.0
