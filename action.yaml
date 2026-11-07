@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening job 2: fixed reference through hidden test with sweep/stateless gate active, 3 replays, property diagnostics (5 seeds), population diagnostics (6 seeds x 256 iterations)"
+notes: "Hardening job 3: property diagnostics, reference end to end from the final code (public/train/hidden + validate), then resumable shortcut replays through the final hidden test"

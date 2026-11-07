@@ -1,0 +1,1219 @@
+{
+ "seeds": [
+  "hidden",
+  101,
+  202,
+  303,
+  404
+ ],
+ "rules": {
+  "reference": [
+   {
+    "seed": "hidden",
+    "seconds": 11.5,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 1.3948553423404064e-10,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 101,
+    "seconds": 11.5,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 7.339018281982135e-12,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 202,
+    "seconds": 11.0,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 4.113304605904907e-11,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 303,
+    "seconds": 10.8,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 2.188804693048496e-12,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 404,
+    "seconds": 12.0,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 1.2747557211137153e-11,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   }
+  ],
+  "lax": [
+   {
+    "seed": "hidden",
+    "seconds": 24.1,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.7343149129873819,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 2.821577
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.69443
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.684645
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.734315
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.706801
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 101,
+    "seconds": 24.2,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.6697146913695572,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 3.103734
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.669715
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.651671
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.663293
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.722514
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 202,
+    "seconds": 24.3,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.696332398655346,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 4.683817
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.696332
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.677035
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.677534
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.67474
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 303,
+    "seconds": 23.5,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.7155771038343731,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 3.442324
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.680238
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.715577
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.681882
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.692008
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 404,
+    "seconds": 24.4,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.7081880774234083,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 6.658921
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "all_players_max_diff": 0.0,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.670816
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.0,
+       "mixture_error": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.69784
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.708188
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.673172
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   }
+  ],
+  "single_lp": [
+   {
+    "seed": "hidden",
+    "seconds": 3.1,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 6.628031457012185e-14,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 1.364741,
+       "all_player_dev_gap": 4.239106,
+       "player_symmetry_gap": 3.641514,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.309308,
+       "all_players_max_diff": 0.309308,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.837158,
+       "mixture_error": 0.004401,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.136487,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 101,
+    "seconds": 3.3,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 1.2989609388114332e-14,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 3.700969,
+       "all_player_dev_gap": 3.700969,
+       "player_symmetry_gap": 2.284421,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.04206,
+       "all_players_max_diff": 0.04206,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.267,
+       "mixture_error": 0.105342,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 202,
+    "seconds": 3.3,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 1.635025448365468e-12,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 3.720322,
+       "all_player_dev_gap": 3.720322,
+       "player_symmetry_gap": 2.35558,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.514,
+       "all_players_max_diff": 1.485,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.48,
+       "mixture_error": 0.395189,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.0,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 303,
+    "seconds": 3.2,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 2.731148640577885e-14,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 3.700969,
+       "all_player_dev_gap": 3.720322,
+       "player_symmetry_gap": 2.35558,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.937,
+       "all_players_max_diff": 0.937,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.088509,
+       "mixture_error": 0.138193,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.851008,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 404,
+    "seconds": 3.2,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 9.43689570931383e-15,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 1.416548,
+       "all_player_dev_gap": 3.720322,
+       "player_symmetry_gap": 2.35558,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 1.798,
+       "all_players_max_diff": 1.798,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.220072,
+       "mixture_error": 0.731555,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.43474,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.0
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   }
+  ],
+  "zero_gain": [
+   {
+    "seed": "hidden",
+    "seconds": 3.6,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.734314912987383,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 2.821577
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.238914,
+       "all_players_max_diff": 0.638472,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.69443
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.65707,
+       "mixture_error": 0.411241,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.684645
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.054194,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.734315
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.706801
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 101,
+    "seconds": 3.7,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.6697146913695576,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 3.103734
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.217984,
+       "all_players_max_diff": 0.87666,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.669715
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.8,
+       "mixture_error": 0.697911,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.651671
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 1.527146,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.663293
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.722514
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 202,
+    "seconds": 3.5,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.6963323986553451,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 4.683817
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.980307,
+       "all_players_max_diff": 0.980307,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.696332
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.355,
+       "mixture_error": 0.344445,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.677035
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.158394,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.677534
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.67474
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 303,
+    "seconds": 3.7,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.7155771038343693,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 3.442324
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.679334,
+       "all_players_max_diff": 0.679334,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.680238
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 0.727551,
+       "mixture_error": 0.449014,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.715577
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 0.220803,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.681882
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.692008
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   },
+   {
+    "seed": 404,
+    "seconds": 3.6,
+    "uncertified": 0,
+    "rating_errors": [],
+    "rating_error_count": 0,
+    "max_relative_excess_over_strictest": 0.7081880774234093,
+    "experiments": {
+     "biased_shapley_augmented": {
+      "proposed": {
+       "dev_gap": 0.0,
+       "all_player_dev_gap": 0.0,
+       "player_symmetry_gap": 0.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 6.658921
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "clone_invariance": {
+      "proposed": {
+       "max_diff": 0.432571,
+       "all_players_max_diff": 0.669922,
+       "clone_source_gap": 0.0,
+       "strictness_gap": 0.670816
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "mixture_invariance": {
+      "proposed": {
+       "original_max_diff": 1.365,
+       "mixture_error": 0.512369,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.69784
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "offset_invariance": {
+      "proposed": {
+       "max_diff": 1.367112,
+       "max_CCE_gap": 0.0,
+       "strictness_gap": 0.708188
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     },
+     "dominance_preserving": {
+      "proposed": {
+       "dominance_violations": 0,
+       "min_margin": 1.0,
+       "CCE_gap": 0.0,
+       "strictness_gap": 0.673172
+      },
+      "failed_games": 0,
+      "failure_reasons": []
+     }
+    }
+   }
+  ]
+ }
+}
