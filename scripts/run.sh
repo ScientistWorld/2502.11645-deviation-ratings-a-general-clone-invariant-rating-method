@@ -1,41 +1,34 @@
 #!/bin/bash
-# Hardening job 2 (diagnostics): the numerically robust reference through the
-# hidden test (with the process sweep and stateless-call gate active), three
-# shortcut replays, property diagnostics on the hidden and 4 alternative seeds,
-# and population diagnostics (6 seeds, 256 iterations) to fix the horizon.
+# Hardening job 3: property diagnostics (reference and cheap selections on the
+# hidden and 4 alternative seeds), the reference end to end from the final code
+# (paper artifacts, baseline, public/train/hidden evaluation, validation), then
+# as many shortcut replays through the final hidden test as the time allows
+# (redteam/replay_all.py resumes in later jobs).
 set -uo pipefail
 cd /home/user
 export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-OUT=redteam/job2
+OUT=redteam/job3
 mkdir -p "$OUT"
 
-echo "=== hidden test (reference)"
-( time timeout 1800 bash scripts/evaluate_test.sh ) > "$OUT/test_reference.log" 2>&1
-tail -40 "$OUT/test_reference.log"
-cp scoring/scores_test.json "$OUT/scores_test_reference.json" 2>/dev/null
-
-echo "=== shortcut replays (test only)"
-for name in prestarted_writer_shortcut zero_gain_fallback_shortcut large_game_abandonment_shortcut; do
-  SHORTCUT_SKIP_TRAIN=1 timeout 900 python3 redteam/audit_v2/shortcut_harness.py "$name" --evidence-subdir job2_check \
-    > "$OUT/replay_$name.log" 2>&1
-  echo "$name exit=$?"
-  grep -E "stopped|FAILED|gate failure" "redteam/$name/job2_check/test.log" | head -8
-  python3 -c "
-import json
-p='redteam/$name/job2_check/scores_test.json'
-try:
-    s=json.load(open(p)); print({e: v['results']['deviation_rating'] for e, v in s['experiments'].items()})
-except Exception as e: print('no scores', e)
-print('marker', __import__('os').path.exists('redteam/$name/job2_check/shortcut_writer_ran.json'))
-"
-done
-
 echo "=== property diagnostics"
-( time timeout 1200 python3 redteam/property_diagnostics.py ) > "$OUT/property_diagnostics.log" 2>&1
-tail -25 "$OUT/property_diagnostics.log"
+( time timeout 900 python3 redteam/property_diagnostics.py ) > "$OUT/property_diagnostics.log" 2>&1
+grep -E "^\[|real" "$OUT/property_diagnostics.log" | cut -c1-400
 
-echo "=== population diagnostics"
-( time timeout 1500 python3 redteam/population_diagnostics.py --iterations 256 --alt-iterations 128 --alt-seeds 2 ) \
-  > "$OUT/population_diagnostics.log" 2>&1
-tail -20 "$OUT/population_diagnostics.log"
-echo "=== done"
+echo "=== reference end to end"
+( time bash scripts/reproduce.sh ) > "$OUT/reproduce.log" 2>&1
+tail -5 "$OUT/reproduce.log"
+( time bash scripts/evaluate_train.sh ) > "$OUT/train.log" 2>&1
+grep -E "==|FAILED|gate failure|deviation_rating|real" "$OUT/train.log" | cut -c1-300
+( time bash scripts/evaluate_test.sh ) > "$OUT/test.log" 2>&1
+cat "$OUT/test.log"
+python3 validate.py > "$OUT/validate.log" 2>&1; tail -20 "$OUT/validate.log"
+
+echo "=== shortcut replays"
+BUDGET=$(( 3250 - SECONDS - 300 ))
+echo "replay budget ${BUDGET}s"
+if [ "$BUDGET" -gt 120 ]; then
+  # No pipes here: the hidden test stops every non-ancestor process of the job.
+  timeout $(( BUDGET + 600 )) python3 redteam/replay_all.py --budget "$BUDGET" > "$OUT/replays.log" 2>&1
+  cut -c1-600 "$OUT/replays.log"
+fi
+echo "=== done after ${SECONDS}s"

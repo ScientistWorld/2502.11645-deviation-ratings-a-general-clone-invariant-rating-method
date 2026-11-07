@@ -99,7 +99,8 @@ def deviation_rating(
     equalities; only if the solver then reports the LP infeasible (round-off
     accumulated over earlier iterations) is the iteration re-solved with each
     frozen rating held in a band of half-width ``bands[i]`` (relative) around its
-    value, which leaves the selection unchanged in exact arithmetic. The returned
+    value, and then re-centred on the previous iteration's distribution (feasible
+    by construction). In exact arithmetic none of this changes the selection. The returned
     ratings are the deviation gains of the returned distribution, recomputed at
     the end, so they and the equilibrium are always consistent.
     """
@@ -151,21 +152,30 @@ def deviation_rating(
         simplex_row = np.zeros(n_vars, dtype=float)
         simplex_row[:num_joint] = 1.0
 
+        # Equalities first; on reported infeasibility (accumulated round-off) hold the
+        # frozen gains in narrow bands, then re-centre them on the previous
+        # iteration's distribution, which satisfies them by construction.
+        attempts = [(band, False, None) for band in bands]
+        attempts += [(0.0, True, None), (1e-9, True, None), (1e-8, True, {"presolve": False}),
+                     (1e-7, True, {"presolve": False})]
         result = None
-        for band in bands:
+        for band, recenter, extra in attempts:
+            targets = {c: (float(np.dot(coeff[c], sigma_star)) if recenter else float(ratings[c])) for c in frozen}
             rows_ub, rhs_ub = list(A_ub_list), list(b_ub_list)
             rows_eq, rhs_eq = [], []
-            for p, ap in frozen:
+            for c in frozen:
                 row = np.zeros(n_vars, dtype=float)
-                row[:num_joint] = coeff[p, ap]
+                row[:num_joint] = coeff[c]
                 if band == 0.0:
                     rows_eq.append(row)
-                    rhs_eq.append(ratings[p, ap])
+                    rhs_eq.append(targets[c])
                 else:
                     rows_ub += [row, -row]
-                    rhs_ub += [ratings[p, ap] + band, -(ratings[p, ap] - band)]
+                    rhs_ub += [targets[c] + band, -(targets[c] - band)]
             rows_eq.append(simplex_row)
             rhs_eq.append(1.0)
+            options = dict(lp_options or {})
+            options.update(extra or {})
             result = linprog(
                 c=objective,
                 A_ub=np.array(rows_ub, dtype=float) if rows_ub else None,
@@ -174,9 +184,12 @@ def deviation_rating(
                 b_eq=np.array(rhs_eq, dtype=float),
                 bounds=bounds,
                 method="highs",
-                options=dict(lp_options or {}),
+                options=options,
             )
             if result.success:
+                if recenter:
+                    for c in frozen:
+                        ratings[c] = targets[c]
                 break
         if result is None or not result.success:
             raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")

@@ -1,8 +1,8 @@
 {
   "experiments": {
     "biased_shapley_augmented": {
-      "description": "Paper Table 2: biased Shapley game augmented with the Nash strategy N. Deviation ratings should assign equal ratings to R, P, S, and N.",
-      "weight": 0.35,
+      "description": "Paper Table 2 / Section 5.1: in cyclic games no strategy should be rated above another; the biased Shapley game augmented with N gets equal ratings for R, P, S and N (-2720/964, the strictest CCE's deviation gains). Hidden test: transformed and populated cyclic games whose deviation ratings are provably all equal. Weights were rescaled by 0.8 when the population-improvement experiment was added; their ratios are unchanged.",
+      "weight": 0.28,
       "primary_metric": "dev_gap",
       "metrics": {
         "dev_gap": {
@@ -24,6 +24,11 @@
           "higher_is_better": false,
           "coefficient": -0.3,
           "description": "Largest same-strategy rating mismatch between the two players in the symmetric cyclic games."
+        },
+        "strictness_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
         }
       },
       "results": {
@@ -39,7 +44,7 @@
     },
     "clone_invariance": {
       "description": "Paper Property 6: adding a clone of an existing strategy should not change the ratings of the original strategies.",
-      "weight": 0.2,
+      "weight": 0.16,
       "primary_metric": "max_diff",
       "metrics": {
         "max_diff": {
@@ -56,6 +61,11 @@
           "higher_is_better": false,
           "coefficient": -0.5,
           "description": "Largest rating mismatch between an added clone and its source action."
+        },
+        "strictness_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
         }
       },
       "results": {
@@ -70,7 +80,7 @@
     },
     "mixture_invariance": {
       "description": "Paper Property 7: adding a mixed strategy should not change the original ratings, and the new strategy should inherit the corresponding mixed rating.",
-      "weight": 0.15,
+      "weight": 0.12,
       "primary_metric": "original_max_diff",
       "metrics": {
         "original_max_diff": {
@@ -87,6 +97,11 @@
           "higher_is_better": false,
           "coefficient": -0.2,
           "description": "Largest recomputed equilibrium regret gap across the base and mixed-strategy augmented games."
+        },
+        "strictness_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
         }
       },
       "results": {
@@ -102,7 +117,7 @@
     },
     "offset_invariance": {
       "description": "Paper Property 5: adding arbitrary b_p(a_-p) offsets should not change any deviation ratings.",
-      "weight": 0.15,
+      "weight": 0.12,
       "primary_metric": "max_diff",
       "metrics": {
         "max_diff": {
@@ -114,6 +129,11 @@
           "higher_is_better": false,
           "coefficient": -0.2,
           "description": "Largest recomputed equilibrium regret gap across the base and offset-transformed games."
+        },
+        "strictness_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
         }
       },
       "results": {
@@ -128,7 +148,7 @@
     },
     "dominance_preserving": {
       "description": "Paper Property 4: if one strategy dominates another, the dominant strategy should not receive a lower rating.",
-      "weight": 0.15,
+      "weight": 0.12,
       "primary_metric": "dominance_violations",
       "metrics": {
         "dominance_violations": {
@@ -145,6 +165,11 @@
           "higher_is_better": true,
           "coefficient": 0.3,
           "description": "Smallest ratio of rating advantage to guaranteed payoff advantage over the evaluator's dominance pairs. Every game contains a pair with a constant payoff gap, on which a rating that is the deviation gain of any distribution has ratio exactly 1, so the value cannot exceed 1."
+        },
+        "strictness_gap": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
         }
       },
       "results": {
@@ -160,6 +185,38 @@
           "type": "baseline"
         },
         "uniform_payoff": {
+          "type": "baseline"
+        }
+      }
+    },
+    "population_improvement": {
+      "description": "Paper Section 5.3 / Figure 3b: ratings drive a population search in Sheriff (item penalty 1, item value 5, max bribe 2, max items 10, 2 rounds, sheriff penalty 1). 8 random stochastic policies per player; each iteration rate the meta-game, discard each player's bottom quarter, replace it with new random policies. Progress is the full-game CCE gap of the population (under the meta-game's maximum-entropy CCE), relative to the initial population's. Paper values are read off Figure 3b (one run, 512 iterations, markers every 32) at the gym's horizon of 96 iterations: late = mean of the 64 and 96 markers, mean = mean of the 32, 64 and 96 markers. Over the paper's full 512 iterations the second-half ratios are about 0.49 (deviation) and 0.86 (uniform). Scaled setup: 8 independent runs x 96 iterations, fixed candidate policy streams per run.",
+      "weight": 0.2,
+      "primary_metric": "late_gap_ratio",
+      "metrics": {
+        "late_gap_ratio": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Mean full-game CCE gap over the second half of the run (checkpoints every 8 iterations), divided by the initial population's gap; averaged over the runs."
+        },
+        "mean_gap_ratio": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Mean full-game CCE gap over all checkpoints after the start, divided by the initial gap."
+        }
+      },
+      "results": {
+        "deviation_rating": {
+          "type": "proposed",
+          "late_gap_ratio": 0.649,
+          "mean_gap_ratio": 0.641
+        },
+        "uniform_payoff": {
+          "type": "baseline",
+          "late_gap_ratio": 0.821,
+          "mean_gap_ratio": 0.838
+        },
+        "random_selection": {
           "type": "baseline"
         }
       }

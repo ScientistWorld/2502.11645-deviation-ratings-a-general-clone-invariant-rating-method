@@ -66,7 +66,7 @@ PROPERTY_METRICS: Dict[str, Tuple[str, ...]] = {
     "dominance_preserving": ("dominance_violations", "min_margin", "CCE_gap", "strictness_gap"),
 }
 EXPERIMENT_METRICS: Dict[str, Tuple[str, ...]] = dict(
-    PROPERTY_METRICS, **{POPULATION_EXPERIMENT: ("mean_gap_ratio", "final_gap_ratio")}
+    PROPERTY_METRICS, **{POPULATION_EXPERIMENT: ("late_gap_ratio", "mean_gap_ratio")}
 )
 HIGHER_IS_BETTER = frozenset({"min_margin"})
 INTEGER_METRICS = frozenset({"dominance_violations"})
@@ -526,7 +526,11 @@ def terminate_foreign_processes() -> List[int]:
 FORCE_ISOLATION = False
 _UNWATCHED = frozenset({".git", "jobs", "logs", "shared", "trajectory", ".claude", ".claude.json",
                         ".claude-tmp", ".codex", ".empty_.claude-tmp", ".empty_trajectory"})
+# The container image and its overlay are mounted by the system and may be touched by it.
+_UNWATCHED_ENVIRONMENT = frozenset({"overlay.img", "container.sif", "container.final.def", ".setup_wrapper.sh",
+                                    ".overlay.log"})
 _WATCHED_ROOTS = (str(ROOT), "/tmp", "/var/tmp", "/dev/shm")
+_LARGE_FILE_BYTES = 256 * 1024 * 1024
 
 
 def isolation_active() -> bool:
@@ -542,6 +546,8 @@ def _file_state(skip: str) -> Dict[str, tuple]:
             if dirpath == str(ROOT):
                 dirnames[:] = [d for d in dirnames if d not in _UNWATCHED]
                 filenames = [f for f in filenames if f not in _UNWATCHED]
+            elif dirpath == str(ROOT / "environment"):
+                filenames = [f for f in filenames if f not in _UNWATCHED_ENVIRONMENT]
             dirnames[:] = [d for d in dirnames if os.path.join(dirpath, d) != skip]
             for name in dirnames + filenames:
                 path = os.path.join(dirpath, name)
@@ -549,7 +555,10 @@ def _file_state(skip: str) -> Dict[str, tuple]:
                     info = os.lstat(path)
                 except OSError:
                     continue
-                state[path] = (info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns, info.st_mode)
+                if stat.S_ISREG(info.st_mode) and info.st_size > _LARGE_FILE_BYTES:
+                    state[path] = (info.st_ino, "large file")  # disk images etc.: existence only
+                else:
+                    state[path] = (info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns, info.st_mode)
     return state
 
 
@@ -1027,7 +1036,7 @@ def dominance_test_game() -> Game:
 POP_SIZE = 8
 POP_DROP = 2
 POP_RUNS = 8
-POP_ITERATIONS = 64
+POP_ITERATIONS = 96
 POP_CHECKPOINT_EVERY = 8
 MECCE_EPS_REL = 1.0e-4
 # Paper Appendix C.1: item penalty 1, item value 5, max bribe 2, max items 10,
@@ -1361,10 +1370,13 @@ class PopulationLoop:
                 self.curves[run].append(pop.full_game_gap(self.sheriff))
 
     def metrics(self) -> Dict[str, float]:
+        """Gap relative to the initial population's: over the second half of the run, and over all checkpoints."""
         initial = math.fsum(curve[0] for curve in self.curves) / len(self.curves)
-        final = math.fsum(curve[-1] for curve in self.curves) / len(self.curves)
+        points = len(self.curves[0]) - 1
         later = [v for curve in self.curves for v in curve[1:]]
-        return {"mean_gap_ratio": math.fsum(later) / len(later) / initial, "final_gap_ratio": final / initial}
+        late = [v for curve in self.curves for v in curve[points // 2 + 1:]]
+        return {"late_gap_ratio": math.fsum(late) / len(late) / initial,
+                "mean_gap_ratio": math.fsum(later) / len(later) / initial}
 
     def mean_curve(self) -> List[float]:
         return [round(math.fsum(c[i] for c in self.curves) / len(self.curves), 4) for i in range(len(self.curves[0]))]
@@ -1397,19 +1409,19 @@ RPS_MATRIX = [[0.0, -1.0, 1.0], [1.0, 0.0, -1.0], [-1.0, 1.0, 0.0]]
 # gs2/gs3: random general-sum 2/3-player games; zs2: zero-sum; cc2: common interest;
 # by3: a random 2-player game plus a bystander (see _with_bystander); sh2: the
 # meta-game of a random Sheriff population (as rated in the population experiment);
-# L2/L3: games above 1000 joint actions.
+# L3: 3-player games above 1000 joint actions.
 CLONE_KINDS = ("gs2", "by3", "zs2", "gs3", "gs2", "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2",
                "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2", "by3", "gs2", "gs2", "gs3", "gs2",
-               "sh2", "sh2", "sh2", "L3", "L2")
+               "sh2", "sh2", "sh2", "L3", "L3")
 MIXTURE_KINDS = ("gs2", "gs3", "by3", "zs2", "gs2", "cc2", "by3", "gs3", "gs2", "by3", "gs2", "zs2", "gs3",
                  "by3", "gs2", "gs2", "cc2", "gs3", "by3", "gs2", "zs2", "gs2", "gs3", "by3", "gs2", "gs2",
-                 "sh2", "sh2", "sh2", "L2")
+                 "sh2", "sh2", "sh2", "L3")
 OFFSET_KINDS = ("gs2", "zs2", "by3", "gs3", "gs2", "cc2", "by3", "gs3", "gs2", "zs2", "by3", "gs2", "gs3",
                 "gs2", "by3", "gs3", "cc2", "gs2", "by3", "zs2", "gs3", "gs2", "by3", "gs2", "gs2", "gs3",
                 "sh2", "sh2", "L3")
 DOMINANCE_KINDS = ("gs2", "gs3", "by3", "gs2", "gs2", "gs3", "by3", "gs2", "gs3", "gs2", "by3", "gs2",
                    "gs3", "gs2", "sh2", "L3")
-LARGE_DIMS = {"L2": ((32, 33), (33, 32), (33, 33)), "L3": ((11, 11, 9), (10, 11, 10), (11, 10, 10))}
+LARGE_DIMS = {"L3": ((11, 11, 9), (10, 11, 10), (11, 10, 10))}
 
 
 def _uniform_payoff(rng) -> float:

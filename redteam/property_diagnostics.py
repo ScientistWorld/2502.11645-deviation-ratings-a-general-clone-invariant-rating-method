@@ -89,9 +89,13 @@ def main() -> None:
             start = time.monotonic()
             suite = H.build_hidden_suite(seed)
             strictest = {gid: H.strictest_epsilon(g) for gid, g in suite.games.items()}
-            results, slack = {}, []
+            results, slack, errors = {}, [], []
             for gid, game in suite.games.items():
-                out = rule(game)
+                try:
+                    out = rule(game)
+                except Exception as error:  # a failed game is scored as failed, as in the test
+                    errors.append(f"{game.dims}: {error}"[:200])
+                    continue
                 results[gid] = out
                 check = H.validate_result(game, out)
                 if check.get("ok") and strictest[gid] is not None:
@@ -99,6 +103,7 @@ def main() -> None:
             scores, diag = H.score_suite(suite.games, suite.instances, results, {}, strictest)
             row = {"seed": "hidden" if seed == H.HIDDEN_SEED else seed, "seconds": round(time.monotonic() - start, 1),
                    "uncertified": sum(1 for v in strictest.values() if v is None),
+                   "rating_errors": errors[:5], "rating_error_count": len(errors),
                    "max_relative_excess_over_strictest": max(slack) if slack else None,
                    "experiments": {e: {"proposed": v["results"]["deviation_rating"],
                                        "failed_games": diag["experiments"][e]["failed_games"],
@@ -106,7 +111,8 @@ def main() -> None:
                                    for e, v in scores["experiments"].items()}}
             rows.append(row)
             compact = {e: ("FAILED" if v["failed_games"] else v["proposed"]) for e, v in row["experiments"].items()}
-            print(f"[{name}] seed={row['seed']} {row['seconds']}s excess={row['max_relative_excess_over_strictest']} "
+            print(f"[{name}] seed={row['seed']} {row['seconds']}s errors={len(errors)} {errors[:2]} "
+                  f"excess={row['max_relative_excess_over_strictest']} "
                   f"{json.dumps(compact)}", flush=True)
         report["rules"][name] = rows
         (ROOT / "redteam/property_diagnostics.json").write_text(json.dumps(report, indent=1))

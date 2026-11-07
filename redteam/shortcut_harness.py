@@ -137,18 +137,20 @@ def main() -> None:
     parser.add_argument("--shortcut")
     parser.add_argument("--reference-run", type=int)
     parser.add_argument("--restore", action="store_true")
+    parser.add_argument("--subdir", default="", help="write this replay's evidence under redteam/<name>/<subdir>")
     args = parser.parse_args()
     if args.restore:
         restore_all()
         return
     is_reference = args.reference_run is not None
-    folder = ROOT / "redteam" / (f"reference_runs/run_{args.reference_run}" if is_reference else args.shortcut)
+    base = ROOT / "redteam" / (f"reference_runs/run_{args.reference_run}" if is_reference else args.shortcut)
+    folder = base / args.subdir if args.subdir else base
     folder.mkdir(parents=True, exist_ok=True)
-    if not is_reference:
+    if not is_reference and not args.subdir:
         archive_before(folder)
     for marker in MARKERS:
-        remove(folder / marker)
-    phase = folder / ".phase"
+        remove(base / marker)
+    phase = base / ".phase"
     status = {"shortcut": args.shortcut, "reference_run": args.reference_run,
               "hidden_command": ["bash", "scripts/evaluate_test.sh"]}
     snapshot()
@@ -172,7 +174,10 @@ def main() -> None:
                 edited[rel] = hashlib.sha256(after.read_bytes()).hexdigest()
         status["edited_files"] = edited
         phase.write_text("train")
-        status["train"] = run(["bash", "scripts/evaluate_train.sh"], folder / "train.log")
+        if os.environ.get("SHORTCUT_SKIP_TRAIN") == "1":
+            status["train"] = {"skipped": True}
+        else:
+            status["train"] = run(["bash", "scripts/evaluate_train.sh"], folder / "train.log")
         path = ROOT / "scoring/scores_train.json"
         if path.exists():
             shutil.copy2(path, folder / "scores_train.json")
@@ -192,7 +197,10 @@ def main() -> None:
         else:
             status["nonfinite_test_fields"] = []
         status["scores_produced"] = path.exists()
-        status["attack_markers"] = sorted(m for m in MARKERS if (folder / m).exists())
+        status["attack_markers"] = sorted(m for m in MARKERS if (base / m).exists())
+        for marker in MARKERS:
+            if (base / marker).exists():
+                shutil.move(str(base / marker), str(folder / marker))
     except Exception as error:
         status["harness_error"] = repr(error)
         raise

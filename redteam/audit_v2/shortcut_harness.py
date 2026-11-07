@@ -110,6 +110,10 @@ def main():
             remove(folder/'shortcut_writer_ready')
         for rel in SNAPSHOT: restore(rel)
         shutil.rmtree(STATE)
+        memo=ROOT/'.cache/rating_memo.json'
+        status['memo_file_left']=memo.exists()
+        remove(memo)
+        if (ROOT/'.cache').is_dir() and not any((ROOT/'.cache').iterdir()): (ROOT/'.cache').rmdir()
         (folder/'status.json').write_text(json.dumps(status,indent=2))
     print(json.dumps(status),flush=True)
 

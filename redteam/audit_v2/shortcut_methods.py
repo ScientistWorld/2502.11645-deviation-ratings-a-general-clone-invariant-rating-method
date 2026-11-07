@@ -192,6 +192,69 @@ def shortcut_batch(entries):
     return {entries[i]['id']:outputs[i] for i in range(len(entries))}
 
 
+def shortcut_first_lp(game):
+    """First LP of Algorithm 1 only: as strict as possible at the top level."""
+    D = shortcut_coefficients(game)
+    k, m = D.shape
+    res = linprog(np.r_[np.zeros(m), 1.], A_ub=np.c_[D, -np.ones(k)], b_ub=np.zeros(k),
+                  A_eq=[np.r_[np.ones(m), 0.]], b_eq=[1.], bounds=[(0, None)]*m+[(None, None)], method='highs')
+    return res.x[:m]
+
+
+def shortcut_strict_batch(entries):
+    """Batch transport with a strict-at-level-1 base (first LP) instead of a zero-gain CCE."""
+    arrays = [np.asarray(e['payoffs'], dtype=float) for e in entries]
+    by_size = sorted(range(len(entries)), key=lambda i: arrays[i].size)
+    outputs = {}
+    for pos, i in enumerate(by_size):
+        game = arrays[i]
+        for j in by_size[:pos]:
+            if arrays[j].shape[0] != game.shape[0]:
+                continue
+            ds = np.array(game.shape[1:]) - np.array(arrays[j].shape[1:])
+            if np.any(ds < 0) or np.sum(ds) > 1:
+                continue
+            mapping = shortcut_relation(arrays[j], game)
+            if mapping is not None:
+                sigma = shortcut_transport(outputs[j]['equilibrium'], arrays[j].shape[1:], game.shape[1:], mapping)
+                outputs[i] = shortcut_output(game, sigma)
+                break
+        else:
+            outputs[i] = shortcut_output(game, shortcut_first_lp(game))
+    return {entries[i]['id']: outputs[i] for i in range(len(entries))}
+
+
+MEMO = Path('/home/user/.cache/rating_memo.json')
+
+
+def shortcut_memo(entries):
+    """Strict-at-level-1 base plus cross-call memory: transport from games seen in earlier calls."""
+    memo = json.loads(MEMO.read_text()) if MEMO.exists() else []
+    seen = [(np.asarray(m['payoffs'], dtype=float), m['equilibrium']) for m in memo]
+    results = {}
+    for e in entries:
+        game = np.asarray(e['payoffs'], dtype=float)
+        out = None
+        for old, sigma in seen:
+            if old.shape[0] != game.shape[0]:
+                continue
+            ds = np.array(game.shape[1:]) - np.array(old.shape[1:])
+            if np.any(ds < 0) or np.sum(ds) > 1:
+                continue
+            mapping = shortcut_relation(old, game)
+            if mapping is not None:
+                out = shortcut_output(game, shortcut_transport(sigma, old.shape[1:], game.shape[1:], mapping))
+                break
+        if out is None:
+            out = shortcut_output(game, shortcut_first_lp(game))
+        results[e['id']] = out
+        if game.size <= 400:
+            memo.append({'payoffs': e['payoffs'], 'equilibrium': out['equilibrium']})
+    MEMO.parent.mkdir(parents=True, exist_ok=True)
+    MEMO.write_text(json.dumps(memo))
+    return results
+
+
 def shortcut_seeded_reference(entries,seed):
     rng = np.random.default_rng(seed)
     results = {}
@@ -215,6 +278,10 @@ def main():
         results = shortcut_seeded_reference(entries,int(name.rsplit('_',1)[-1]))
     elif name == 'batch_transport_shortcut':
         results = shortcut_batch(entries)
+    elif name == 'strict_batch_transport_shortcut':
+        results = shortcut_strict_batch(entries)
+    elif name == 'memo_transport_shortcut':
+        results = shortcut_memo(entries)
     else:
         results = {}
         for entry in entries:
@@ -224,6 +291,9 @@ def main():
             elif name == 'zero_gain_fallback_shortcut':
                 sigma = shortcut_solve(game,'zero')
                 out = rate_game(game) if sigma is None else shortcut_output(game,sigma)
+            elif name == 'sheriff_special_case_shortcut':
+                # Population-like 8x8 two-player games get the lax selection, all else the reference.
+                out = shortcut_lax(game) if game.shape == (2, 8, 8) else rate_game(game)
             elif name == 'zero_nondominated_shortcut':
                 sigma = shortcut_solve(game,'nondominated')
                 out = shortcut_output(game, shortcut_solve(game) if sigma is None else sigma)
