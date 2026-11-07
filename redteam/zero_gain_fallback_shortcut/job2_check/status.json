@@ -1,0 +1,17 @@
+{
+  "name": "zero_gain_fallback_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "0076a619fc2f8f40f7a8f2202cd3a73dbab02f6203980e968624288eec230990",
+  "train": {
+    "skipped": true
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 134.7639
+  },
+  "score_sha256": "d8d38215427f29927e75d6d0e9aac365ecfbc992509964861efe3f468420b867",
+  "shortcut_writer_marker_at_capture": false
+}

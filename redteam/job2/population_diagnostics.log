@@ -1,0 +1,16 @@
+101 {'uniform_payoff': {'mean_gap_ratio': 0.676378, 'late_gap_ratio': 0.676079, 'final_gap_ratio': 0.590163}, 'random_selection': {'mean_gap_ratio': 1.019551, 'late_gap_ratio': 1.008314, 'final_gap_ratio': 0.959181}, 'reference': {'mean_gap_ratio': 0.579415, 'late_gap_ratio': 0.523319, 'final_gap_ratio': 0.473309}} 58.1 s
+202 {'uniform_payoff': {'mean_gap_ratio': 0.700144, 'late_gap_ratio': 0.692513, 'final_gap_ratio': 0.615539}, 'random_selection': {'mean_gap_ratio': 1.026208, 'late_gap_ratio': 1.026891, 'final_gap_ratio': 1.08384}, 'reference': {'mean_gap_ratio': 0.627292, 'late_gap_ratio': 0.618534, 'final_gap_ratio': 0.475933}} 60.6 s
+303 {'uniform_payoff': {'mean_gap_ratio': 0.778689, 'late_gap_ratio': 0.697271, 'final_gap_ratio': 0.673875}, 'random_selection': {'mean_gap_ratio': 1.192203, 'late_gap_ratio': 1.20261, 'final_gap_ratio': 1.090732}, 'reference': {'mean_gap_ratio': 0.739799, 'late_gap_ratio': 0.682344, 'final_gap_ratio': 0.618342}} 60.1 s
+404 {'uniform_payoff': {'mean_gap_ratio': 0.788509, 'late_gap_ratio': 0.736452, 'final_gap_ratio': 0.714581}, 'random_selection': {'mean_gap_ratio': 1.166715, 'late_gap_ratio': 1.185142, 'final_gap_ratio': 1.142377}, 'reference': {'mean_gap_ratio': 0.683848, 'late_gap_ratio': 0.581866, 'final_gap_ratio': 0.548609}} 59.5 s
+505 {'uniform_payoff': {'mean_gap_ratio': 0.684881, 'late_gap_ratio': 0.661366, 'final_gap_ratio': 0.644756}, 'random_selection': {'mean_gap_ratio': 1.007144, 'late_gap_ratio': 1.017511, 'final_gap_ratio': 1.017256}, 'reference': {'mean_gap_ratio': 0.578007, 'late_gap_ratio': 0.529451, 'final_gap_ratio': 0.562354}} 62.6 s
+606 {'uniform_payoff': {'mean_gap_ratio': 0.599816, 'late_gap_ratio': 0.543483, 'final_gap_ratio': 0.47571}, 'random_selection': {'mean_gap_ratio': 0.894561, 'late_gap_ratio': 0.896295, 'final_gap_ratio': 0.79911}, 'reference': {'mean_gap_ratio': 0.527701, 'late_gap_ratio': 0.446383, 'final_gap_ratio': 0.387277}} 61.0 s
+lax 101 {'error': 'TypeError("\'NoneType\' object is not subscriptable")'}
+lax 202 {'mean_gap_ratio': 0.638011, 'late_gap_ratio': 0.584123, 'final_gap_ratio': 0.545429}
+single_lp 101 {'mean_gap_ratio': 0.635511, 'late_gap_ratio': 0.584889, 'final_gap_ratio': 0.536205}
+single_lp 202 {'mean_gap_ratio': 0.63605, 'late_gap_ratio': 0.573637, 'final_gap_ratio': 0.561487}
+max_welfare 101 {'mean_gap_ratio': 0.645753, 'late_gap_ratio': 0.604937, 'final_gap_ratio': 0.568098}
+max_welfare 202 {'mean_gap_ratio': 0.63548, 'late_gap_ratio': 0.575623, 'final_gap_ratio': 0.558658}
+
+real	9m13.274s
+user	9m7.233s
+sys	0m3.229s

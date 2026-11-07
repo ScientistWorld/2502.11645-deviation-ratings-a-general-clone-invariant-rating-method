@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening job 1: reference through the new train/hidden evaluators (timing), property and population diagnostics on non-hidden seeds, replays of REDTEAM's five paying shortcuts"
+notes: "Hardening job 2: fixed reference through hidden test with sweep/stateless gate active, 3 replays, property diagnostics (5 seeds), population diagnostics (6 seeds x 256 iterations)"
