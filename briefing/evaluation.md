@@ -50,7 +50,7 @@ Every scored number is recomputed from the payoffs and the submitted distributio
 | `bash scripts/evaluate_train.sh` | the same visible suite | `scoring/scores_train.json` |
 | `bash scripts/evaluate_test.sh` (hidden, no arguments) | about 250 property games and the population experiment, all generated at test time from a seed that exists only in the hidden test | `scoring/scores_test.json` |
 
-The evaluators run with `python3 -I`, ignoring `PYTHONPATH`, user site-packages and the working directory. They do not read `checkpoints/`, `data/`, `baseline/` or `scoring/reference.json`. Baselines are computed by the evaluator itself. One visible evaluation takes about 3.5 minutes with the reproduced method, mostly program start-up across the 96 calls.
+The evaluators run with `python3 -I`, ignoring `PYTHONPATH`, user site-packages and the working directory. They do not read `checkpoints/`, `data/`, `baseline/` or `scoring/reference.json`. Baselines are computed by the evaluator itself. One evaluation takes about 4-4.5 minutes with the reproduced method, mostly program start-up across the 96 calls.
 
 ## Experiments
 

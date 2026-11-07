@@ -10,6 +10,7 @@
   - mixture invariance holds exactly on a scored general-sum reference game
   - offset invariance holds exactly on a scored general-sum reference game
   - dominance preservation holds exactly on a scored dominance test game
+- Hardening iteration 13 (2026-11-07): the hidden and visible tests certify the strictest selection on every independent block of players in product games, not only at the top level, and include games above 2,048 joint actions; the reference still scores 0 on every property metric. See `HARDENING.md`.
 - The sequential LP freezes exactly the constraints with nonzero duals, the rule in Section 4.1 of the paper (hardening iteration, 2026-11-07). The intermediate rule that also froze every numerically tight constraint lost uniqueness on degenerate optima and failed the hidden invariance checks; see `HARDENING.md`.
 
 ## Results Achieved
@@ -66,7 +67,7 @@ At 2026-04-24 09:06 UTC, the canonical evaluator in [`eval/evaluate.py`](/home/u
 
 The scored benchmark runs the rating program `scripts/rate.sh` on games supplied by the evaluators, once per population iteration (96 calls).
 
-The hidden test generates about 210 property games and a Sheriff population run at test time. It gates every output: finite, a normalized CCE, and ratings equal to its deviation gains.
+The hidden test generates about 250 property games and a Sheriff population run at test time. It gates every output: finite, a normalized CCE, and ratings equal to its deviation gains.
 
 Six experiments are scored. The five property experiments now also score `strictness_gap`. The sixth, `population_improvement` (paper Section 5.3), is the headroom experiment.
 
