@@ -1,6 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: done
+action: pending
+gpus: 0
+test: false
 milestone: secondary_claims
-notes: "Hardened: strictness_gap, split/stateless calls, process sweep, large games, Sheriff population headroom experiment (paper 5.3); 65 shortcuts replayed, none beats or ties the reference without running it; reference rerun from final code"
+notes: ""
