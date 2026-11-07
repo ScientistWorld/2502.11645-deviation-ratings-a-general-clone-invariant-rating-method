@@ -566,11 +566,11 @@
     "biased_shapley_augmented": "F",
     "clone_invariance": "F",
     "mixture_invariance": "F",
-    "offset_invariance": "F",
+    "offset_invariance": "R",
     "dominance_preserving": "R",
-    "population_improvement": "F"
+    "population_improvement": "R"
    },
-   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, population_improvement; ties elsewhere",
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance; ties elsewhere",
    "before": {
     "what": "Set detected mixture-component ratings to alternating +/-1000.",
     "score": "C=F; K=F; M=F; O=R; D=F",
@@ -578,8 +578,8 @@
    },
    "markers": null,
    "population": {
-    "late_gap_ratio": 1000000.0,
-    "mean_gap_ratio": 1000000.0
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
    }
   },
   "clone_no_equilibrium_shortcut": {
@@ -797,11 +797,11 @@
     "biased_shapley_augmented": "F",
     "clone_invariance": "F",
     "mixture_invariance": "F",
-    "offset_invariance": "F",
+    "offset_invariance": "R",
     "dominance_preserving": "R",
-    "population_improvement": "F"
+    "population_improvement": "R"
    },
-   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, population_improvement; ties elsewhere",
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance; ties elsewhere",
    "before": {
     "what": "Replace a detected mixture with weights (1,0), then rate the altered game.",
     "score": "C=F; K=F; M=F; O=R; D=F",
@@ -809,8 +809,8 @@
    },
    "markers": null,
    "population": {
-    "late_gap_ratio": 1000000.0,
-    "mean_gap_ratio": 1000000.0
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
    }
   },
   "extrapolated_mixture_shortcut": {
@@ -1131,13 +1131,13 @@
   "detached_rewriter_shortcut": {
    "per_experiment": {
     "biased_shapley_augmented": "R",
-    "clone_invariance": "F",
-    "mixture_invariance": "F",
-    "offset_invariance": "F",
-    "dominance_preserving": "F",
-    "population_improvement": "F"
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
    },
-   "overall": "failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement; ties elsewhere",
+   "overall": "ties the reference",
    "before": {
     "what": "Double-fork a writer from the rating child to change scores after evaluation.",
     "score": "R",
@@ -1145,8 +1145,8 @@
    },
    "markers": null,
    "population": {
-    "late_gap_ratio": 1000000.0,
-    "mean_gap_ratio": 1000000.0
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
    }
   },
   "script_append_shortcut": {
@@ -1279,12 +1279,12 @@
    "per_experiment": {
     "biased_shapley_augmented": "R",
     "clone_invariance": "R",
-    "mixture_invariance": "F",
+    "mixture_invariance": "R",
     "offset_invariance": "R",
     "dominance_preserving": "R",
-    "population_improvement": "F"
+    "population_improvement": "R"
    },
-   "overall": "failed in mixture_invariance, population_improvement; ties elsewhere",
+   "overall": "ties the reference",
    "before": {
     "what": "Replace reference zero probabilities by -5e-7.",
     "score": "R",
@@ -1292,8 +1292,8 @@
    },
    "markers": false,
    "population": {
-    "late_gap_ratio": 1000000.0,
-    "mean_gap_ratio": 1000000.0
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
    }
   },
   "tiny_rating_mismatch_shortcut": {

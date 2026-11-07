@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening job 5: continue shortcut replays through the final hidden test (28 pending)"
+notes: "Hardening job 6: reference end to end from the final code (public/train/hidden + validate), replays of the reference and the 4 cases hit by the git-shim false positive against the final hidden test"

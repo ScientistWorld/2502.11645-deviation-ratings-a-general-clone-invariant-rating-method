@@ -1,11 +1,11 @@
 isolation: on; stopped 0 leftover process(es) of the submission before testing
-  population iteration 16/96, 38 s
-  population iteration 32/96, 70 s
-  population iteration 48/96, 103 s
-  population iteration 64/96, 136 s
-  population iteration 80/96, 169 s
-  population iteration 96/96, 200 s
-== hidden test: 96 rating-program calls, 203.5 s ==
+  population iteration 16/96, 39 s
+  population iteration 32/96, 71 s
+  population iteration 48/96, 104 s
+  population iteration 64/96, 139 s
+  population iteration 80/96, 173 s
+  population iteration 96/96, 206 s
+== hidden test: 96 rating-program calls, 209.4 s ==
 [biased_shapley_augmented] 16 instances, 16 games (largest 1089 joint actions), proposed method: ok
     deviation_rating           {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0, "strictness_gap": 0.0}
     uniform_payoff             {"dev_gap": 2.934636, "all_player_dev_gap": 5.122333, "player_symmetry_gap": 3.832333, "CCE_gap": 3.209813, "strictness_gap": 4.286515}

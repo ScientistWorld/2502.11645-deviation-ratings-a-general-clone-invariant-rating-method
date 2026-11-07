@@ -1,0 +1,137 @@
+  population iteration 16/96, 42 s
+  population iteration 32/96, 77 s
+  population iteration 48/96, 113 s
+  population iteration 64/96, 149 s
+  population iteration 80/96, 186 s
+  population iteration 96/96, 222 s
+== evaluate (public games): 96 rating-program calls, 224.6 s ==
+[biased_shapley_augmented] 17 instances, 17 games (largest 1089 joint actions), proposed method: ok
+    deviation_rating           {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"dev_gap": 3.4, "all_player_dev_gap": 3.4, "player_symmetry_gap": 1.368333, "CCE_gap": 3.303251, "strictness_gap": 5.202199}
+[clone_invariance] 32 instances, 64 games (largest 1210 joint actions), proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "all_players_max_diff": 0.0, "clone_source_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"max_diff": 0.684875, "all_players_max_diff": 0.684875, "clone_source_gap": 0.0, "strictness_gap": 3.381661}
+[mixture_invariance] 31 instances, 62 games (largest 1188 joint actions), proposed method: ok
+    deviation_rating           {"original_max_diff": 0.0, "mixture_error": 0.0, "max_CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"original_max_diff": 0.352571, "mixture_error": 0.0, "max_CCE_gap": 5.794775, "strictness_gap": 5.307505}
+[offset_invariance] 30 instances, 60 games (largest 1089 joint actions), proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "max_CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"max_diff": 4.014, "max_CCE_gap": 3.005284, "strictness_gap": 2.21565}
+[dominance_preserving] 18 instances, 18 games (largest 1188 joint actions), proposed method: ok
+    deviation_rating           {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 2.370042, "strictness_gap": 1.884682}
+    zero_rating                {"dominance_violations": 90, "min_margin": 0.0, "CCE_gap": 2.370042, "strictness_gap": 1.884682}
+    negative_uniform_payoff    {"dominance_violations": 90, "min_margin": -622.049435, "CCE_gap": 2.370042, "strictness_gap": 1.884682}
+[population_improvement] Sheriff, 8 runs x 96 iterations, proposed method: ok
+    deviation_rating           {"late_gap_ratio": 0.712638, "mean_gap_ratio": 0.778461}
+    uniform_payoff             {"late_gap_ratio": 0.797493, "mean_gap_ratio": 0.825532}
+    random_selection           {"late_gap_ratio": 1.083548, "mean_gap_ratio": 1.08643}
+    mean full-game CCE gap every 8 iterations, deviation_rating: [25.9831, 23.6768, 23.1929, 20.5991, 23.0817, 21.087, 19.985, 20.1785, 18.1716, 18.7152, 19.1481, 17.2386, 17.6472]
+    mean full-game CCE gap every 8 iterations, uniform_payoff: [25.9831, 25.1398, 23.9399, 21.3527, 22.1179, 20.113, 20.4069, 19.1036, 20.0309, 21.8772, 23.6669, 19.4947, 20.1548]
+    mean full-game CCE gap every 8 iterations, random_selection: [25.9831, 28.0958, 29.7106, 32.2385, 27.3416, 25.8822, 26.5532, 28.0562, 33.038, 25.7069, 29.5383, 23.5227, 29.0613]
+Evaluation complete. Results written to scoring/scores.json
+
+=== REPRODUCTION RESULTS ===
+Results are in scoring/scores.json
+
+── Scoring ──
+  reference.json — OK (6 experiments, 15 methods)
+  scores.json — OK (1 experiments, 6 methods)
+
+=== biased_shapley_augmented (weight: 0.28) ===
+    Paper Table 2 / Section 5.1: in cyclic games no strategy should be rated above another; the biased Shapley game augmented with N gets equal ratings for R, P, S and N (-2720/964, the strictest CCE's deviation gains). Hidden test: transformed and populated cyclic games whose deviation ratings are provably all equal. Weights were rescaled by 0.8 when the population-improvement experiment was added; their ratios are unchanged.
+
+    Method                    Source          dev_gap *        CCE_gapall_player_dev_gapplayer_symmetry_gap strictness_gap
+    ------------------------- ----------───────────────────────────────────────────────────────────────────────────
+    deviation_rating [proposed] paper               0.000          0.000              —              —              —
+                              repro               0.000          0.000          0.000          0.000          0.000
+
+    uniform_payoff [baseline] paper                   —              —              —              —              —
+                              repro               3.400          3.303          3.400          1.368          5.202
+
+
+=== clone_invariance (weight: 0.16) ===
+    Paper Property 6: adding a clone of an existing strategy should not change the ratings of the original strategies.
+
+    Method                    Source         max_diff *all_players_max_diffclone_source_gap strictness_gap
+    ------------------------- ----------────────────────────────────────────────────────────────────
+    deviation_rating [proposed] paper               0.000              —              —              —
+                              repro               0.000          0.000          0.000          0.000
+
+    uniform_payoff [baseline] paper                   —              —              —              —
+                              repro               0.685          0.685          0.000          3.382
+
+
+=== mixture_invariance (weight: 0.12) ===
+    Paper Property 7: adding a mixed strategy should not change the original ratings, and the new strategy should inherit the corresponding mixed rating.
+
+    Method                    Source    original_max_diff *  mixture_error    max_CCE_gap strictness_gap
+    ------------------------- ----------────────────────────────────────────────────────────────────
+    deviation_rating [proposed] paper               0.000          0.000              —              —
+                              repro               0.000          0.000          0.000          0.000
+
+    uniform_payoff [baseline] paper                   —              —              —              —
+                              repro               0.353          0.000          5.795          5.308
+
+
+=== offset_invariance (weight: 0.12) ===
+    Paper Property 5: adding arbitrary b_p(a_-p) offsets should not change any deviation ratings.
+
+    Method                    Source         max_diff *    max_CCE_gap strictness_gap
+    ------------------------- ----------─────────────────────────────────────────────
+    deviation_rating [proposed] paper               0.000              —              —
+                              repro               0.000          0.000          0.000
+
+    uniform_payoff [baseline] paper                   —              —              —
+                              repro               4.014          3.005          2.216
+
+
+=== dominance_preserving (weight: 0.12) ===
+    Paper Property 4: if one strategy dominates another, the dominant strategy should not receive a lower rating.
+
+    Method                    Source    dominance_violations *        CCE_gap     min_margin strictness_gap
+    ------------------------- ----------────────────────────────────────────────────────────────────
+    deviation_rating [proposed] paper               0.000          0.000              —              —
+                              repro               0.000          0.000          1.000          0.000
+
+    zero_rating [baseline]    paper                   —              —              —              —
+                              repro              90.000          2.370          0.000          1.885
+
+    negative_uniform_payoff [baseline] paper                   —              —              —              —
+                              repro              90.000          2.370       -622.049          1.885
+
+    uniform_payoff [baseline] paper                   —              —              —              —
+                              repro               0.000          2.370          1.000          1.885
+
+
+=== population_improvement (weight: 0.2) ===
+    Paper Section 5.3 / Figure 3b: ratings drive a population search in Sheriff (item penalty 1, item value 5, max bribe 2, max items 10, 2 rounds, sheriff penalty 1). 8 random stochastic policies per player; each iteration rate the meta-game, discard each player's bottom quarter, replace it with new random policies. Progress is the full-game CCE gap of the population (under the meta-game's maximum-entropy CCE), relative to the initial population's. Paper values are read off Figure 3b (one run, 512 iterations, markers every 32) at the gym's horizon of 96 iterations: late = mean of the 64 and 96 markers, mean = mean of the 32, 64 and 96 markers. Over the paper's full 512 iterations the second-half ratios are about 0.49 (deviation) and 0.86 (uniform). Scaled setup: 8 independent runs x 96 iterations, fixed candidate policy streams per run.
+
+    Method                    Source    late_gap_ratio * mean_gap_ratio
+    ------------------------- ----------──────────────────────────────
+    deviation_rating [proposed] paper               0.649          0.641
+                              repro               0.713          0.778
+
+    uniform_payoff [baseline] paper               0.821          0.838
+                              repro               0.797          0.826
+
+    random_selection [baseline] paper                   —              —
+                              repro               1.084          1.086
+
+  scores_train.json — OK (1 experiments, 6 methods)
+  scores_test.json — OK (1 experiments, 6 methods)
+
+── Structure ──
+  import separation — OK (eval/ and data/ do not import from method/)
+  eval reads method outputs — OK (no regen-without-read pattern)
+  gitignored imports — OK (all eval/method/baseline imports resolve to tracked files)
+  eval/train ↔ eval/test independence — OK
+  shared/ references — OK (no shared/ paths in committed code)
+  evaluate_{train,test}.sh rewiring — OK
+  evaluate_{train,test}.sh method defaults — OK (no hardcoded method name)
+  scores_train.json ↔ scores_test.json method keys — OK
+  scores_train.json ↔ scores_test.json value differentiation — OK
+  primary metric train/test differentiation — OK
+  primary metric discriminates methods on train — OK
+
+All checks passed.
