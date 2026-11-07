@@ -73,13 +73,3 @@
 
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
-
-### [2026-11-07 07:30] - secondary_claims
-- Hardened the gym against the 62 redteam shortcuts plus 3 new probes; full report in `HARDENING.md`. No shortcut beats the reference, and none ties it without running the paper's method underneath.
-- Equilibrium selection is now scored: `strictness_gap` in every property experiment.
-- Isolation and coverage:
-  - the two games of every invariance pair arrive in different rating calls, and calls must be stateless;
-  - the hidden test stops a submission's leftover processes before it starts;
-  - every family includes games above 1,000 joint actions and Sheriff population meta-games.
-- Added the paper's Section 5.3 population-improvement experiment (Sheriff, 8 runs x 96 iterations, weight 0.2) as the headroom experiment. Hidden test late gap ratio: deviation rating 0.577, uniform 0.668, random 0.968 (paper's direction).
-- Fixed accumulated LP round-off in the reference (`method/deviation_rating.py`); the selection rule is unchanged and paper Table 2 is still reproduced. Reran the reference end to end and every shortcut from the final code.
