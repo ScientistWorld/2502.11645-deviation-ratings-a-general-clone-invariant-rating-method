@@ -32,9 +32,17 @@ The LP finds the **strictest CCE** — the equilibrium where no player can gain 
 
 ### Computational Approach
 
-The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP (`method/deviation_rating.py`). The benchmark calls it through the rating program `scripts/rate.sh` -> `method/rate.py`, which returns, for every game, the ratings and the final LP's distribution, under which every rating is exactly the corresponding deviation gain.
+The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP (`method/deviation_rating.py`). The benchmark calls it through the rating program `scripts/rate.sh` -> `method/rate.py`. For every game, that program returns the final LP's distribution and its deviation gains as the ratings.
 
-An earlier version of this implementation also froze every constraint that happened to be numerically tight at the vertex the solver returned. When the optimal face is not a single point, for example when one player's best action pins epsilon at 0, that freezes ratings that later iterations should lower. The result then depends on the solver's vertex choice and loses uniqueness and invariance: it failed the hidden invariance checks on every one of 11 sampled test suites. The current default follows the paper's nonzero-dual rule (`freeze_rule="dual"`). The old rule is kept only as a diagnostic (`freeze_rule="active"`). The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
+Numerical care (paper Appendix B: "care needs to be taken to minimize the accumulation of errors"):
+- **Scaling.** Deviation coefficients are divided by the payoff scale and quantized to 14 decimals, so solver tolerances are relative.
+- **Fallback when an LP is reported infeasible.** Frozen ratings are imposed as equalities. On some Sheriff population meta-games and games with about 1,000 joint actions, round-off accumulated over many iterations made a later LP infeasible. Only then is the iteration re-solved, first with each frozen gain held in a narrow band (relative half-width 1e-9 to 1e-7). If that also fails, the frozen gains are re-centred on the previous iteration's distribution, which satisfies them by construction.
+- **Time limit.** Each LP solve has a 60 s time limit.
+- None of this changes the selection in exact arithmetic. On the benchmark's games the fallback is rarely or never needed (0 fallback solves on the hidden population run).
+
+An earlier version also froze every constraint that happened to be numerically tight at the vertex the solver returned. When the optimal face is not a single point, for example when one player's best action pins epsilon at 0, that freezes ratings that later iterations should lower. The result then depends on the solver's vertex choice and loses uniqueness and invariance. The current default follows the paper's nonzero-dual rule (`freeze_rule="dual"`); the old rule is kept only as a diagnostic (`freeze_rule="active"`).
+
+The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
 
 ## Main Claims
 
@@ -49,4 +57,4 @@ An earlier version of this implementation also froze every constraint that happe
 - Dominance preserving: dominant strategies rated higher
 - N-player general-sum: no restrictions
 
-**Secondary**: On cyclic games (Shapley's game), deviation rating gives equal ratings to all strategies in the cycle. On LLM evaluation (Livebench), deviation rating groups top models by niche rather than forcing a linear ranking.
+**Secondary**: On cyclic games (Shapley's game), deviation rating gives equal ratings to all strategies in the cycle. On LLM evaluation (Livebench), deviation rating groups top models by niche rather than forcing a linear ranking. Used as the fitness measure of a population search in the general-sum Sheriff game, deviation ratings reduce the full-game CCE gap where uniform averaging stalls (Section 5.3, Figure 3b).

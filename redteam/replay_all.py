@@ -53,11 +53,14 @@ def done(kind, name, sha):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--budget", type=float, default=3000.0)
+    parser.add_argument("--only", default="", help="comma-separated case names (reference runs: 'reference')")
     args = parser.parse_args()
+    only = set(filter(None, args.only.split(",")))
     sha = hashlib.sha256((ROOT / "eval/test/evaluate.py").read_bytes()).hexdigest()
     start = time.monotonic()
     env = dict(os.environ, SHORTCUT_SKIP_TRAIN="1")
-    pending = [c for c in cases() if not done(*c, sha)]
+    pending = [c for c in cases() if not done(*c, sha)
+               and (not only or c[1] in only or (c[0] == "reference" and "reference" in only))]
     print(f"hidden test sha256 {sha}; {len(pending)} of {len(cases())} cases pending", flush=True)
     for kind, name in pending:
         if time.monotonic() - start > args.budget:

@@ -33,4 +33,5 @@ A rating method should:
 - **Be mixture invariant**: adding mixtures of existing strategies doesn't change ratings
 - **Be offset invariant**: adding arbitrary offsets to payoffs doesn't change ratings
 - **Scale to N players and general-sum games**: no restrictions on number of players or payoff structure
-- **Be efficiently computable**: polynomial time in the size of the game
+- **Be efficiently computable**: polynomial time in the size of the game, and practical on games with a thousand or more joint strategies
+- **Be directional**: when a rating is used to decide which strategies to keep in an evolving population, the population should move toward an equilibrium of the underlying game rather than toward strategies that only look good on average

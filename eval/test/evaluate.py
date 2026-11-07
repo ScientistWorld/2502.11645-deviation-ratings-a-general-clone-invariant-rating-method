@@ -522,10 +522,11 @@ def terminate_foreign_processes() -> List[int]:
 # Inside the job container (private PID namespace) the evaluator also enforces
 # that a rating call is stateless: it may not create, change or delete files
 # outside its own temporary directory. Only system-managed locations are not
-# watched (version control, job logs, agent transcripts, the shared mount).
+# watched (version control and its credential shims, which the job system
+# rewrites when it commits progress, job logs, agent transcripts, the shared mount).
 FORCE_ISOLATION = False
-_UNWATCHED = frozenset({".git", "jobs", "logs", "shared", "trajectory", ".claude", ".claude.json",
-                        ".claude-tmp", ".codex", ".empty_.claude-tmp", ".empty_trajectory"})
+_UNWATCHED = frozenset({".git", ".git-shims", ".git-credentials", "jobs", "logs", "shared", "trajectory",
+                        ".claude", ".claude.json", ".claude-tmp", ".codex", ".empty_.claude-tmp", ".empty_trajectory"})
 # The container image and its overlay are mounted by the system and may be touched by it.
 _UNWATCHED_ENVIRONMENT = frozenset({"overlay.img", "container.sif", "container.final.def", ".setup_wrapper.sh",
                                     ".overlay.log"})
