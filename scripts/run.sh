@@ -1,30 +1,13 @@
 #!/bin/bash
-# Hardening job 4: diagnose job 3's stalled hidden test (the hidden seed's
-# population loop rated in-process under a per-game alarm), the reference
-# through the hidden test from the final code, validation, then as many shortcut
-# replays as the time allows (redteam/replay_all.py resumes in later jobs).
+# Hardening job 5: continue the shortcut replays through the final hidden test
+# (redteam/replay_all.py skips cases already replayed against the same test).
 set -uo pipefail
 cd /home/user
 export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-OUT=redteam/job4
+OUT=redteam/job5
 mkdir -p "$OUT"
-
-echo "=== hidden population loop, in-process"
-( time timeout 900 python3 redteam/hidden_population_check.py ) > "$OUT/hidden_population_check.log" 2>&1
-tail -12 "$OUT/hidden_population_check.log"
-
-echo "=== hidden test (reference)"
-( time timeout 1500 bash scripts/evaluate_test.sh ) > "$OUT/test.log" 2>&1
-echo "exit $?"
-cat "$OUT/test.log"
-python3 validate.py > "$OUT/validate.log" 2>&1; tail -20 "$OUT/validate.log"
-
-echo "=== shortcut replays"
-BUDGET=$(( 3250 - SECONDS - 300 ))
-echo "replay budget ${BUDGET}s"
-if [ "$BUDGET" -gt 120 ]; then
-  # No pipes here: the hidden test stops every non-ancestor process of the job.
-  timeout $(( BUDGET + 600 )) python3 redteam/replay_all.py --budget "$BUDGET" > "$OUT/replays.log" 2>&1
-  cut -c1-600 "$OUT/replays.log"
-fi
+# No pipes here: the hidden test stops every non-ancestor process of the job.
+timeout 3450 python3 redteam/replay_all.py --budget 3150 > "$OUT/replays.log" 2>&1
+cut -c1-400 "$OUT/replays.log"
+python3 redteam/summarize_final.py > "$OUT/summary.txt" 2>&1; cat "$OUT/summary.txt"
 echo "=== done after ${SECONDS}s"
