@@ -50,8 +50,9 @@ The scientist may NOT:
 - Keep state between calls, leave processes running, or touch score files
 
 ## Compliance Checklist
-- [ ] `scripts/rate.sh` rates any finite 2- or 3-player normal-form game it is given (including players with a single action and games above 1,000 joint actions)
+- [ ] `scripts/rate.sh` rates any finite normal-form game it is given, with any number of players (the test uses 2 to 5), including players with a single action and games above 2,000 joint actions
 - [ ] Ratings are the deviation gains of the returned CCE
 - [ ] Each call is stateless and finishes within 300 s
 - [ ] All six scored experiments are evaluated through the provided entrypoints
 - [ ] Clone, mixture, offset and dominance properties hold on the hidden games, not only the public ones
+- [ ] The selected equilibrium is strictest at every level, not only the top: in games built from independent sub-games it must be strictest on each of them

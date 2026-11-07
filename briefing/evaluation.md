@@ -12,7 +12,7 @@ Input (written by the evaluator):
 {"games": [{"id": "<opaque id>", "payoffs": P}, ...]}
 ```
 
-`P` has shape `[N][A_1]...[A_N]`: `P[p][a_1]...[a_N]` is player `p`'s payoff at the joint action `(a_1, ..., a_N)`. Games have 2 or 3 players, can include players with a single action, and range from 2x2 up to about 1,200 joint actions.
+`P` has shape `[N][A_1]...[A_N]`: `P[p][a_1]...[a_N]` is player `p`'s payoff at the joint action `(a_1, ..., a_N)`. Games have 2 to 5 players, can include players with a single action, and range from 2x2 up to about 2,400 joint actions.
 
 Output (written by the method):
 
@@ -48,7 +48,7 @@ Every scored number is recomputed from the payoffs and the submitted distributio
 |---|---|---|
 | `bash scripts/evaluate.sh` | the five documented public games plus families generated from a visible seed, and the population experiment on a visible seed | `scoring/scores.json` |
 | `bash scripts/evaluate_train.sh` | the same visible suite | `scoring/scores_train.json` |
-| `bash scripts/evaluate_test.sh` (hidden, no arguments) | about 210 property games and the population experiment, all generated at test time from a seed that exists only in the hidden test | `scoring/scores_test.json` |
+| `bash scripts/evaluate_test.sh` (hidden, no arguments) | about 250 property games and the population experiment, all generated at test time from a seed that exists only in the hidden test | `scoring/scores_test.json` |
 
 The evaluators run with `python3 -I`, ignoring `PYTHONPATH`, user site-packages and the working directory. They do not read `checkpoints/`, `data/`, `baseline/` or `scoring/reference.json`. Baselines are computed by the evaluator itself. One visible evaluation takes about 3.5 minutes with the reproduced method, mostly program start-up across the 96 calls.
 
@@ -60,8 +60,8 @@ Property experiments: each metric is a maximum over the experiment's games (domi
    - Public game: the paper's Table 2 biased Shapley game augmented with its Nash mixture `N`.
    - Hidden games are games whose deviation ratings are provably all equal:
      - the biased Shapley game with and without `N`;
-     - symmetric populations of random mixtures of R/P/S, including one with 33 strategies per player;
-     - scaled, offset, cloned and relabeled variants, and variants with an extra bystander player (see below);
+     - symmetric populations of random mixtures of R/P/S, including ones with 33 and 48 strategies per player;
+     - scaled, offset, cloned and relabeled variants, and variants with one or two extra bystander players (see below);
      - zero-sum rock-paper-scissors, randomly weighted RPS, and RPS-lizard-Spock.
    - `dev_gap`: rating spread of the first cyclic player's actions.
    - `all_player_dev_gap`: spread across both cyclic players.
@@ -70,7 +70,7 @@ Property experiments: each metric is a maximum over the experiment's games (domi
 
 2. **`clone_invariance`: duplicating a strategy changes nothing.**
    - Public game: rock-paper-scissors with player 1's rock cloned.
-   - Hidden games: random 2- and 3-player general-sum, zero-sum and common-interest games, games with a bystander, meta-games of random Sheriff populations (as in experiment 6), and 3-player games above 1,000 joint actions. Each gets a clone of one action inserted at a random position, and every player's actions are relabeled.
+   - Hidden games: random 2- and 3-player general-sum, zero-sum and common-interest games, games with one or two bystanders, products of two independent 2-player games (with or without a bystander), meta-games of random Sheriff populations (as in experiment 6), and 3-player games above 1,000 and above 2,000 joint actions. Each gets a clone of one action inserted at a random position, and every player's actions are relabeled.
    - `max_diff`: change in the ratings of the other players' strategies, the ones that face the clone.
    - `all_players_max_diff`: change over all original actions of all players.
    - `clone_source_gap`: clone's rating versus its source.
@@ -107,11 +107,17 @@ Property experiments: each metric is a maximum over the experiment's games (domi
 
 ### `strictness_gap`
 
-For every property game the evaluator computes the smallest largest deviation gain that any CCE of the game attains: `min over CCEs of max over (p, a')` of the deviation gain. It solves this matrix-game value as a linear program and certifies it with a dual bound. `strictness_gap` is the largest excess of the submitted distribution's largest deviation gain over that minimum. 0 means the selected equilibrium is as strict as possible at the top level. Selecting a less strict equilibrium (for example one where every gain is 0) shows up here even when it is invariant. Baselines are measured with their uniform distribution.
+The selection being tested is the strictest equilibrium: minimize the largest deviation gain, then the next largest, and so on. `strictness_gap` checks it at every level the evaluator can certify.
+
+- **Top level.** For every property game the evaluator computes the smallest largest deviation gain any CCE attains, `min over CCEs of max over (p, a')` of the deviation gain. It solves this matrix-game value as a linear program and certifies it with a dual bound.
+- **Independent blocks.** Some hidden games are products of independent sub-games: groups of players whose payoffs, up to offsets `b_p(a_-p)`, depend only on their own group's actions (bystanders below, and pairs of independent 2-player games). A block's deviation gains depend only on the distribution's marginal on that block, so the strictest equilibrium of the whole game is also strictest on every block. For every block the evaluator computes and certifies the block's own `min over CCEs of max over (p in block, a')`.
+- **The metric.** `strictness_gap` is the largest excess, over the experiment's games and blocks, of the submitted distribution's largest deviation gain within the block over that minimum.
+
+0 means the selected equilibrium is as strict as possible on every certified block. All blocks except the one with the largest minimum sit below the top of the lexicographic order. A selection that is strict only at the top level and stops refining below it, or a less strict equilibrium (for example one where every gain is 0), shows up here even when the result is invariant. Baselines are measured with their uniform distribution.
 
 ### Bystander players
 
-Some hidden games add a player whose payoff depends only on its own action. Such a player does not change the other players' deviation ratings. Its best action has deviation gain 0 under every CCE, though, so the strictest equilibrium of the remaining players is not visible to a single "minimize the largest deviation gain" LP. A method must keep selecting among the remaining equilibria to rate them consistently.
+Some hidden games add one or two players whose payoff depends only on their own action (3-10 actions each). Such a player does not change the other players' deviation ratings. Its best action has deviation gain 0 under every CCE, though, which pins the first "minimize the largest deviation gain" LP at 0. Most of its other actions' gains lie between 0 and the original players' strictest value, so the original players' strictest equilibrium is reached only after many further selection steps, one per such level. A method must keep selecting among the remaining equilibria until every gain is fixed.
 
 ## Baselines
 
@@ -125,7 +131,7 @@ Baseline rows are reference points and are not subject to the method gates.
 
 ## What the test does and does not establish
 
-The property experiments check the properties the paper proves (Table 1 and Section 5.1), and the top-level strictness of the selected equilibrium, on games no submission can see beforehand. They do not check which algorithm produced the distribution. Strictness is measured at the top level only; equilibria that differ only below it are distinguished through the invariance checks, not directly.
+The property experiments check the properties the paper proves (Table 1 and Section 5.1), and the strictness of the selected equilibrium at the top level and on every independent block, on games no submission can see beforehand. They do not check which algorithm produced the distribution. Below the top level, strictness is certified directly only on product games, through their blocks. Within a game that has no product structure, equilibria that differ only below the top level are distinguished through the invariance checks, not directly.
 
 The population experiment measures how well a rating drives a simple evolutionary search, the paper's directional claim. Only there can a method score better than the reproduced method. A method that changes its equilibrium selection to do so will usually pay for it in `strictness_gap` or the invariance metrics, which is the trade-off the benchmark is meant to expose.
 

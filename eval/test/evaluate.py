@@ -6,9 +6,10 @@ submission can edit (PYTHONPATH, sitecustomize, eval/protocol.py, data/,
 scoring/reference.json, checkpoints/) is imported or trusted.
 
 Everything scored is generated here at test time from a seed that exists only
-in this file: about 210 normal-form games for the five property experiments
-(including games above 1000 joint actions and meta-games of Sheriff
-populations) and the population-improvement experiment (paper Section 5.3).
+in this file: about 250 normal-form games for the five property experiments
+(2 to 5 players, including games above 2000 joint actions, meta-games of
+Sheriff populations, and products of independent sub-games such as games with
+bystander players) and the population-improvement experiment (paper Section 5.3).
 The method under test is the program ``scripts/rate.sh``. It is called once per
 population iteration; each call carries that iteration's population meta-games
 together with a share of the property games, shuffled and anonymised, and the
@@ -20,7 +21,8 @@ changes files outside its temporary directory (calls must be stateless, so one
 call cannot see another's games). Every scored number is recomputed from the
 payoffs and the submitted equilibria. Baselines, transformations (clones, mixtures and their
 weights, offsets, permutations), dominance relations, the strictest achievable
-deviation gain, the population game and its candidate policies, tolerances and
+deviation gain of every game and of every independent block of players in a
+product game, the population game and its candidate policies, tolerances and
 the test size are fixed here.
 
 The contract and the validity gates are the same as in eval/protocol.py.
@@ -271,28 +273,28 @@ def strict_dominance_pairs(game: Game) -> List[Tuple[int, int, int, float]]:
     return pairs
 
 
-def deviation_rows(game: Game) -> List[List[float]]:
-    """One row per (player, action): its deviation gain is ``row . sigma``."""
+def deviation_rows(game: Game, players: Optional[Sequence[int]] = None) -> List[List[float]]:
+    """One row per (player, action) of ``players`` (default all): its deviation gain is ``row . sigma``."""
     rows = []
-    for p in range(game.n):
+    for p in range(game.n) if players is None else players:
         table, stride, own = game.tables[p], game.strides[p], game._own[p]
         for action in range(game.dims[p]):
             rows.append([table[j + (action - own[j]) * stride] - table[j] for j in range(game.size)])
     return rows
 
 
-def strictest_epsilon(game: Game) -> Optional[Tuple[float, float]]:
+def strictest_epsilon(game: Game, players: Optional[Sequence[int]] = None) -> Optional[Tuple[float, float]]:
     """Certified bounds on the smallest achievable largest CCE deviation gain.
 
     epsilon* = min over joint distributions s of max over (p, a') of the deviation
-    gain, i.e. the value of the zero-sum matrix game whose rows are the deviation
-    constraints. Solved as the column player's LP  max 1.x  s.t.  M x <= 1, x >= 0,
+    gain, with p ranging over ``players`` (default all), i.e. the value of the
+    zero-sum matrix game whose rows are those deviation constraints. Solved as the column player's LP  max 1.x  s.t.  M x <= 1, x >= 0,
     with M = rows / scale + shift >= 1 (slack basis is feasible; no phase 1). The
     row player's strategy, read from the final reduced costs, certifies the value:
     returns (lower, upper) with upper - lower <= 1e-9 * scale, or None.
     """
     scale = game.scale()
-    norm = [[v / scale for v in row] for row in deviation_rows(game)]
+    norm = [[v / scale for v in row] for row in deviation_rows(game, players)]
     k, m = len(norm), game.size
     shift = 1.0 - min(min(row) for row in norm)
     tab = []
@@ -754,13 +756,14 @@ def validate_result(game: Game, entry) -> dict:
             ok=False,
             reason=f"ratings are not the deviation gains of the submitted equilibrium (mismatch {mismatch:.3e})",
         )
-    return dict(info, ok=True, reason="", ratings=gains, cce_gap=cce_gap(gains))
+    return dict(info, ok=True, reason="", ratings=gains, cce_gap=cce_gap(gains),
+                player_max=[max(row) for row in gains])
 
 
 # ── Metrics ─────────────────────────────────────────────────────────────────
 
 
-# view(game id) -> (ratings, total CCE regret, largest deviation gain of the distribution)
+# view(game id) -> (ratings, total CCE regret, each player's largest deviation gain under the distribution)
 View = Callable[[str], Tuple[List[List[float]], float, float]]
 
 
@@ -885,19 +888,45 @@ METRIC_FUNCTIONS = {
 }
 
 
-def strictness_gap(gids: Sequence[str], games: Dict[str, Game], view: View, strictest: Dict[str, Optional[tuple]]) -> float:
-    """Largest excess of the distribution's largest deviation gain over the smallest achievable one.
+# strictest[game id] -> [(players of one independent block, certified (lower, upper) or None), ...]
+Strictest = Dict[str, List[Tuple[Tuple[int, ...], Optional[Tuple[float, float]]]]]
 
-    The strictest equilibrium minimises the largest deviation gain; 0 means the
-    submitted equilibrium is as strict as any CCE of the game at that level.
+
+def block_strictness(game: Game, blocks: Optional[Sequence[Sequence[int]]]) -> List[tuple]:
+    """Certified strictest epsilon of every independent block of players (default: one block, all players).
+
+    A block is a set of players whose payoffs, up to offsets b_p(a_-p), depend only on
+    the block's own actions (the game is a product of independent sub-games, such as
+    a game with bystander players). Their deviation gains depend only on the joint
+    distribution's marginal on the block, and the marginals of different blocks can
+    be chosen independently. So the lexicographically strictest equilibrium is
+    strictest on every block: within each block its largest gain is the block's own
+    epsilon*. Blocks other than the one with the largest epsilon* sit below the top
+    of the lexicographic order, so this certifies the selection below the top level.
+    """
+    if not blocks or len(blocks) == 1:
+        return [(tuple(range(game.n)), strictest_epsilon(game))]
+    return [(tuple(b), strictest_epsilon(game, b)) for b in blocks]
+
+
+def strictness_gap(gids: Sequence[str], games: Dict[str, Game], view: View, strictest: Strictest) -> float:
+    """Largest excess, over games and their independent blocks, of the distribution's largest
+    deviation gain within a block over the smallest achievable one for that block.
+
+    The strictest equilibrium minimises the largest deviation gain, then the next, and
+    so on (Algorithm 1). 0 means the submitted equilibrium is as strict as any CCE on
+    every certified block: the whole game's top level and, in product games, each
+    independent sub-game's top level.
     """
     worst = 0.0
     for gid in gids:
-        bounds = strictest.get(gid)
-        if bounds is None:
-            continue
-        _, _, max_gain = view(gid)
-        worst = max(worst, _err(max(0.0, max_gain - bounds[1]), games[gid].scale()))
+        _, _, player_max = view(gid)
+        scale = games[gid].scale()
+        for players, bounds in strictest.get(gid, ()):
+            if bounds is None:
+                continue
+            block_max = max(player_max[p] for p in players)
+            worst = max(worst, _err(max(0.0, block_max - bounds[1]), scale))
     return worst
 
 
@@ -927,7 +956,7 @@ def baseline_view(name: str, games: Dict[str, Game]) -> View:
                 ratings = [[-v for v in row] for row in uniform]
             else:
                 raise KeyError(name)
-            cache[gid] = (ratings, cce_gap(gains), max(max(row) for row in gains))
+            cache[gid] = (ratings, cce_gap(gains), [max(row) for row in gains])
         return cache[gid]
 
     return view
@@ -955,7 +984,7 @@ def score_suite(
     instances: Dict[str, List[dict]],
     results: Dict[str, object],
     call_errors: Dict[str, str],
-    strictest: Dict[str, Optional[tuple]],
+    strictest: Strictest,
 ) -> Tuple[dict, dict]:
     """Return (scores, diagnostics) for the property experiments.
 
@@ -968,7 +997,7 @@ def score_suite(
             checks[gid] = {"ok": False, "reason": call_errors[gid]}
         else:
             checks[gid] = validate_result(game, results.get(gid))
-    valid_view: View = lambda gid: (checks[gid]["ratings"], checks[gid]["cce_gap"], checks[gid]["max_gain"])
+    valid_view: View = lambda gid: (checks[gid]["ratings"], checks[gid]["cce_gap"], checks[gid]["player_max"])
     scores = {"experiments": {}}
     diagnostics = {"experiments": {}}
     for experiment, insts in instances.items():
@@ -996,7 +1025,8 @@ def score_suite(
             "failure_reasons": sorted({reason for _, reason in failures})[:10],
             "max_rating_mismatch": max((c["mismatch"] for c in valid_infos), default=None),
             "max_deviation_gain": max((c["max_gain"] for c in valid_infos), default=None),
-            "uncertified_strictness": sum(1 for g in gids if strictest.get(g) is None),
+            "uncertified_strictness": sum(1 for g in gids if any(b is None for _, b in strictest.get(g, ()))),
+            "certified_blocks": sum(len(strictest.get(g, ())) for g in gids),
         }
     return scores, diagnostics
 
@@ -1408,45 +1438,68 @@ def baseline_population(sheriff: Sheriff, pools: List[CandidatePool], seed: int,
 HIDDEN_SEED = 7_311_942_665
 RPS_MATRIX = [[0.0, -1.0, 1.0], [1.0, 0.0, -1.0], [-1.0, 1.0, 0.0]]
 # gs2/gs3: random general-sum 2/3-player games; zs2: zero-sum; cc2: common interest;
-# by3: a random 2-player game plus a bystander (see _with_bystander); sh2: the
-# meta-game of a random Sheriff population (as rated in the population experiment);
-# L3: 3-player games above 1000 joint actions.
+# by3: a random 2-player game plus a bystander (see _with_bystander); pr4: two
+# independent random 2-player games side by side (see _product_game); pb5: pr4 plus
+# a bystander; bb4: a random 2-player game with a strict CCE plus two bystanders, so
+# its strictest equilibrium lies many iterations below the top; sh2: the meta-game of a random Sheriff population (as rated in the
+# population experiment); L3: 3-player games above 1000 joint actions; XL3: 3-player
+# games above 2000 joint actions.
 CLONE_KINDS = ("gs2", "by3", "zs2", "gs3", "gs2", "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2",
                "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2", "by3", "gs2", "gs2", "gs3", "gs2",
-               "sh2", "sh2", "sh2", "L3", "L3")
+               "sh2", "sh2", "sh2", "L3", "L3", "pr4", "pb5", "pr4", "pb5", "bb4", "bb4", "XL3")
 MIXTURE_KINDS = ("gs2", "gs3", "by3", "zs2", "gs2", "cc2", "by3", "gs3", "gs2", "by3", "gs2", "zs2", "gs3",
                  "by3", "gs2", "gs2", "cc2", "gs3", "by3", "gs2", "zs2", "gs2", "gs3", "by3", "gs2", "gs2",
-                 "sh2", "sh2", "sh2", "L3")
+                 "sh2", "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "bb4", "XL3")
 OFFSET_KINDS = ("gs2", "zs2", "by3", "gs3", "gs2", "cc2", "by3", "gs3", "gs2", "zs2", "by3", "gs2", "gs3",
                 "gs2", "by3", "gs3", "cc2", "gs2", "by3", "zs2", "gs3", "gs2", "by3", "gs2", "gs2", "gs3",
-                "sh2", "sh2", "L3")
+                "sh2", "sh2", "L3", "pr4", "pb5", "pb5", "bb4", "XL3")
 DOMINANCE_KINDS = ("gs2", "gs3", "by3", "gs2", "gs2", "gs3", "by3", "gs2", "gs3", "gs2", "by3", "gs2",
-                   "gs3", "gs2", "sh2", "L3")
-LARGE_DIMS = {"L3": ((11, 11, 9), (10, 11, 10), (11, 10, 10))}
+                   "gs3", "gs2", "sh2", "L3", "pr4", "pb5", "bb4", "bb4", "XL3")
+LARGE_DIMS = {"L3": ((11, 11, 9), (10, 11, 10), (11, 10, 10)),
+              "XL3": ((13, 13, 13), (12, 13, 14), (14, 12, 13))}
+# Bystander gain levels, as fractions of the base game's strictest epsilon: most lie
+# between 0 and it (each one is a separate earlier iteration of Algorithm 1), a few below.
+BYSTANDER_FRACTIONS = tuple(round(0.05 * i, 2) for i in range(1, 19)) + (1.15, 1.3, 1.45, 1.6)
+BYSTANDER_SIZES = (3, 4, 5, 6, 7, 8, 9, 10)
+
+Blocks = List[Tuple[int, ...]]
 
 
 def _uniform_payoff(rng) -> float:
     return round(rng.uniform(-1.0, 1.0), 3) + 0.0
 
 
-def _bystander_payoffs(rng, k: int) -> List[float]:
-    while True:
-        payoffs = [_uniform_payoff(rng) for _ in range(k)]
-        if payoffs.count(max(payoffs)) == 1:
-            return payoffs
+def _with_bystander(rng, game: Game, blocks: Blocks, sizes: Sequence[int] = BYSTANDER_SIZES,
+                    anchor: Optional[float] = None) -> Tuple[Game, int, Blocks]:
+    """Seat an extra player whose payoff depends only on its own action (3-10 actions).
 
-
-def _with_bystander(rng, game: Game) -> Tuple[Game, int]:
-    """Seat an extra player whose payoff depends only on its own action (1-3 actions).
-
-    Its unique best action has deviation gain 0 at every CCE, which pins the first LP
-    of Algorithm 1 at epsilon = 0; the other players' strictest CCE is then only found
-    by the later iterations. Deviation ratings of the other players are unchanged by
-    such a player, so every invariance and equality check still applies exactly.
+    The game becomes the product of the original game and a one-player game: the
+    other players' deviation ratings are unchanged, and the bystander's ratings are
+    its payoff differences to its best action. Its best action has deviation gain 0
+    at every CCE, which pins the first LP of Algorithm 1 at epsilon = 0. Most of its
+    other gains lie strictly between 0 and the original game's strictest epsilon,
+    so the original players' strictest equilibrium is only reached after one further
+    iteration per such level. ``anchor`` is that strictest epsilon (computed here
+    when omitted). Returns the game, the bystander's seat and the independent
+    player blocks.
     """
-    k = rng.choice((1, 2, 3))
+    k = rng.choice(tuple(sizes))
     seat = rng.randrange(game.n + 1)
-    own = _bystander_payoffs(rng, k)
+    if anchor is None:
+        bounds = strictest_epsilon(game)
+        anchor = bounds[1] if bounds is not None else 0.0
+    top = anchor
+    scale = game.scale()
+    if top < -0.02 * scale:
+        levels = [round(top * f, 4) + 0.0 for f in rng.sample(BYSTANDER_FRACTIONS, k - 1)]
+    else:
+        chosen = set()
+        while len(chosen) < k - 1:
+            chosen.add(round(rng.uniform(0.01, 0.6) * scale, 4))
+        levels = [-v for v in sorted(chosen)]
+    base = _uniform_payoff(rng)
+    own = [base] + [round(base + level, 4) + 0.0 for level in levels]
+    rng.shuffle(own)
     dims = list(game.dims)
     dims.insert(seat, k)
 
@@ -1455,7 +1508,28 @@ def _with_bystander(rng, game: Game) -> Tuple[Game, int]:
             return own[joint[seat]]
         return game.value(p if p < seat else p - 1, tuple(joint[:seat]) + tuple(joint[seat + 1 :]))
 
-    return Game.from_function(dims, payoff), seat
+    new_blocks = [tuple(p if p < seat else p + 1 for p in block) for block in blocks] + [(seat,)]
+    return Game.from_function(dims, payoff), seat, new_blocks
+
+
+def _product_game(rng, parts: Sequence[Game]) -> Tuple[Game, Blocks]:
+    """Independent games side by side, players seated in random order.
+
+    Each player's payoff depends only on the actions of its own part's players, so
+    every part is an independent block (see block_strictness).
+    """
+    owners = [(i, q) for i, part in enumerate(parts) for q in range(part.n)]
+    rng.shuffle(owners)
+    seats = [[0] * part.n for part in parts]
+    for seat, (i, q) in enumerate(owners):
+        seats[i][q] = seat
+    dims = [parts[i].dims[q] for i, q in owners]
+
+    def payoff(p: int, joint: Tuple[int, ...]) -> float:
+        i, q = owners[p]
+        return parts[i].value(q, tuple(joint[s] for s in seats[i]))
+
+    return Game.from_function(dims, payoff), [tuple(sorted(s)) for s in seats]
 
 
 class _SheriffSource:
@@ -1477,17 +1551,38 @@ class _SheriffSource:
         return Game((POP_SIZE, POP_SIZE), tables)
 
 
-def _random_game(rng, kind: str, sheriff: Optional[_SheriffSource] = None) -> Game:
+def _random_game(rng, kind: str, sheriff: Optional[_SheriffSource] = None,
+                 sides: Sequence[int] = (2, 3, 4)) -> Tuple[Game, Blocks]:
+    """A random game of ``kind`` and its independent player blocks."""
     if kind == "by3":
-        return _with_bystander(rng, _random_game(rng, "gs2"))[0]
+        game, _, blocks = _with_bystander(rng, _random_game(rng, "gs2")[0], [(0, 1)])
+        return game, blocks
+    if kind == "bb4":
+        for _ in range(100):
+            base = _random_game(rng, "gs2")[0]
+            bounds = strictest_epsilon(base)
+            if bounds is not None and bounds[1] < -0.02 * base.scale():
+                break
+        anchor = bounds[1] if bounds is not None else 0.0
+        game, _, blocks = _with_bystander(rng, base, [(0, 1)], anchor=anchor)
+        game, _, blocks = _with_bystander(rng, game, blocks, anchor=anchor)
+        return game, blocks
+    if kind == "pr4":
+        parts = [_random_game(rng, rng.choice(("gs2", "zs2", "cc2")), sides=(2, 3))[0] for _ in range(2)]
+        return _product_game(rng, parts)
+    if kind == "pb5":
+        game, blocks = _random_game(rng, "pr4")
+        game, _, blocks = _with_bystander(rng, game, blocks, sizes=(3, 4, 5))
+        return game, blocks
     if kind == "sh2":
-        return sheriff.game()
+        game = sheriff.game()
+        return game, [tuple(range(game.n))]
     if kind in LARGE_DIMS:
         dims = rng.choice(LARGE_DIMS[kind])
     elif kind == "gs3":
         dims = tuple(rng.choice((2, 3)) for _ in range(3))
     else:
-        dims = (rng.choice((2, 3, 4)), rng.choice((2, 3, 4)))
+        dims = (rng.choice(tuple(sides)), rng.choice(tuple(sides)))
     size = 1
     for d in dims:
         size *= d
@@ -1498,7 +1593,7 @@ def _random_game(rng, kind: str, sheriff: Optional[_SheriffSource] = None) -> Ga
         tables = [first, list(first)]
     else:
         tables = [first] + [[_uniform_payoff(rng) for _ in range(size)] for _ in range(len(dims) - 1)]
-    return Game(dims, tables)
+    return Game(dims, tables), [tuple(range(len(dims)))]
 
 
 def _random_perms(rng, dims: Sequence[int]) -> List[List[int]]:
@@ -1531,6 +1626,7 @@ class _Suite:
         self.id_rng = random.Random(seed ^ 0x5DEECE66D)
         self.sheriff = _SheriffSource(_mix(seed, 0x5E))
         self.games: Dict[str, Game] = {}
+        self.blocks: Dict[str, Blocks] = {}
         self.instances: Dict[str, List[dict]] = {name: [] for name in PROPERTY_METRICS}
 
     def new_id(self) -> str:
@@ -1539,9 +1635,11 @@ class _Suite:
             if gid not in self.games:
                 return gid
 
-    def add(self, game: Game) -> str:
+    def add(self, game: Game, blocks: Optional[Blocks] = None) -> str:
         gid = self.new_id()
         self.games[gid] = game
+        if blocks and len(blocks) > 1:
+            self.blocks[gid] = [tuple(b) for b in blocks]
         return gid
 
 
@@ -1556,12 +1654,17 @@ def _shapley_family(suite: _Suite) -> None:
         game = symmetric_population_game(matrix, population)
         labs = [list(labels), list(labels)]
         players = [0, 1]
+        blocks = None
         if scale is not None:
             game = Game(game.dims, [[v * scale for v in t] for t in game.tables])
         if bystander:
-            game, seat = _with_bystander(rng, game)
-            labs.insert(seat, [f"b{a}" for a in range(game.dims[seat])])
-            players = [p if p < seat else p + 1 for p in players]
+            bounds = strictest_epsilon(game)
+            anchor = bounds[1] if bounds is not None else 0.0
+            blocks = [(0, 1)]
+            for _ in range(int(bystander)):
+                game, seat, blocks = _with_bystander(rng, game, blocks, anchor=anchor)
+                labs.insert(seat, [f"b{a}" for a in range(game.dims[seat])])
+                players = [p if p < seat else p + 1 for p in players]
         if offsets:
             game = add_offsets(game, _random_offsets(rng, game))
         if clone:
@@ -1578,7 +1681,7 @@ def _shapley_family(suite: _Suite) -> None:
         game, _ = permute_actions(game, perms)
         labs = [[labs[p][perms[p][pos]] for pos in range(game.dims[p])] for p in range(game.n)]
         suite.instances["biased_shapley_augmented"].append(
-            {"game": suite.add(game), "players": players, "labels": [labs[p] for p in players]}
+            {"game": suite.add(game, blocks), "players": players, "labels": [labs[p] for p in players]}
         )
 
     rpsn = pure3 + [SHAPLEY_NASH]
@@ -1593,8 +1696,10 @@ def _shapley_family(suite: _Suite) -> None:
     add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(2)], ["R", "P", "S", "m0", "m1"],
         offsets=True, bystander=True)
     add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], clone=True, bystander=True)
-    # A large population (above 1000 joint actions): 30 random mixtures besides R, P, S.
+    add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], offsets=True, bystander=2)
+    # Large populations (above 1000 and above 2000 joint actions): random mixtures besides R, P, S.
     add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(30)], ["R", "P", "S"] + [f"m{i}" for i in range(30)])
+    add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(45)], ["R", "P", "S"] + [f"m{i}" for i in range(45)])
     add(RPS_MATRIX, pure3, ["R", "P", "S"])
     for with_offsets in (False, True):
         a, b, c = (round(rng.uniform(0.5, 3.0), 2) for _ in range(3))
@@ -1605,12 +1710,13 @@ def _shapley_family(suite: _Suite) -> None:
     a, b, c = (round(rng.uniform(0.5, 3.0), 2) for _ in range(3))
     weighted = [[0.0, -a, b], [a, 0.0, -c], [-b, c, 0.0]]
     add(weighted, pure3 + [mixture3() for _ in range(2)], ["R", "P", "S", "m0", "m1"])
+    add(weighted, pure3, ["R", "P", "S"], bystander=True)
 
 
 def _clone_family(suite: _Suite) -> None:
     rng = suite.rng
     for kind in CLONE_KINDS:
-        base = _random_game(rng, kind, suite.sheriff)
+        base, blocks = _random_game(rng, kind, suite.sheriff)
         player = rng.randrange(base.n)
         source = rng.randrange(base.dims[player])
         position = rng.randrange(base.dims[player] + 1)
@@ -1618,8 +1724,8 @@ def _clone_family(suite: _Suite) -> None:
         variant, second = permute_actions(cloned, _random_perms(rng, cloned.dims))
         suite.instances["clone_invariance"].append(
             {
-                "base": suite.add(base),
-                "variant": suite.add(variant),
+                "base": suite.add(base, blocks),
+                "variant": suite.add(variant, blocks),
                 "player": player,
                 "source": source,
                 "clone_pos": second[player][position],
@@ -1631,7 +1737,7 @@ def _clone_family(suite: _Suite) -> None:
 def _mixture_family(suite: _Suite) -> None:
     rng = suite.rng
     for kind in MIXTURE_KINDS:
-        base = _random_game(rng, kind, suite.sheriff)
+        base, blocks = _random_game(rng, kind, suite.sheriff)
         player = rng.choice([p for p in range(base.n) if base.dims[p] >= 2])
         k = rng.randint(2, min(base.dims[player], 4))
         support = sorted(rng.sample(range(base.dims[player]), k))
@@ -1641,8 +1747,8 @@ def _mixture_family(suite: _Suite) -> None:
         variant, second = permute_actions(mixed, _random_perms(rng, mixed.dims))
         suite.instances["mixture_invariance"].append(
             {
-                "base": suite.add(base),
-                "variant": suite.add(variant),
+                "base": suite.add(base, blocks),
+                "variant": suite.add(variant, blocks),
                 "player": player,
                 "weights": weights,
                 "mix_pos": second[player][position],
@@ -1654,33 +1760,35 @@ def _mixture_family(suite: _Suite) -> None:
 def _offset_family(suite: _Suite) -> None:
     rng = suite.rng
     for kind in OFFSET_KINDS:
-        base = _random_game(rng, kind, suite.sheriff)
+        base, blocks = _random_game(rng, kind, suite.sheriff)
         shifted = add_offsets(base, _random_offsets(rng, base))
         variant, maps = permute_actions(shifted, _random_perms(rng, shifted.dims))
         suite.instances["offset_invariance"].append(
-            {"base": suite.add(base), "variant": suite.add(variant), "maps": maps}
+            {"base": suite.add(base, blocks), "variant": suite.add(variant, blocks), "maps": maps}
         )
 
 
-def _plant_dominated_action(rng, game: Game) -> Game:
-    """Add an action that is strictly dominated, by a constant gap, by an existing one."""
+def _plant_dominated_action(rng, game: Game, blocks: Optional[Blocks] = None) -> Game:
+    """Add an action that is strictly dominated, by a constant gap, by an existing one.
+
+    Players in the same independent block get fresh payoffs against the new action;
+    players of other blocks are unaffected by it, so the blocks stay independent.
+    """
     player = rng.randrange(game.n)
+    block = next((b for b in blocks or () if player in b), tuple(range(game.n)))
+    mates = sorted(q for q in block if q != player)
     better = rng.randrange(game.dims[player])
     delta = round(rng.uniform(0.25, 2.0), 2)
     position = rng.randrange(game.dims[player] + 1)
-    others = [range(d) for q, d in enumerate(game.dims) if q != player]
-    fresh = {
-        q: {joint: _uniform_payoff(rng) for joint in itertools.product(*others)}
-        for q in range(game.n)
-        if q != player
-    }
+    profiles = list(itertools.product(*[range(game.dims[q]) for q in mates]))
+    fresh = {q: {joint: _uniform_payoff(rng) for joint in profiles} for q in mates}
 
-    def payoff(q, joint, game=game, player=player, better=better, delta=delta, fresh=fresh):
-        if q == player:
-            source = list(joint)
-            source[player] = better
-            return game.value(player, tuple(source)) - delta
-        return fresh[q][tuple(joint[:player]) + tuple(joint[player + 1 :])]
+    def payoff(q, joint, game=game, player=player, better=better, delta=delta, fresh=fresh, mates=mates):
+        if q in fresh:
+            return fresh[q][tuple(joint[r] for r in mates)]
+        source = list(joint)
+        source[player] = better
+        return game.value(q, tuple(source)) - (delta if q == player else 0.0)
 
     planted, _ = insert_action(game, player, position, payoff)
     return planted
@@ -1689,11 +1797,11 @@ def _plant_dominated_action(rng, game: Game) -> Game:
 def _dominance_family(suite: _Suite) -> None:
     rng = suite.rng
     for kind in DOMINANCE_KINDS:
-        game = _random_game(rng, kind, suite.sheriff)
+        game, blocks = _random_game(rng, kind, suite.sheriff)
         for _ in range(1 if kind in LARGE_DIMS else rng.choice((1, 2))):
-            game = _plant_dominated_action(rng, game)
+            game = _plant_dominated_action(rng, game, blocks)
         game, _ = permute_actions(game, _random_perms(rng, game.dims))
-        suite.instances["dominance_preserving"].append({"game": suite.add(game)})
+        suite.instances["dominance_preserving"].append({"game": suite.add(game, blocks)})
     public, _ = permute_actions(dominance_test_game(), _random_perms(rng, (2, 2)))
     suite.instances["dominance_preserving"].append({"game": suite.add(public)})
 
@@ -1738,7 +1846,7 @@ def _split_pairs(suite: _Suite, gids: Iterable[str]) -> List[List[str]]:
 def evaluate_hidden(seed: int = HIDDEN_SEED, command: Optional[Sequence[str]] = None) -> Tuple[dict, dict]:
     started = time.monotonic()
     suite = build_hidden_suite(seed)
-    strictest = {gid: strictest_epsilon(game) for gid, game in suite.games.items()}
+    strictest = {gid: block_strictness(game, suite.blocks.get(gid)) for gid, game in suite.games.items()}
     sheriff, pools = make_pools(_mix(seed, 0x50))
     loop: Optional[PopulationLoop] = PopulationLoop(sheriff, pools, _mix(seed, 0x50))
     plan_rng = random.Random(_mix(seed, 0x51))

@@ -11,7 +11,7 @@ Scientists should work on principled game-theoretic rating methods for normal-fo
 ## Approach Scope
 
 The scientist may explore:
-- Better optimization or numerical methods for computing deviation-style ratings, including on games with a thousand or more joint actions
+- Better optimization or numerical methods for computing deviation-style ratings, including on games with two thousand or more joint actions and more than three players
 - Alternative principled equilibrium selections for the same problem family
 - Ratings that drive population improvement better while keeping the scored properties
 - Broader evaluations after keeping the scored benchmark intact
@@ -23,7 +23,7 @@ A method is judged through the rating program `scripts/rate.sh` on games the eva
 Within that family the scored question is equilibrium selection. Which CCE gives ratings that:
 - stay equal on cyclic games;
 - stay invariant to clones, mixtures, offsets and extra players;
-- are as strict as possible (`strictness_gap`);
+- are as strict as possible, at the top level and below it (`strictness_gap`, certified on every independent block of players in product games);
 - drive a population search toward equilibrium?
 
 The reproduced method scores 0 on every property metric. Measurable progress over it is on `population_improvement`, where it reaches a late gap ratio of about 0.58 on the hidden test and the bound is 0. A gain there that costs strictness or invariance shows up in those metrics.

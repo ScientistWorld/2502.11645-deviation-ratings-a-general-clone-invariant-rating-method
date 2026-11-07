@@ -32,7 +32,7 @@ Additional scored checks:
 - `all_player_dev_gap` (lower is better): spread across both cyclic players' actions.
 - `player_symmetry_gap` (lower is better): largest same-strategy mismatch between the two players.
 - `CCE_gap` (lower is better): recomputed total CCE regret of the submitted distribution. It is 0 for every output that passes the gates.
-- `strictness_gap` (lower is better): how much the selected equilibrium's largest deviation gain exceeds the smallest largest deviation gain any CCE of the game attains. On the biased Shapley games that minimum is -680/241 times the payoff scale, the common deviation rating of paper Table 2.
+- `strictness_gap` (lower is better): how much the selected equilibrium's largest deviation gain exceeds the smallest largest deviation gain any CCE of the game attains. In games built from independent sub-games (bystander players, pairs of independent games) this is checked on every independent block of players, so a selection that is strict only at the top level fails on the blocks below it. On the biased Shapley games the minimum is -680/241 times the payoff scale, the common deviation rating of paper Table 2, also for the cyclic players of a game with bystanders.
 
 ## Headroom Target
 

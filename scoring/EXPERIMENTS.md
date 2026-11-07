@@ -2,20 +2,20 @@
 
 Every experiment runs the rating program `scripts/rate.sh` on games supplied by the evaluator. The program is called once per population iteration (96 calls). Each call carries the iteration's population meta-games and a share of the property games; the two games of an invariance pair are always in different calls, and calls must be stateless.
 
-The visible evaluators use the five documented public games plus families generated from a visible seed. The hidden test generates about 210 property games when it runs:
-- 2- and 3-player games, some with a bystander player whose payoff depends only on its own action;
+The visible evaluators use the five documented public games plus families generated from a visible seed. The hidden test generates about 250 property games when it runs:
+- 2- to 5-player games, some with one or two bystander players whose payoff depends only on their own action, and some that are products of two independent 2-player games;
 - meta-games of random Sheriff populations;
-- 3-player games above 1,000 joint actions.
+- 3-player games above 1,000 and above 2,000 joint actions, and a cyclic population with 48 strategies per player (2,304 joint actions).
 
 Each property metric is the maximum over the experiment's games (dominance violations are summed). Outputs must pass the validity gates in [TARGETS.md](/home/user/scoring/TARGETS.md), or the experiment is scored as failed.
 
-Every property experiment also reports `strictness_gap`. For each game, the evaluator computes and certifies the smallest largest deviation gain that any CCE attains. `strictness_gap` is the largest amount by which the submitted equilibrium's largest deviation gain exceeds that minimum; 0 means it is as strict as possible at the top level.
+Every property experiment also reports `strictness_gap`. For each game, the evaluator computes and certifies the smallest largest deviation gain that any CCE attains. In product games (bystanders, pairs of independent games) it does so for every independent block of players separately. `strictness_gap` is the largest amount by which the submitted equilibrium's largest deviation gain, within the game or within a block, exceeds that minimum. 0 means it is as strict as possible at the top level and on every block, and the blocks below the top probe the selection deeper in the lexicographic order.
 
 ## biased_shapley_augmented
 
 Tests whether a method rates cyclic games without forcing an artificial linear order.
 - Public game: paper Table 2 (biased Shapley game plus its Nash mixture N).
-- Hidden games: relabeled, scaled, offset, cloned and populated variants (one population has 33 strategies per player), versions with a bystander player, zero-sum RPS, weighted RPS and RPS-lizard-Spock. In all of them the deviation ratings are provably equal.
+- Hidden games: relabeled, scaled, offset, cloned and populated variants (populations with up to 48 strategies per player), versions with one or two bystander players, zero-sum RPS, weighted RPS and RPS-lizard-Spock. In all of them the deviation ratings are provably equal.
 
 Scored outputs:
 - `dev_gap`: spread of the first cyclic player's ratings

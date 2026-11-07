@@ -28,7 +28,7 @@
         "strictness_gap": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
+          "description": "Largest excess, over the experiment's games and over every independent block of players in a game built from independent sub-games (bystander players, pairs of independent games), of the submitted equilibrium's largest deviation gain within the game or block over the smallest largest deviation gain any CCE attains there (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level and on every block; blocks other than the top one sit deeper in the lexicographic order that the paper's selection (the strictest equilibrium) minimises."
         }
       },
       "results": {
@@ -65,7 +65,7 @@
         "strictness_gap": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
+          "description": "Largest excess, over the experiment's games and over every independent block of players in a game built from independent sub-games (bystander players, pairs of independent games), of the submitted equilibrium's largest deviation gain within the game or block over the smallest largest deviation gain any CCE attains there (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level and on every block; blocks other than the top one sit deeper in the lexicographic order that the paper's selection (the strictest equilibrium) minimises."
         }
       },
       "results": {
@@ -101,7 +101,7 @@
         "strictness_gap": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
+          "description": "Largest excess, over the experiment's games and over every independent block of players in a game built from independent sub-games (bystander players, pairs of independent games), of the submitted equilibrium's largest deviation gain within the game or block over the smallest largest deviation gain any CCE attains there (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level and on every block; blocks other than the top one sit deeper in the lexicographic order that the paper's selection (the strictest equilibrium) minimises."
         }
       },
       "results": {
@@ -133,7 +133,7 @@
         "strictness_gap": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
+          "description": "Largest excess, over the experiment's games and over every independent block of players in a game built from independent sub-games (bystander players, pairs of independent games), of the submitted equilibrium's largest deviation gain within the game or block over the smallest largest deviation gain any CCE attains there (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level and on every block; blocks other than the top one sit deeper in the lexicographic order that the paper's selection (the strictest equilibrium) minimises."
         }
       },
       "results": {
@@ -169,7 +169,7 @@
         "strictness_gap": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Largest excess, over the experiment's games, of the submitted equilibrium's largest deviation gain over the smallest largest deviation gain any CCE of the game attains (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level, as the paper's selection (the strictest equilibrium) requires."
+          "description": "Largest excess, over the experiment's games and over every independent block of players in a game built from independent sub-games (bystander players, pairs of independent games), of the submitted equilibrium's largest deviation gain within the game or block over the smallest largest deviation gain any CCE attains there (computed and certified by the evaluator). 0 means the selected equilibrium is as strict as possible at the top level and on every block; blocks other than the top one sit deeper in the lexicographic order that the paper's selection (the strictest equilibrium) minimises."
         }
       },
       "results": {
