@@ -1,0 +1,18 @@
+{
+  "name": "reference_unmodified",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
+  "train": {
+    "exit_code": 0,
+    "seconds": 2.7195
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 3.5706
+  },
+  "score_sha256": "b9d4121272028940c8db1dbfe7b3c48daaf2c8506f397b459ee44c2fc2fde3e9",
+  "shortcut_writer_marker_at_capture": false
+}

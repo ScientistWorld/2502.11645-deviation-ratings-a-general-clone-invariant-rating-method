@@ -7,19 +7,19 @@
   ],
   "producer": {
     "exit_code": 0,
-    "seconds": 0.11
+    "seconds": 0.16
   },
   "edited_files": {
     "scripts/rate.sh": "7c709a8dba9ca3148ac969eea014057414d3a2088448adb380f472ef8383b229"
   },
   "train": {
     "exit_code": 0,
-    "seconds": 1.42
+    "seconds": 1.87
   },
   "restored_hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
   "test": {
     "exit_code": 0,
-    "seconds": 1.73
+    "seconds": 2.17
   },
   "nonfinite_test_fields": [],
   "scores_produced": true,

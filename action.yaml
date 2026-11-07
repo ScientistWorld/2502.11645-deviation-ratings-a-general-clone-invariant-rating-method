@@ -1,8 +1,4 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
 action: submit
 gpus: 0
 test: false
-milestone: secondary_claims
-notes: "Hardening job 1: population-improvement (paper Sec. 5.3, Sheriff) diagnostics for reference, baselines and alternative CCE rules (16 runs x 256 iterations), plus timing of the new hidden test and train evaluators."
+notes: "Audit 62 scoring shortcuts, fresh unmodified reference plus three seeded action/batch orderings, and public-game strictness/context diagnostics; all tests use restored eval and no-argument hidden entrypoint."

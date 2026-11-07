@@ -14,12 +14,12 @@
   },
   "train": {
     "exit_code": 0,
-    "seconds": 1.42
+    "seconds": 1.92
   },
   "restored_hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
   "test": {
     "exit_code": 0,
-    "seconds": 3.68
+    "seconds": 4.87
   },
   "nonfinite_test_fields": [],
   "scores_produced": true,
