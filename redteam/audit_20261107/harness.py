@@ -12,11 +12,13 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import time
 from pathlib import Path
 
 ROOT = Path("/home/user")
 HERE = ROOT / "redteam/audit_20261107"
+sys.path.insert(0, str(ROOT))
 PATHS = ("method", "scripts/rate.sh", "scripts/evaluate_test.sh", "eval", "scoring", "baseline", "data")
 
 
@@ -73,8 +75,6 @@ def main():
             f'exec python3 -m method.audit_candidate {args.name} "$1" "$2"\n')
         if args.name == "visible_answers_shortcut":
             # The installer may use the train evaluator and its imports.
-            import sys
-            sys.path.insert(0, str(ROOT))
             from eval.protocol import build_visible_suite
             games = build_visible_suite().games
             source, dest = folder / "visible_games.json", folder / "visible_ratings.json"
@@ -88,8 +88,6 @@ def main():
             (ROOT / "method/visible_shortcut_cache.json").write_text(json.dumps(cache))
             status["visible_cache_entries"] = len(cache)
         if args.name == "direct_scores_shortcut":
-            import sys
-            sys.path.insert(0, str(ROOT))
             fake = forge_scores()
             for split in ("train", "test"):
                 (ROOT / f"scoring/scores_{split}.json").write_text(json.dumps(fake))

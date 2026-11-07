@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "Fresh audit: public CCE identifiability diagnostics, 3 reference seeds, quality variants and 13 shortcut replays through the unchanged no-argument hidden test; results under redteam/audit_20261107."
+notes: "Resume audit after fixing harness-only import path: retain 8 completed evaluations, run the remaining 13 shortcut replays, and summarize exact weighted ranks."
