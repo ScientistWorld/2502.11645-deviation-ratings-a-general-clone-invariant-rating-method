@@ -1,16 +1,17 @@
 #!/bin/bash
 # Job script submitted via the end-of-turn YAML block.
 #
-# TEMPORARY (hardening job 1): population-improvement diagnostics and timing of
-# the new evaluators. The final version reproduces the reference end to end.
+# Reproduce the reference end to end: paper artifacts and uniform baseline,
+# the public evaluation (scripts/evaluate.sh), the train slice, the hidden test
+# (all three run the rating program scripts/rate.sh), and validation.
+# The hardening audit (diagnostics and shortcut replays) is
+# redteam/hardening_job.sh.
 
-set -uo pipefail
+set -euo pipefail
 
 cd /home/user
 
-echo "=== population diagnostics"
-time python3 redteam/population_diagnostics.py 2>&1 | tee redteam/population_diagnostics.log
-echo "=== hidden test"
-time bash scripts/evaluate_test.sh 2>&1 | tee redteam/job1_test.log
-echo "=== train"
-time bash scripts/evaluate_train.sh 2>&1 | tee redteam/job1_train.log
+bash scripts/reproduce.sh
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
+python3 validate.py
