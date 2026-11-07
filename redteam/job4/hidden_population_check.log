@@ -1,0 +1,11 @@
+iteration 16: 5 s total, slowest game 0.08 s, fallbacks 0
+iteration 32: 9 s total, slowest game 0.08 s, fallbacks 0
+iteration 48: 13 s total, slowest game 0.08 s, fallbacks 0
+iteration 64: 17 s total, slowest game 0.08 s, fallbacks 0
+iteration 80: 21 s total, slowest game 0.08 s, fallbacks 0
+iteration 96: 25 s total, slowest game 0.08 s, fallbacks 0
+{"stalls": 0, "gate_failures": 0, "fallback_attempts": 0, "slowest_game_s": 0.08313189097680151, "metrics": {"late_gap_ratio": 0.5766020552684409, "mean_gap_ratio": 0.6460344063228907}, "mean_curve": [28.4662, 26.2998, 23.9338, 20.6162, 18.3139, 16.4402, 16.596, 16.6665, 16.7189, 17.0709, 17.1657, 15.5319, 15.3282]}
+
+real	0m27.989s
+user	0m26.868s
+sys	0m0.300s

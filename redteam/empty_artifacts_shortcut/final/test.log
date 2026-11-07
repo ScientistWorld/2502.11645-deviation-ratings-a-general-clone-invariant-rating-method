@@ -1,0 +1,37 @@
+isolation: on; stopped 0 leftover process(es) of the submission before testing
+== hidden test: 3 rating-program calls, 20.7 s ==
+[biased_shapley_augmented] 16 instances, 16 games (largest 1089 joint actions), proposed method: FAILED
+    gate failure: 'ratings' must be a list with one list per player (2)
+    gate failure: 'ratings' must be a list with one list per player (3)
+    deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"dev_gap": 2.934636, "all_player_dev_gap": 5.122333, "player_symmetry_gap": 3.832333, "CCE_gap": 3.209813, "strictness_gap": 4.286515}
+[clone_invariance] 31 instances, 62 games (largest 1210 joint actions), proposed method: FAILED
+    gate failure: 'ratings' must be a list with one list per player (2)
+    gate failure: 'ratings' must be a list with one list per player (3)
+    deviation_rating           {"max_diff": 1000000.0, "all_players_max_diff": 1000000.0, "clone_source_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 0.25075, "all_players_max_diff": 0.25075, "clone_source_gap": 0.0, "strictness_gap": 3.857303}
+[mixture_invariance] 30 instances, 60 games (largest 1188 joint actions), proposed method: FAILED
+    gate failure: 'ratings' must be a list with one list per player (2)
+    gate failure: 'ratings' must be a list with one list per player (3)
+    deviation_rating           {"original_max_diff": 1000000.0, "mixture_error": 1000000.0, "max_CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"original_max_diff": 0.407582, "mixture_error": 0.0, "max_CCE_gap": 3.086416, "strictness_gap": 2.621413}
+[offset_invariance] 29 instances, 58 games (largest 1089 joint actions), proposed method: FAILED
+    gate failure: 'ratings' must be a list with one list per player (2)
+    gate failure: 'ratings' must be a list with one list per player (3)
+    deviation_rating           {"max_diff": 1000000.0, "max_CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 3.84, "max_CCE_gap": 1.738788, "strictness_gap": 1.451191}
+[dominance_preserving] 17 instances, 17 games (largest 1200 joint actions), proposed method: FAILED
+    gate failure: 'ratings' must be a list with one list per player (2)
+    gate failure: 'ratings' must be a list with one list per player (3)
+    deviation_rating           {"dominance_violations": 1000000, "min_margin": -1000000.0, "CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 2.507909, "strictness_gap": 2.104818}
+    zero_rating                {"dominance_violations": 65, "min_margin": 0.0, "CCE_gap": 2.507909, "strictness_gap": 2.104818}
+    negative_uniform_payoff    {"dominance_violations": 65, "min_margin": -97.325057, "CCE_gap": 2.507909, "strictness_gap": 2.104818}
+[population_improvement] Sheriff, 8 runs x 96 iterations, proposed method: FAILED
+    gate failure: population meta-game: 'ratings' must be a list with one list per player (2)
+    deviation_rating           {"late_gap_ratio": 1000000.0, "mean_gap_ratio": 1000000.0}
+    uniform_payoff             {"late_gap_ratio": 0.667682, "mean_gap_ratio": 0.70202}
+    random_selection           {"late_gap_ratio": 0.968004, "mean_gap_ratio": 0.964801}
+    mean full-game CCE gap every 8 iterations, uniform_payoff: [28.4662, 26.1423, 24.6196, 21.1471, 18.7526, 17.2881, 17.8184, 17.8812, 20.0432, 19.7729, 18.038, 16.6145, 21.6887]
+    mean full-game CCE gap every 8 iterations, random_selection: [28.4662, 26.9694, 27.263, 28.2573, 24.541, 29.551, 27.6566, 29.6382, 24.6193, 31.0995, 25.4422, 28.195, 26.3385]
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json

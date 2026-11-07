@@ -1,0 +1,112 @@
+{
+  "experiments": {
+    "biased_shapley_augmented": {
+      "results": {
+        "deviation_rating": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "dev_gap": 2.934636,
+          "all_player_dev_gap": 5.122333,
+          "player_symmetry_gap": 3.832333,
+          "CCE_gap": 3.209813,
+          "strictness_gap": 4.286515
+        }
+      }
+    },
+    "clone_invariance": {
+      "results": {
+        "deviation_rating": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "max_diff": 0.25075,
+          "all_players_max_diff": 0.25075,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 3.857303
+        }
+      }
+    },
+    "mixture_invariance": {
+      "results": {
+        "deviation_rating": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "original_max_diff": 0.407582,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 3.086416,
+          "strictness_gap": 2.621413
+        }
+      }
+    },
+    "offset_invariance": {
+      "results": {
+        "deviation_rating": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "max_diff": 3.84,
+          "max_CCE_gap": 1.738788,
+          "strictness_gap": 1.451191
+        }
+      }
+    },
+    "dominance_preserving": {
+      "results": {
+        "deviation_rating": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 2.507909,
+          "strictness_gap": 2.104818
+        },
+        "zero_rating": {
+          "dominance_violations": 65,
+          "min_margin": 0.0,
+          "CCE_gap": 2.507909,
+          "strictness_gap": 2.104818
+        },
+        "negative_uniform_payoff": {
+          "dominance_violations": 65,
+          "min_margin": -97.325057,
+          "CCE_gap": 2.507909,
+          "strictness_gap": 2.104818
+        }
+      }
+    },
+    "population_improvement": {
+      "results": {
+        "deviation_rating": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        },
+        "uniform_payoff": {
+          "late_gap_ratio": 0.667682,
+          "mean_gap_ratio": 0.70202
+        },
+        "random_selection": {
+          "late_gap_ratio": 0.968004,
+          "mean_gap_ratio": 0.964801
+        }
+      }
+    }
+  }
+}
