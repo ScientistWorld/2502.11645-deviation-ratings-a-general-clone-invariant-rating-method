@@ -27,10 +27,10 @@ SPEC.loader.exec_module(HIDDEN)
 
 RATER = ["python3", str(ROOT / "redteam/shortcut_rater.py")]
 PROGRAMS = {
-    "reference (scripts/rate.sh)": ["bash", str(ROOT / "scripts/rate.sh")],
-    "reference, dual-only freezing": RATER + ["variant:dual"],
-    "reference, dual-only freezing, tight LP tolerances": RATER + ["variant:dual_tight"],
-    "reference, tight LP tolerances": RATER + ["variant:active_tight"],
+    "reference (scripts/rate.sh; paper's nonzero-dual freezing)": ["bash", str(ROOT / "scripts/rate.sh")],
+    "reference, tight LP tolerances": RATER + ["variant:dual_tight"],
+    "previous implementation (also freezes every tight constraint)": RATER + ["variant:active"],
+    "previous implementation, tight LP tolerances": RATER + ["variant:active_tight"],
     "single LP (first step of Algorithm 1 only)": RATER + ["single_lp_shortcut"],
     "any CCE (feasibility LP)": RATER + ["feasibility_cce_shortcut"],
     "first pure Nash equilibrium": RATER + ["pure_nash_shortcut"],
@@ -39,7 +39,7 @@ PROGRAMS = {
 
 
 def main(argv) -> None:
-    seeds = [HIDDEN.HIDDEN_SEED] + [int(s) for s in argv[1:]] if len(argv) > 1 else [HIDDEN.HIDDEN_SEED, 11, 22, 33, 44]
+    seeds = [HIDDEN.HIDDEN_SEED] + [int(s) for s in argv[1:]] if len(argv) > 1 else [HIDDEN.HIDDEN_SEED] + list(range(101, 111))
     report = {"seeds": ["hidden" if s == HIDDEN.HIDDEN_SEED else s for s in seeds], "programs": {}}
     for label, command in PROGRAMS.items():
         rows = []

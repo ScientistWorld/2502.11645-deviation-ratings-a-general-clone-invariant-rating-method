@@ -474,21 +474,24 @@ def _spread(values: Iterable[float]) -> float:
 
 
 def shapley_metrics(instances: List[dict], games: Dict[str, Game], view: View) -> Dict[str, float]:
+    """Equality checks over the two players of the cyclic game (``inst["players"]``)."""
     out = {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0}
     for inst in instances:
         game = games[inst["game"]]
         scale = game.scale()
         ratings, gap = view(inst["game"])
-        out["dev_gap"] = max(out["dev_gap"], _err(_spread(ratings[0]), scale))
+        first, second = inst.get("players", (0, 1))
+        cyclic = [ratings[first], ratings[second]]
+        out["dev_gap"] = max(out["dev_gap"], _err(_spread(cyclic[0]), scale))
         out["all_player_dev_gap"] = max(
-            out["all_player_dev_gap"], _err(_spread(v for row in ratings for v in row), scale)
+            out["all_player_dev_gap"], _err(_spread(v for row in cyclic for v in row), scale)
         )
         labels = inst["labels"]
         for a0, label0 in enumerate(labels[0]):
             for a1, label1 in enumerate(labels[1]):
                 if label0 == label1:
                     out["player_symmetry_gap"] = max(
-                        out["player_symmetry_gap"], _err(ratings[0][a0] - ratings[1][a1], scale)
+                        out["player_symmetry_gap"], _err(cyclic[0][a0] - cyclic[1][a1], scale)
                     )
         out["CCE_gap"] = max(out["CCE_gap"], _gap(gap, game))
     return out
@@ -743,20 +746,54 @@ def dominance_test_game() -> Game:
 
 HIDDEN_SEED = 7_311_942_665
 RPS_MATRIX = [[0.0, -1.0, 1.0], [1.0, 0.0, -1.0], [-1.0, 1.0, 0.0]]
-CLONE_KINDS = ("gs2", "gs2", "zs2", "gs3", "gs2", "cc2", "gs2", "gs3", "zs2", "gs2",
-               "gs3", "gs2", "cc2", "gs2", "gs3", "zs2", "gs2", "gs3", "gs2", "gs2")
-MIXTURE_KINDS = ("gs2", "gs3", "gs2", "zs2", "gs2", "cc2", "gs3", "gs2", "gs2", "zs2",
-                 "gs3", "gs2", "gs2", "cc2", "gs3", "gs2", "zs2", "gs2", "gs3", "gs2")
-OFFSET_KINDS = ("gs2", "zs2", "gs3", "gs2", "gs2", "cc2", "gs3", "gs2", "zs2", "gs2",
-                "gs3", "gs2", "gs2", "gs3", "cc2", "gs2", "zs2", "gs3", "gs2", "gs2")
-DOMINANCE_KINDS = ("gs2", "gs3", "gs2", "gs2", "gs3", "gs2", "gs3", "gs2", "gs2", "gs3", "gs2")
+# gs2/gs3: random general-sum 2/3-player games; zs2: zero-sum; cc2: common interest;
+# by3: a random 2-player game plus a bystander (see _with_bystander).
+CLONE_KINDS = ("gs2", "by3", "zs2", "gs3", "gs2", "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2",
+               "cc2", "by3", "gs3", "zs2", "gs2", "by3", "gs3", "gs2", "by3", "gs2", "gs2", "gs3", "gs2")
+MIXTURE_KINDS = ("gs2", "gs3", "by3", "zs2", "gs2", "cc2", "by3", "gs3", "gs2", "by3", "gs2", "zs2", "gs3",
+                 "by3", "gs2", "gs2", "cc2", "gs3", "by3", "gs2", "zs2", "gs2", "gs3", "by3", "gs2", "gs2")
+OFFSET_KINDS = ("gs2", "zs2", "by3", "gs3", "gs2", "cc2", "by3", "gs3", "gs2", "zs2", "by3", "gs2", "gs3",
+                "gs2", "by3", "gs3", "cc2", "gs2", "by3", "zs2", "gs3", "gs2", "by3", "gs2", "gs2", "gs3")
+DOMINANCE_KINDS = ("gs2", "gs3", "by3", "gs2", "gs2", "gs3", "by3", "gs2", "gs3", "gs2", "by3", "gs2",
+                   "gs3", "gs2")
 
 
 def _uniform_payoff(rng) -> float:
     return round(rng.uniform(-1.0, 1.0), 3) + 0.0
 
 
+def _bystander_payoffs(rng, k: int) -> List[float]:
+    while True:
+        payoffs = [_uniform_payoff(rng) for _ in range(k)]
+        if payoffs.count(max(payoffs)) == 1:
+            return payoffs
+
+
+def _with_bystander(rng, game: Game) -> Tuple[Game, int]:
+    """Seat an extra player whose payoff depends only on its own action (1-3 actions).
+
+    Its unique best action has deviation gain 0 at every CCE, which pins the first LP
+    of Algorithm 1 at epsilon = 0; the other players' strictest CCE is then only found
+    by the later iterations. Deviation ratings of the other players are unchanged by
+    such a player, so every invariance and equality check still applies exactly.
+    """
+    k = rng.choice((1, 2, 3))
+    seat = rng.randrange(game.n + 1)
+    own = _bystander_payoffs(rng, k)
+    dims = list(game.dims)
+    dims.insert(seat, k)
+
+    def payoff(p: int, joint: Tuple[int, ...]) -> float:
+        if p == seat:
+            return own[joint[seat]]
+        return game.value(p if p < seat else p - 1, tuple(joint[:seat]) + tuple(joint[seat + 1 :]))
+
+    return Game.from_function(dims, payoff), seat
+
+
 def _random_game(rng, kind: str) -> Game:
+    if kind == "by3":
+        return _with_bystander(rng, _random_game(rng, "gs2"))[0]
     if kind == "gs3":
         dims = tuple(rng.choice((2, 3)) for _ in range(3))
     else:
@@ -820,15 +857,20 @@ def _shapley_family(suite: _Suite) -> None:
     def mixture3() -> List[float]:
         return [x / 1000.0 for x in _composition(rng, 3)]
 
-    def add(matrix, population, labels, offsets=False, scale=None, clone=False):
+    def add(matrix, population, labels, offsets=False, scale=None, clone=False, bystander=False):
         game = symmetric_population_game(matrix, population)
         labs = [list(labels), list(labels)]
+        players = [0, 1]
         if scale is not None:
             game = Game(game.dims, [[v * scale for v in t] for t in game.tables])
+        if bystander:
+            game, seat = _with_bystander(rng, game)
+            labs.insert(seat, [f"b{a}" for a in range(game.dims[seat])])
+            players = [p if p < seat else p + 1 for p in players]
         if offsets:
             game = add_offsets(game, _random_offsets(rng, game))
         if clone:
-            p = rng.randrange(2)
+            p = rng.choice(players)
             source = rng.randrange(game.dims[p])
             position = rng.randrange(game.dims[p] + 1)
             game, maps = clone_action(game, p, source, position)
@@ -839,8 +881,10 @@ def _shapley_family(suite: _Suite) -> None:
             labs[p] = new_labels
         perms = _random_perms(rng, game.dims)
         game, _ = permute_actions(game, perms)
-        labs = [[labs[p][perms[p][pos]] for pos in range(game.dims[p])] for p in range(2)]
-        suite.instances["biased_shapley_augmented"].append({"game": suite.add(game), "labels": labs})
+        labs = [[labs[p][perms[p][pos]] for pos in range(game.dims[p])] for p in range(game.n)]
+        suite.instances["biased_shapley_augmented"].append(
+            {"game": suite.add(game), "players": players, "labels": [labs[p] for p in players]}
+        )
 
     rpsn = pure3 + [SHAPLEY_NASH]
     add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"])
@@ -850,6 +894,10 @@ def _shapley_family(suite: _Suite) -> None:
     add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(3)], ["R", "P", "S", "m0", "m1", "m2"])
     add(BIASED_SHAPLEY, rpsn + [mixture3() for _ in range(2)], ["R", "P", "S", "N", "m0", "m1"], offsets=True)
     add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], clone=True)
+    add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], bystander=True)
+    add(BIASED_SHAPLEY, pure3 + [mixture3() for _ in range(2)], ["R", "P", "S", "m0", "m1"],
+        offsets=True, bystander=True)
+    add(BIASED_SHAPLEY, rpsn, ["R", "P", "S", "N"], clone=True, bystander=True)
     add(RPS_MATRIX, pure3, ["R", "P", "S"])
     for with_offsets in (False, True):
         a, b, c = (round(rng.uniform(0.5, 3.0), 2) for _ in range(3))
@@ -887,7 +935,7 @@ def _mixture_family(suite: _Suite) -> None:
     rng = suite.rng
     for kind in MIXTURE_KINDS:
         base = _random_game(rng, kind)
-        player = rng.randrange(base.n)
+        player = rng.choice([p for p in range(base.n) if base.dims[p] >= 2])
         k = rng.randint(2, base.dims[player])
         support = sorted(rng.sample(range(base.dims[player]), k))
         weights = {a: w / 1000.0 for a, w in zip(support, _composition(rng, k))}

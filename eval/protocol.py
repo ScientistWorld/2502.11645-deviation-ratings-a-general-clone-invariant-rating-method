@@ -495,21 +495,24 @@ def _spread(values: Iterable[float]) -> float:
 
 
 def shapley_metrics(instances: List[dict], games: Dict[str, Game], view: View) -> Dict[str, float]:
+    """Equality checks over the two players of the cyclic game (``inst["players"]``)."""
     out = {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0}
     for inst in instances:
         game = games[inst["game"]]
         scale = game.scale()
         ratings, gap = view(inst["game"])
-        out["dev_gap"] = max(out["dev_gap"], _err(_spread(ratings[0]), scale))
+        first, second = inst.get("players", (0, 1))
+        cyclic = [ratings[first], ratings[second]]
+        out["dev_gap"] = max(out["dev_gap"], _err(_spread(cyclic[0]), scale))
         out["all_player_dev_gap"] = max(
-            out["all_player_dev_gap"], _err(_spread(v for row in ratings for v in row), scale)
+            out["all_player_dev_gap"], _err(_spread(v for row in cyclic for v in row), scale)
         )
         labels = inst["labels"]
         for a0, label0 in enumerate(labels[0]):
             for a1, label1 in enumerate(labels[1]):
                 if label0 == label1:
                     out["player_symmetry_gap"] = max(
-                        out["player_symmetry_gap"], _err(ratings[0][a0] - ratings[1][a1], scale)
+                        out["player_symmetry_gap"], _err(cyclic[0][a0] - cyclic[1][a1], scale)
                     )
         out["CCE_gap"] = max(out["CCE_gap"], _gap(gap, game))
     return out
@@ -767,7 +770,7 @@ def public_suite() -> Tuple[Dict[str, Game], Dict[str, List[dict]], List[str]]:
 
     games["shapley_augmented"] = biased_shapley_augmented()
     instances["biased_shapley_augmented"].append(
-        {"game": "shapley_augmented", "labels": [["R", "P", "S", "N"], ["R", "P", "S", "N"]]}
+        {"game": "shapley_augmented", "players": [0, 1], "labels": [["R", "P", "S", "N"], ["R", "P", "S", "N"]]}
     )
 
     # Clone player 1's rock: the visible max_diff is player 0, whose strategies face the clone.

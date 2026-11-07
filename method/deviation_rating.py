@@ -72,7 +72,7 @@ def deviation_rating(
     tol: float = 1e-9,
     active_tol: float = 1e-8,
     max_iterations: Optional[int] = None,
-    freeze_rule: str = "active",
+    freeze_rule: str = "dual",
     lp_options: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
@@ -81,9 +81,16 @@ def deviation_rating(
     The auxiliary variable epsilon is intentionally unbounded below so the solver can
     find strict equilibria with negative deviation gains.
 
-    ``freeze_rule="dual"`` freezes only constraints with a nonzero dual (Section 4.1);
-    the default ``"active"`` additionally freezes every constraint that is numerically
-    tight at the returned optimum. ``lp_options`` is passed to SciPy's HiGHS backend.
+    ``freeze_rule="dual"`` (default) freezes exactly the max constraints with a nonzero
+    dual variable, as in Section 4.1 of the paper ("Nonzero dual variables indicate that
+    the constraint is active and can be frozen"). By complementary slackness these
+    constraints are tight at every optimal distribution, so their ratings are unique.
+    ``freeze_rule="active"`` is the earlier implementation's rule, which additionally
+    froze every constraint that happened to be tight at the vertex the solver returned;
+    when the optimal face is not a single point (e.g. a player whose best action pins
+    epsilon at 0) that freezes ratings that later iterations should have lowered, so the
+    result depends on the solver's vertex choice. It is kept only for diagnostics.
+    ``lp_options`` is passed to SciPy's HiGHS backend.
     """
     if max_iterations is None:
         max_iterations = sum(action_dims)
@@ -183,9 +190,10 @@ def deviation_rating(
                     ratings[p, ap] = float(np.dot(coeff[p, ap], sigma_star))
                     new_active_set.add((p, ap))
 
-        # Freeze every constraint that is active at the optimum, not only those
-        # selected by nonzero duals. Degenerate optima can have active max
-        # constraints with zero dual marginals.
+        # Paper rule: only the constraints with nonzero duals (frozen above) are
+        # tight at every optimum. A tight constraint with a zero dual may still be
+        # lowered at another optimal distribution; it is frozen in a later
+        # iteration if it is truly pinned. The "active" rule below is diagnostic.
         if freeze_rule == "active":
             for p, ap in unfrozen_constraints:
                 delta = float(np.dot(coeff[p, ap], sigma_star))

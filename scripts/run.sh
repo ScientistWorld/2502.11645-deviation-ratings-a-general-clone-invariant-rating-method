@@ -1,19 +1,12 @@
 #!/bin/bash
-# Hardening job 1 (diagnostic): reference end to end on the rating-program
-# contract, hidden test, diagnostics sweep, and every shortcut replay.
+# Hardening job 2: reference end to end (method, baseline, public evaluation,
+# train and hidden test, validation), then the hardening audit.
 set -uo pipefail
 cd /home/user
 python3 -c "import sys, numpy, scipy; print(sys.version); print('numpy', numpy.__version__, 'scipy', scipy.__version__)"
-echo "=== reproduce (method, baseline, evaluate, validate --compare)"
-time bash scripts/reproduce.sh
-echo "=== train"
-time bash scripts/evaluate_train.sh
-echo "=== hidden test"
-time bash scripts/evaluate_test.sh
-echo "=== validate"
-python3 validate.py
-echo "=== diagnostics"
-time python3 redteam/diagnostics.py
-echo "=== shortcut replays"
-time bash redteam/run_shortcuts.sh
+bash scripts/reproduce.sh; echo "reproduce rc=$?"
+bash scripts/evaluate_train.sh; echo "train rc=$?"
+bash scripts/evaluate_test.sh; echo "test rc=$?"
+python3 validate.py; echo "validate rc=$?"
+bash redteam/hardening_job.sh
 echo "=== done"
