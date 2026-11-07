@@ -87,7 +87,10 @@ def main():
             while not ready.exists() and daemon.poll() is None and time.monotonic()<deadline:
                 time.sleep(.01)
             status['shortcut_writer_ready']=ready.exists()
-        status['train']=execute(['bash','scripts/evaluate_train.sh'],folder/'train.log')
+        if os.environ.get('SHORTCUT_SKIP_TRAIN')=='1':
+            status['train']={'skipped':True}
+        else:
+            status['train']=execute(['bash','scripts/evaluate_train.sh'],folder/'train.log')
         if (ROOT/'scoring/scores_train.json').is_file(): shutil.copy2(ROOT/'scoring/scores_train.json',folder/'scores_train.json')
         # The gym restores precisely these trusted inputs; all submission changes stay.
         restore('eval')

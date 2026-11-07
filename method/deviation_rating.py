@@ -74,6 +74,7 @@ def deviation_rating(
     max_iterations: Optional[int] = None,
     freeze_rule: str = "dual",
     lp_options: Optional[Dict[str, Any]] = None,
+    bands: Tuple[float, ...] = (0.0, 1e-9, 1e-8, 1e-7),
 ) -> Dict[str, Any]:
     """
     Compute deviation ratings by iteratively minimizing the maximum deviation gain.
@@ -91,6 +92,16 @@ def deviation_rating(
     epsilon at 0) that freezes ratings that later iterations should have lowered, so the
     result depends on the solver's vertex choice. It is kept only for diagnostics.
     ``lp_options`` is passed to SciPy's HiGHS backend.
+
+    Numerics (Appendix B: "care needs to be taken to minimize the accumulation of
+    errors"): the deviation coefficients are divided by the payoff scale before
+    quantization, so tolerances are relative. Frozen ratings are imposed as
+    equalities; only if the solver then reports the LP infeasible (round-off
+    accumulated over earlier iterations) is the iteration re-solved with each
+    frozen rating held in a band of half-width ``bands[i]`` (relative) around its
+    value, which leaves the selection unchanged in exact arithmetic. The returned
+    ratings are the deviation gains of the returned distribution, recomputed at
+    the end, so they and the equilibrium are always consistent.
     """
     if max_iterations is None:
         max_iterations = sum(action_dims)
@@ -101,7 +112,8 @@ def deviation_rating(
     max_actions = max(action_dims)
 
     coeff, _ = _build_deviation_coefficients(payoffs, num_players, action_dims)
-    coeff = _quantize(coeff)
+    scale = max(1.0, float(np.max(np.abs(payoffs))))
+    coeff = _quantize(coeff / scale)
 
     ratings = np.zeros((num_players, max_actions), dtype=float)
     active_constraints: set[Tuple[int, int]] = set()
@@ -132,41 +144,41 @@ def deviation_rating(
             b_ub_list.append(0.0)
             unfrozen_constraints.append((p, ap))
 
-        A_eq_list = []
-        b_eq_list = []
-        for p, ap in all_constraints:
-            if (p, ap) not in active_constraints:
-                continue
-            row = np.zeros(n_vars, dtype=float)
-            row[:num_joint] = coeff[p, ap]
-            A_eq_list.append(row)
-            b_eq_list.append(ratings[p, ap])
-
-        simplex_row = np.zeros(n_vars, dtype=float)
-        simplex_row[:num_joint] = 1.0
-        A_eq_list.append(simplex_row)
-        b_eq_list.append(1.0)
-
-        A_ub = np.array(A_ub_list, dtype=float) if A_ub_list else None
-        b_ub = np.array(b_ub_list, dtype=float) if b_ub_list else None
-        A_eq = np.array(A_eq_list, dtype=float)
-        b_eq = np.array(b_eq_list, dtype=float)
-
         bounds = [(0.0, None)] * num_joint + [(None, None)]
         objective = np.zeros(n_vars, dtype=float)
         objective[epsilon_idx] = 1.0
+        frozen = [(p, ap) for p, ap in all_constraints if (p, ap) in active_constraints]
+        simplex_row = np.zeros(n_vars, dtype=float)
+        simplex_row[:num_joint] = 1.0
 
-        result = linprog(
-            c=objective,
-            A_ub=A_ub,
-            b_ub=b_ub,
-            A_eq=A_eq,
-            b_eq=b_eq,
-            bounds=bounds,
-            method="highs",
-            options=dict(lp_options or {}),
-        )
-        if not result.success:
+        result = None
+        for band in bands:
+            rows_ub, rhs_ub = list(A_ub_list), list(b_ub_list)
+            rows_eq, rhs_eq = [], []
+            for p, ap in frozen:
+                row = np.zeros(n_vars, dtype=float)
+                row[:num_joint] = coeff[p, ap]
+                if band == 0.0:
+                    rows_eq.append(row)
+                    rhs_eq.append(ratings[p, ap])
+                else:
+                    rows_ub += [row, -row]
+                    rhs_ub += [ratings[p, ap] + band, -(ratings[p, ap] - band)]
+            rows_eq.append(simplex_row)
+            rhs_eq.append(1.0)
+            result = linprog(
+                c=objective,
+                A_ub=np.array(rows_ub, dtype=float) if rows_ub else None,
+                b_ub=np.array(rhs_ub, dtype=float) if rhs_ub else None,
+                A_eq=np.array(rows_eq, dtype=float),
+                b_eq=np.array(rhs_eq, dtype=float),
+                bounds=bounds,
+                method="highs",
+                options=dict(lp_options or {}),
+            )
+            if result.success:
+                break
+        if result is None or not result.success:
             raise RuntimeError(f"LP failed in iteration {iteration + 1}: {result.message}")
         num_solves += 1
 
@@ -184,7 +196,7 @@ def deviation_rating(
             marginals = np.asarray(result.ineqlin.marginals, dtype=float).reshape(-1)
 
         if marginals is not None and marginals.size:
-            for idx, marginal in enumerate(marginals):
+            for idx, marginal in enumerate(marginals[: len(unfrozen_constraints)]):
                 if abs(marginal) > active_tol:
                     p, ap = unfrozen_constraints[idx]
                     ratings[p, ap] = float(np.dot(coeff[p, ap], sigma_star))
@@ -226,8 +238,10 @@ def deviation_rating(
         if verbose:
             print(f"  epsilon={epsilon_star:.12f} new_active={new_active}")
 
+    # Report the deviation gains of the returned distribution (payoff units). The
+    # frozen values above equal them up to solver round-off.
     ratings_dict = {
-        p: {ap: float(ratings[p, ap]) for ap in range(action_dims[p])}
+        p: {ap: float(np.dot(coeff[p, ap], sigma_star)) * scale for ap in range(action_dims[p])}
         for p in range(num_players)
     }
 

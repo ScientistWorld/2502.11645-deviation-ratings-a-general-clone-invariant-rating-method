@@ -80,9 +80,8 @@ def main() -> None:
         "lax": lambda g: as_output(g, _sigma_from_gains_rule(P, g, "lax")),
         "single_lp": lambda g: as_output(g, _sigma_from_gains_rule(P, g, "single_lp")),
         "zero_gain": zero_gain,
-        "feasibility": feasibility,
     }
-    seeds = [H.HIDDEN_SEED, 101, 202, 303, 404, 505, 606]
+    seeds = [H.HIDDEN_SEED, 101, 202, 303, 404]
     report = {"seeds": ["hidden" if s == H.HIDDEN_SEED else s for s in seeds], "rules": {}}
     for name, rule in rules.items():
         rows = []

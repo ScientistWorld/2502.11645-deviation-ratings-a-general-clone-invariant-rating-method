@@ -101,8 +101,11 @@ def metrics_at(curves, horizon: int) -> dict:
     points = horizon // H.POP_CHECKPOINT_EVERY
     initial = sum(c[0] for c in curves) / len(curves)
     later = [v for c in curves for v in c[1:points + 1]]
+    late = [v for c in curves for v in c[points // 2 + 1:points + 1]]
     final = sum(c[points] for c in curves) / len(curves)
-    return {"mean_gap_ratio": round(sum(later) / len(later) / initial, 6), "final_gap_ratio": round(final / initial, 6)}
+    return {"mean_gap_ratio": round(sum(later) / len(later) / initial, 6),
+            "late_gap_ratio": round(sum(late) / len(late) / initial, 6),
+            "final_gap_ratio": round(final / initial, 6)}
 
 
 def reference_rate(game):
@@ -124,7 +127,7 @@ def main() -> None:
               "runs_per_seed": H.POP_RUNS, "rules": {}}
 
     def save():
-        horizons = [h for h in (32, 48, 64, 96, 128) if h <= args.iterations]
+        horizons = [h for h in (32, 64, 96, 128, 160, 192, 256) if h <= args.iterations]
         summary = {}
         for rule, per_seed in report["rules"].items():
             summary[rule] = {}
@@ -134,7 +137,7 @@ def main() -> None:
                 if vals:
                     summary[rule][str(h)] = {
                         m: {"per_seed": [x[m] for x in vals], "mean": round(sum(x[m] for x in vals) / len(vals), 6)}
-                        for m in ("mean_gap_ratio", "final_gap_ratio")
+                        for m in ("mean_gap_ratio", "late_gap_ratio", "final_gap_ratio")
                     }
         report["summary"] = summary
         Path(args.out).write_text(json.dumps(report, indent=1))
@@ -143,7 +146,7 @@ def main() -> None:
         for name in ("uniform_payoff", "random_selection"):
             report["rules"].setdefault(name, {})[str(seed)] = run_baseline(seed, name, args.iterations)
         report["rules"].setdefault("reference", {})[str(seed)] = run_loop(seed, reference_rate, args.iterations)
-        print(seed, {r: metrics_at(v[str(seed)]["curves"], min(64, args.iterations)) for r, v in report["rules"].items()},
+        print(seed, {r: metrics_at(v[str(seed)]["curves"], args.iterations) for r, v in report["rules"].items()},
               report["rules"]["reference"][str(seed)]["seconds"], "s", flush=True)
         save()
     for rule in ("lax", "single_lp", "max_welfare"):

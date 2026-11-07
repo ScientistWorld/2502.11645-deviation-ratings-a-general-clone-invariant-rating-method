@@ -447,7 +447,18 @@ def _kill_descendants() -> None:
 
 
 def _in_private_pid_namespace() -> bool:
-    """True inside a nested PID namespace (the job container), where /proc only shows the job."""
+    """True inside the job container's own PID namespace, where /proc only shows the job.
+
+    There, PID 1 is the container's init and belongs to this (non-root) user; on a
+    shared host PID 1 is the system init, owned by root. Nested namespaces whose
+    /proc shows the parent levels are recognised from NSpid as well.
+    """
+    uid = os.getuid()
+    try:
+        if uid != 0 and os.stat("/proc/1").st_uid == uid:
+            return True
+    except OSError:
+        pass
     try:
         with open("/proc/self/status", "r") as handle:
             for line in handle:
