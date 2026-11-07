@@ -1,0 +1,1 @@
+{"results": {"public_probe": {"ratings": [[1.0, -1.0], [1.0, -1.0]], "equilibrium": [0.25, 0.25, 0.25, 0.25], "success": true, "CCE_gap": 0.0, "strictness_gap": 0.0, "seconds": 0.0, "min_margin": 1e+100, "test_size": 0, "tolerance": 1e+100, "dominance_pairs": [], "ground_truth": [], "flags": null}}}

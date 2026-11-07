@@ -1,0 +1,33 @@
+isolation: on; stopped 0 leftover process(es) of the submission before testing
+  population iteration 16/96, 75 s
+  population iteration 32/96, 122 s
+  population iteration 48/96, 168 s
+  population iteration 64/96, 213 s
+  population iteration 80/96, 266 s
+  population iteration 96/96, 315 s
+== hidden test: 96 rating-program calls, 318.3 s ==
+[biased_shapley_augmented] 19 instances, 19 games (largest 2304 joint actions), proposed method: ok
+    deviation_rating           {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"dev_gap": 2.2555, "all_player_dev_gap": 3.5608, "player_symmetry_gap": 2.481, "CCE_gap": 4.76672, "strictness_gap": 4.286515}
+[clone_invariance] 38 instances, 76 games (largest 2352 joint actions), proposed method: ok
+    deviation_rating           {"max_diff": 0.025466, "all_players_max_diff": 0.025466, "clone_source_gap": 0.0, "strictness_gap": 0.025466}
+    uniform_payoff             {"max_diff": 0.415752, "all_players_max_diff": 0.415752, "clone_source_gap": 0.0, "strictness_gap": 3.959754}
+[mixture_invariance] 36 instances, 72 games (largest 2352 joint actions), proposed method: ok
+    deviation_rating           {"original_max_diff": 0.0, "mixture_error": 0.0, "max_CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"original_max_diff": 0.343772, "mixture_error": 0.0, "max_CCE_gap": 3.086416, "strictness_gap": 2.688069}
+[offset_invariance] 34 instances, 68 games (largest 2184 joint actions), proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "max_CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"max_diff": 4.088, "max_CCE_gap": 2.171173, "strictness_gap": 1.451191}
+[dominance_preserving] 22 instances, 22 games (largest 2340 joint actions), proposed method: ok
+    deviation_rating           {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 0.0, "strictness_gap": 0.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+    zero_rating                {"dominance_violations": 204, "min_margin": 0.0, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+    negative_uniform_payoff    {"dominance_violations": 204, "min_margin": -1813.69697, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+[population_improvement] Sheriff, 8 runs x 96 iterations, proposed method: ok
+    deviation_rating           {"late_gap_ratio": 0.576602, "mean_gap_ratio": 0.646034}
+    uniform_payoff             {"late_gap_ratio": 0.667682, "mean_gap_ratio": 0.70202}
+    random_selection           {"late_gap_ratio": 0.968004, "mean_gap_ratio": 0.964801}
+    mean full-game CCE gap every 8 iterations, deviation_rating: [28.4662, 26.2998, 23.9338, 20.6162, 18.3139, 16.4402, 16.596, 16.6665, 16.7189, 17.0709, 17.1657, 15.5319, 15.3282]
+    mean full-game CCE gap every 8 iterations, uniform_payoff: [28.4662, 26.1423, 24.6196, 21.1471, 18.7526, 17.2881, 17.8184, 17.8812, 20.0432, 19.7729, 18.038, 16.6145, 21.6887]
+    mean full-game CCE gap every 8 iterations, random_selection: [28.4662, 26.9694, 27.263, 28.2573, 24.541, 29.551, 27.6566, 29.6382, 24.6193, 31.0995, 25.4422, 28.195, 26.3385]
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json

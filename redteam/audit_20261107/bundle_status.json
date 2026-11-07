@@ -1,47 +1,67 @@
 [
   {
-    "name": "reference_seed_0",
-    "returncode": 0,
-    "elapsed_seconds": 732.088
-  },
-  {
-    "name": "reference_seed_1",
-    "returncode": 0,
-    "elapsed_seconds": 1064.321
-  },
-  {
-    "name": "reference_seed_2",
-    "returncode": 0,
-    "elapsed_seconds": 1402.865
-  },
-  {
-    "name": "vectorized_solver",
-    "returncode": 0,
-    "elapsed_seconds": 1972.67
-  },
-  {
-    "name": "weaker_one_lp",
-    "returncode": 0,
-    "elapsed_seconds": 2431.799
-  },
-  {
-    "name": "welfare_cce_variant",
-    "returncode": 0,
-    "elapsed_seconds": 2985.309
-  },
-  {
-    "name": "exact_cce_certificate",
-    "returncode": 0,
-    "elapsed_seconds": 3019.422
-  },
-  {
-    "name": "tolerant_cce_certificate",
-    "returncode": 0,
-    "elapsed_seconds": 3052.616
-  },
-  {
     "name": "feasibility_only_shortcut",
-    "returncode": 1,
-    "elapsed_seconds": 3053.46
+    "returncode": 0,
+    "elapsed_seconds": 327.887
+  },
+  {
+    "name": "cap32_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 726.954
+  },
+  {
+    "name": "cap12_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1049.039
+  },
+  {
+    "name": "size_limit_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1418.364
+  },
+  {
+    "name": "visible_answers_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1495.816
+  },
+  {
+    "name": "reported_fields_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1526.312
+  },
+  {
+    "name": "direct_scores_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1555.168
+  },
+  {
+    "name": "baseline_move_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1585.525
+  },
+  {
+    "name": "artifact_replace_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1612.517
+  },
+  {
+    "name": "constant_zero_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1637.495
+  },
+  {
+    "name": "empty_output_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1664.055
+  },
+  {
+    "name": "impossible_values_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1694.788
+  },
+  {
+    "name": "copy_input_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 1723.908
   }
 ]

@@ -37,6 +37,1179 @@
     }
   },
   "cases": {
+    "artifact_replace_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "artifact_replace_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "artifact_changes": [
+          "data/game_data.py",
+          "method/run_experiments.py"
+        ],
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/artifact_replace_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/artifact_replace_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 1.822
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 24.568
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "baseline_move_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "baseline_move_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "comparison_changes": [
+          "baseline/run_uniform.py",
+          "scoring/reference.json"
+        ],
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/baseline_move_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/baseline_move_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 3.278
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 25.691
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "cap12_shortcut": {
+      "rank_delta": -0.008964032,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.025466,
+          "all_players_max_diff": 0.025466,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.025466
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "changed_metrics": {
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 0.025466
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 0.025466
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 0.025466
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "cap12_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/cap12_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/cap12_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.818
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 318.781
+        },
+        "score_sha256": "5059d242e435a3e7517d95a3881ef0c5159be9774891c2b7060dafc19da8942f"
+      }
+    },
+    "cap32_shortcut": {
+      "rank_delta": 0.0,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "changed_metrics": {},
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "cap32_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/cap32_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/cap32_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 4.178
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 393.883
+        },
+        "score_sha256": "c8deffa0fef4e9a971d9b608fd974a6a1271b9e7a78003cbb2c628e4c0899b91"
+      }
+    },
+    "constant_zero_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "constant_zero_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/constant_zero_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/constant_zero_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.551
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 22.143
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "copy_input_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "copy_input_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/copy_input_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/copy_input_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.594
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 25.228
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "direct_scores_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "direct_scores_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/direct_scores_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/direct_scores_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 3.612
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 24.917
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "empty_output_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "empty_output_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/empty_output_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/empty_output_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 1.77
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 24.464
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
     "exact_cce_certificate": {
       "rank_delta": -2227999.8560762,
       "metrics": {
@@ -202,6 +1375,274 @@
           ],
           "returncode": 0,
           "seconds": 31.689
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "feasibility_only_shortcut": {
+      "rank_delta": -0.0421172,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.15746,
+          "mixture_error": 0.073841,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.007057
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.007261
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.628365,
+          "mean_gap_ratio": 0.677528
+        }
+      },
+      "changed_metrics": {
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 0.15746
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 0.073841
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 0.007057
+          }
+        },
+        "offset_invariance": {
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 0.007261
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 0.628365
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 0.677528
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "feasibility_only_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/feasibility_only_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/feasibility_only_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 3.281
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 322.671
+        },
+        "score_sha256": "b353db6fd7d01ff52409695f068f1d4abdcec37a807f6f909cb7212453d790de"
+      }
+    },
+    "impossible_values_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "impossible_values_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/impossible_values_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/impossible_values_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.414
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 26.519
         },
         "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
       }
@@ -414,6 +1855,243 @@
           ],
           "returncode": 0,
           "seconds": 334.878
+        },
+        "score_sha256": "c8deffa0fef4e9a971d9b608fd974a6a1271b9e7a78003cbb2c628e4c0899b91"
+      }
+    },
+    "reported_fields_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "reported_fields_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/reported_fields_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/reported_fields_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.273
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 27.505
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
+    "size_limit_shortcut": {
+      "rank_delta": 0.0,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "changed_metrics": {},
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "size_limit_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/size_limit_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/size_limit_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 3.124
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 365.685
         },
         "score_sha256": "c8deffa0fef4e9a971d9b608fd974a6a1271b9e7a78003cbb2c628e4c0899b91"
       }
@@ -663,6 +2341,188 @@
         "score_sha256": "c8deffa0fef4e9a971d9b608fd974a6a1271b9e7a78003cbb2c628e4c0899b91"
       }
     },
+    "visible_answers_shortcut": {
+      "rank_delta": -2227999.8560762,
+      "metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 1000000.0,
+          "mean_gap_ratio": 1000000.0
+        }
+      },
+      "changed_metrics": {
+        "biased_shapley_augmented": {
+          "dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_player_dev_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "player_symmetry_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "clone_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "all_players_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "clone_source_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "mixture_invariance": {
+          "original_max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "mixture_error": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "offset_invariance": {
+          "max_diff": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "max_CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "dominance_preserving": {
+          "dominance_violations": {
+            "reference": 0,
+            "candidate": 1000000
+          },
+          "min_margin": {
+            "reference": 1.0,
+            "candidate": -1000000.0
+          },
+          "CCE_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          },
+          "strictness_gap": {
+            "reference": 0.0,
+            "candidate": 1000000.0
+          }
+        },
+        "population_improvement": {
+          "late_gap_ratio": {
+            "reference": 0.576602,
+            "candidate": 1000000.0
+          },
+          "mean_gap_ratio": {
+            "reference": 0.646034,
+            "candidate": 1000000.0
+          }
+        }
+      },
+      "baseline_rows_changed": [],
+      "status": {
+        "name": "visible_answers_shortcut",
+        "hidden_command": [
+          "bash",
+          "scripts/evaluate_test.sh"
+        ],
+        "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+        "build_visible_answers": {
+          "command": [
+            "python3",
+            "-m",
+            "method.audit_candidate",
+            "reference",
+            "/home/user/redteam/audit_20261107/visible_answers_shortcut/visible_games.json",
+            "/home/user/redteam/audit_20261107/visible_answers_shortcut/visible_ratings.json"
+          ],
+          "returncode": 0,
+          "seconds": 47.125
+        },
+        "visible_cache_entries": 264,
+        "standalone": {
+          "command": [
+            "bash",
+            "scripts/rate.sh",
+            "/home/user/redteam/audit_20261107/visible_answers_shortcut/probe_input.json",
+            "/home/user/redteam/audit_20261107/visible_answers_shortcut/probe_output.json"
+          ],
+          "returncode": 0,
+          "seconds": 2.449
+        },
+        "test": {
+          "command": [
+            "bash",
+            "scripts/evaluate_test.sh"
+          ],
+          "returncode": 0,
+          "seconds": 25.919
+        },
+        "score_sha256": "a76aab9d229cf107c802fed556d6827f89104769cfa04792e7a8170df1d4aeff"
+      }
+    },
     "weaker_one_lp": {
       "rank_delta": -3.1964371720000004,
       "metrics": {
@@ -803,7 +2663,7 @@
       }
     },
     "welfare_cce_variant": {
-      "rank_delta": -5.899502052000001,
+      "rank_delta": -5.899502052,
       "metrics": {
         "biased_shapley_augmented": {
           "dev_gap": 9.486911,

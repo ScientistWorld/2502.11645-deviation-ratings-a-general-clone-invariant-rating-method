@@ -1,0 +1,77 @@
+isolation: on; stopped 0 leftover process(es) of the submission before testing
+== hidden test: 3 rating-program calls, 26.8 s ==
+[biased_shapley_augmented] 19 instances, 19 games (largest 2304 joint actions), proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.053e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.270e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.465e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.721e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.928e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.414e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.496e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.539e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 3.767e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 3.860e-01)
+    deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"dev_gap": 2.2555, "all_player_dev_gap": 3.5608, "player_symmetry_gap": 2.481, "CCE_gap": 4.76672, "strictness_gap": 4.286515}
+[clone_invariance] 38 instances, 76 games (largest 2352 joint actions), proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.151e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.260e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.269e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.320e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.332e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.562e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.563e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.653e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.662e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.774e-01)
+    deviation_rating           {"max_diff": 1000000.0, "all_players_max_diff": 1000000.0, "clone_source_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 0.415752, "all_players_max_diff": 0.415752, "clone_source_gap": 0.0, "strictness_gap": 3.959754}
+[mixture_invariance] 36 instances, 72 games (largest 2352 joint actions), proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.453e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.042e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.050e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.197e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.306e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.311e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.316e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.328e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.428e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.499e-01)
+    deviation_rating           {"original_max_diff": 1000000.0, "mixture_error": 1000000.0, "max_CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"original_max_diff": 0.343772, "mixture_error": 0.0, "max_CCE_gap": 3.086416, "strictness_gap": 2.688069}
+[offset_invariance] 34 instances, 68 games (largest 2184 joint actions), proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.074e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.127e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.130e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.173e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.184e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.444e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.516e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.606e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.124e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.264e-01)
+    deviation_rating           {"max_diff": 1000000.0, "max_CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 4.088, "max_CCE_gap": 2.171173, "strictness_gap": 1.451191}
+[dominance_preserving] 22 instances, 22 games (largest 2340 joint actions), proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.634e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.984e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 2.306e+00)
+    gate failure: equilibrium is not a CCE (largest deviation gain 3.047e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 3.411e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 4.834e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 4.971e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 5.000e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 5.127e-01)
+    gate failure: equilibrium is not a CCE (largest deviation gain 5.146e-01)
+    deviation_rating           {"dominance_violations": 1000000, "min_margin": -1000000.0, "CCE_gap": 1000000.0, "strictness_gap": 1000000.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+    zero_rating                {"dominance_violations": 204, "min_margin": 0.0, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+    negative_uniform_payoff    {"dominance_violations": 204, "min_margin": -1813.69697, "CCE_gap": 2.50856, "strictness_gap": 2.546267}
+[population_improvement] Sheriff, 8 runs x 96 iterations, proposed method: FAILED
+    gate failure: population meta-game: equilibrium is not a CCE (largest deviation gain 2.684e+00)
+    deviation_rating           {"late_gap_ratio": 1000000.0, "mean_gap_ratio": 1000000.0}
+    uniform_payoff             {"late_gap_ratio": 0.667682, "mean_gap_ratio": 0.70202}
+    random_selection           {"late_gap_ratio": 0.968004, "mean_gap_ratio": 0.964801}
+    mean full-game CCE gap every 8 iterations, uniform_payoff: [28.4662, 26.1423, 24.6196, 21.1471, 18.7526, 17.2881, 17.8184, 17.8812, 20.0432, 19.7729, 18.038, 16.6145, 21.6887]
+    mean full-game CCE gap every 8 iterations, random_selection: [28.4662, 26.9694, 27.263, 28.2573, 24.541, 29.551, 27.6566, 29.6382, 24.6193, 31.0995, 25.4422, 28.195, 26.3385]
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json
