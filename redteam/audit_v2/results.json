@@ -161,7 +161,8 @@
     ],
     "joint_actions": 1089,
     "shortcut_returned_equilibrium_length": 0,
-    "required_equilibrium_length": 1089
+    "required_equilibrium_length": 1089,
+    "actual_shortcut_cli_executed": true
   },
   "reference_test_seed_spread": {
     "biased_shapley_augmented": {
@@ -3358,11 +3359,11 @@
         "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
         "train": {
           "exit_code": 0,
-          "seconds": 1.8672
+          "seconds": 1.8674
         },
         "test": {
           "exit_code": 0,
-          "seconds": 3.6244
+          "seconds": 3.6705
         },
         "score_sha256": "b9d4121272028940c8db1dbfe7b3c48daaf2c8506f397b459ee44c2fc2fde3e9",
         "shortcut_writer_marker_at_capture": false
@@ -3404,13 +3405,14 @@
           "scripts/evaluate_test.sh"
         ],
         "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
+        "from_scratch_install": true,
         "train": {
           "exit_code": 0,
-          "seconds": 1.9198
+          "seconds": 2.5686
         },
         "test": {
           "exit_code": 0,
-          "seconds": 4.2724
+          "seconds": 4.2214
         },
         "score_sha256": "b9d4121272028940c8db1dbfe7b3c48daaf2c8506f397b459ee44c2fc2fde3e9",
         "shortcut_writer_marker_at_capture": false
@@ -3500,13 +3502,14 @@
           "scripts/evaluate_test.sh"
         ],
         "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
+        "from_scratch_install": true,
         "train": {
           "exit_code": 0,
-          "seconds": 1.8671
+          "seconds": 1.968
         },
         "test": {
           "exit_code": 0,
-          "seconds": 2.7689
+          "seconds": 2.7191
         },
         "score_sha256": "b9d4121272028940c8db1dbfe7b3c48daaf2c8506f397b459ee44c2fc2fde3e9",
         "shortcut_writer_marker_at_capture": false
@@ -3550,11 +3553,11 @@
         "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
         "train": {
           "exit_code": 0,
-          "seconds": 1.9675
+          "seconds": 1.9178
         },
         "test": {
           "exit_code": 0,
-          "seconds": 3.57
+          "seconds": 3.5714
         },
         "score_sha256": "b9d4121272028940c8db1dbfe7b3c48daaf2c8506f397b459ee44c2fc2fde3e9",
         "shortcut_writer_marker_at_capture": false
@@ -3839,11 +3842,11 @@
         "shortcut_writer_ready": true,
         "train": {
           "exit_code": 0,
-          "seconds": 1.8673
+          "seconds": 1.8676
         },
         "test": {
           "exit_code": 0,
-          "seconds": 1.9679
+          "seconds": 1.9177
         },
         "score_sha256": "de36517b53e0ddb7eb5daa0df5ef0b0e76881d2ff38c394cf10019beed502e1b",
         "shortcut_writer_marker_at_capture": true

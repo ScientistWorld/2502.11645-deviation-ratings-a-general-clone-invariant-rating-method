@@ -1,0 +1,19 @@
+{
+  "name": "prestarted_writer_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "3b55cfa0783573907ca959e17ace70c75e9ea0e462ca279585b4a7d439685eb7",
+  "shortcut_writer_ready": true,
+  "train": {
+    "exit_code": 0,
+    "seconds": 1.8676
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 1.9676
+  },
+  "score_sha256": "de36517b53e0ddb7eb5daa0df5ef0b0e76881d2ff38c394cf10019beed502e1b",
+  "shortcut_writer_marker_at_capture": true
+}

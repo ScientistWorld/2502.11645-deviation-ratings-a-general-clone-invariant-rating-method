@@ -8,11 +8,11 @@
   "shortcut_writer_ready": true,
   "train": {
     "exit_code": 0,
-    "seconds": 1.8673
+    "seconds": 1.8676
   },
   "test": {
     "exit_code": 0,
-    "seconds": 1.9679
+    "seconds": 1.9177
   },
   "score_sha256": "de36517b53e0ddb7eb5daa0df5ef0b0e76881d2ff38c394cf10019beed502e1b",
   "shortcut_writer_marker_at_capture": true

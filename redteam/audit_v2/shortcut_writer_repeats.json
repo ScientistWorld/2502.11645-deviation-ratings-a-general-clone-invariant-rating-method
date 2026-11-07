@@ -1,0 +1,17 @@
+{
+  "primary": {
+    "matches_reference": true,
+    "marker_at_capture": true,
+    "all_five_logged_failed": true
+  },
+  "shortcut_repeat_1": {
+    "matches_reference": true,
+    "marker_at_capture": true,
+    "all_five_logged_failed": true
+  },
+  "shortcut_repeat_2": {
+    "matches_reference": true,
+    "marker_at_capture": true,
+    "all_five_logged_failed": true
+  }
+}

@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "Audit 62 scoring shortcuts, fresh unmodified reference plus three seeded action/batch orderings, and public-game strictness/context diagnostics; all tests use restored eval and no-argument hidden entrypoint."
+notes: "Confirm lax-CCE and batch-transport shortcuts from an empty method directory, repeat prestarted score-writer three times with immediate capture, and execute the 33x33 size-cutoff counterexample."
