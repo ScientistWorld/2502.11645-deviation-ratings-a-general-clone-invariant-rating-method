@@ -1,0 +1,23 @@
+{
+  "dims": [
+    4,
+    4,
+    40
+  ],
+  "reference_lp_iterations": 43,
+  "max_rating_difference": 2.511576763485504,
+  "reference_first_player_ratings": [
+    -2.821576763485494,
+    -2.821576763485474,
+    -2.8215767634855036,
+    -2.821576763485488
+  ],
+  "shortcut_first_player_ratings": [
+    -0.31,
+    -0.3100000000000001,
+    -1.6518993560577775,
+    -0.6106745445108714
+  ],
+  "shortcut_max_deviation_gain": 0.0,
+  "reference_max_deviation_gain": 0.0
+}

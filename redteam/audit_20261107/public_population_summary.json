@@ -1,0 +1,25 @@
+{
+  "games": 768,
+  "pure_reference_games": 53,
+  "unique_pure_CCE_games": 53,
+  "population_metrics": {
+    "late_gap_ratio": 0.7126380582835152,
+    "mean_gap_ratio": 0.7784609979546965
+  },
+  "curve": [
+    25.9831,
+    23.6768,
+    23.1929,
+    20.5991,
+    23.0817,
+    21.087,
+    19.985,
+    20.1785,
+    18.1716,
+    18.7152,
+    19.1481,
+    17.2386,
+    17.6472
+  ],
+  "minimum_dual_mass": -0.0
+}

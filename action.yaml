@@ -1,6 +1,4 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: done
-milestone: secondary_claims
-notes: "Hardened: strictness certified on independent player blocks (deeper bystanders, product games) and games >2,048 joint actions; three-LP and size-abandonment shortcuts now worse/failed in all 5 property experiments; reference unchanged (byte-identical over 5 hidden runs); HARDENING.md written."
+action: submit
+gpus: 0
+test: false
+notes: "Fresh audit: public CCE identifiability diagnostics, 3 reference seeds, quality variants and 13 shortcut replays through the unchanged no-argument hidden test; results under redteam/audit_20261107."

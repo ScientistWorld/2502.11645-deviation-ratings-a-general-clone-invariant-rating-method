@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/user/redteam/audit_20261107/harness.py", line 158, in <module>
+    main()
+  File "/home/user/redteam/audit_20261107/harness.py", line 120, in main
+    from data.game_data import augmented_biased_shapley_game
+ModuleNotFoundError: No module named 'data'
