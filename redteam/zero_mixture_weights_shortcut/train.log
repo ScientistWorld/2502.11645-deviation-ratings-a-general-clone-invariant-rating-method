@@ -1,6 +1,6 @@
 == train (public games) ==
 [biased_shapley_augmented] 1 instances, 1 games, proposed method: FAILED
-    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 2.065e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 2.910e+00)
     deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0}
     uniform_payoff             {"dev_gap": 1.25, "all_player_dev_gap": 1.25, "player_symmetry_gap": 0.0, "CCE_gap": 0.941909}
 [clone_invariance] 1 instances, 2 games, proposed method: ok
