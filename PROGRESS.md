@@ -10,7 +10,7 @@
   - mixture invariance holds exactly on a scored general-sum reference game
   - offset invariance holds exactly on a scored general-sum reference game
   - dominance preservation holds exactly on a scored dominance test game
-- The sequential LP implementation now freezes all active max-deviation constraints, including degenerate active constraints at the LP optimum, which matches the paper's Algorithm 1 more closely than the earlier dual-only detection.
+- The sequential LP freezes exactly the constraints with nonzero duals, the rule in Section 4.1 of the paper (hardening iteration, 2026-11-07). The intermediate rule that also froze every numerically tight constraint lost uniqueness on degenerate optima and failed the hidden invariance checks; see `HARDENING.md`.
 
 ## Results Achieved
 
@@ -39,7 +39,7 @@ Re-validation on April 7, 2026 confirmed the same outputs immediately before pre
 
 ## Issues Encountered
 - Earlier workspace code had solver/sign inconsistencies that broke the small-form paper experiments; these were corrected in the current LP implementation and evaluation setup.
-- The earlier active-set update relied only on nonzero dual marginals, which can miss degenerate active constraints. The current implementation also freezes constraints whose deviation gain numerically matches the optimal `epsilon`.
+- An intermediate active-set update also froze constraints whose deviation gain numerically matched the optimal `epsilon`. That is not safe: such a constraint may be lowered at another optimal distribution. It was reverted to the paper's nonzero-dual rule. A tight constraint with a zero dual that really is pinned gets frozen in a later iteration at the same value.
 - The original status files overstated LiveBench coverage. The packaged environment now reports only experiments that are actually implemented and scored.
 - Earlier local verification depended on an ad hoc `/home/user/pkgs` target install. The packaging now follows the required `uv pip install --system` path so scheduler validation will exercise the declared environment rather than leftover login-node state.
 
@@ -61,3 +61,7 @@ At 2026-04-24 09:00 UTC, the environment packaging was cleaned up to remove the 
 At 2026-04-24 09:15 UTC, final verification confirmed the milestone remains `secondary_claims`, generalized [`eval/evaluate.py`](/home/user/eval/evaluate.py) to discover and score arbitrary method output layouts, and removed tracked stale files and the unused OCI tarball that were not part of the shipped gym.
 
 At 2026-04-24 09:06 UTC, the canonical evaluator in [`eval/evaluate.py`](/home/user/eval/evaluate.py) was expanded to score the full declared benchmark contract instead of the earlier reduced subset. `scores.json` now includes the all-player property metrics already declared in `reference.json` and the packaged baselines (`uniform_payoff`, `zero_rating`, and `negative_uniform_payoff`), and `python3 validate.py --compare` still passes after the change.
+
+## Hardening (2026-11-07)
+
+The scored benchmark now runs the rating program `scripts/rate.sh` on games supplied by the evaluators. The hidden test generates about 190 games at test time and gates every output: finite, a normalized CCE, and ratings equal to its deviation gains. The reference scores 0 on every invariance metric on the hidden test and on 10 further sampled suites. `HARDENING.md` lists every shortcut with its score before and after.

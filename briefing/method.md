@@ -24,15 +24,17 @@ The algorithm works iteratively:
 2. Each iteration solves an LP:
    - Minimize the maximum deviation gain $\epsilon$
    - Subject to: $\sigma$ is a probability distribution, and for each already-rated strategy $(p, a'_p)$: its deviation gain equals its frozen rating
-3. From the LP solution, identify which deviation gain constraints are active (at the optimum)
-4. Freeze those constraints (add them to the active set) with their computed ratings
+3. From the LP solution, identify which deviation gain constraints are active: those with a nonzero dual variable (Section 4.1). By complementary slackness they are tight at every optimal distribution
+4. Freeze those constraints (add them to the active set) with their computed ratings. A constraint that is tight at the returned vertex but has a zero dual is not frozen yet; if it is truly pinned it is frozen in a later iteration at the same value
 5. Repeat until all strategies are rated
 
 The LP finds the **strictest CCE** — the equilibrium where no player can gain the most by deviating. Since ratings are derived from the objective value (not the solution parameters), the ratings are unique even though many equilibria may exist.
 
 ### Computational Approach
 
-The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP. The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
+The paper reports using CVXPY with GLOP (OR-Tools' simplex solver) as the backend. This reproduction keeps the same sequential-LP algorithm but implements it with SciPy's `linprog` (HiGHS backend) instead of CVXPY/GLOP (`method/deviation_rating.py`). The benchmark calls it through the rating program `scripts/rate.sh` -> `method/rate.py`, which returns, for every game, the ratings and the final LP's distribution, under which every rating is exactly the corresponding deviation gain.
+
+An earlier version of this implementation also froze every constraint that happened to be numerically tight at the vertex the solver returned. When the optimal face is not a single point, for example when one player's best action pins epsilon at 0, that freezes ratings that later iterations should lower. The result then depends on the solver's vertex choice and loses uniqueness and invariance: it failed the hidden invariance checks on every one of 11 sampled test suites. The current default follows the paper's nonzero-dual rule (`freeze_rule="dual"`). The old rule is kept only as a diagnostic (`freeze_rule="active"`). The algorithm still runs in polynomial time since it solves sequential LPs, each in polynomial time. The maximum number of outer iterations is $\sum_p |A_p|$ (number of constraints).
 
 ## Main Claims
 

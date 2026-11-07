@@ -1938,20 +1938,6 @@
         "nonfinite": [],
         "failed_experiments": [],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "ties the reference (no gain)",
-        "better": [],
-        "worse": [],
-        "nonfinite": [],
-        "failed_experiments": [],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     },
     "feasibility_cce_shortcut": {
@@ -1973,26 +1959,6 @@
         "nonfinite": [],
         "failed_experiments": [],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "worse than the reference",
-        "better": [],
-        "worse": [
-          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 5.6875",
-          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 2.958333",
-          "clone_invariance.all_players_max_diff: 0.0 -> 0.707698",
-          "mixture_invariance.mixture_error: 0.0 -> 0.645351",
-          "offset_invariance.max_diff: 0.0 -> 0.565913"
-        ],
-        "nonfinite": [],
-        "failed_experiments": [],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     },
     "pure_nash_shortcut": {
@@ -2014,26 +1980,6 @@
         "nonfinite": [],
         "failed_experiments": [],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "worse than the reference",
-        "better": [],
-        "worse": [
-          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 5.6875",
-          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 2.958333",
-          "clone_invariance.all_players_max_diff: 0.0 -> 1.613",
-          "mixture_invariance.mixture_error: 0.0 -> 0.645351",
-          "offset_invariance.max_diff: 0.0 -> 1.826"
-        ],
-        "nonfinite": [],
-        "failed_experiments": [],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     },
     "uniform_gains_shortcut": {
@@ -2068,39 +2014,6 @@
           "dominance_preserving"
         ],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
-        "better": [],
-        "worse": [
-          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
-          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
-          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
-          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
-          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
-          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
-          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
-          "offset_invariance.max_diff: 0.0 -> 1000000.0",
-          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
-          "dominance_preserving.dominance_violations: 0 -> 1000000",
-          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
-          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
-        ],
-        "nonfinite": [],
-        "failed_experiments": [
-          "biased_shapley_augmented",
-          "clone_invariance",
-          "mixture_invariance",
-          "offset_invariance",
-          "dominance_preserving"
-        ],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     },
     "detached_rewriter_shortcut": {
@@ -2113,20 +2026,6 @@
         "nonfinite": [],
         "failed_experiments": [],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "ties the reference (no gain)",
-        "better": [],
-        "worse": [],
-        "nonfinite": [],
-        "failed_experiments": [],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     },
     "script_append_shortcut": {
@@ -2139,20 +2038,6 @@
         "nonfinite": [],
         "failed_experiments": [],
         "baseline_rows_changed": []
-      },
-      "before": {
-        "test_exit_code": 0,
-        "attack_markers": [],
-        "verdict": "ties the reference (no gain)",
-        "better": [],
-        "worse": [],
-        "nonfinite": [],
-        "failed_experiments": [],
-        "baseline_rows_changed": [
-          "offset_invariance.uniform_payoff",
-          "dominance_preserving.zero_rating",
-          "dominance_preserving.negative_uniform_payoff"
-        ]
       }
     }
   }

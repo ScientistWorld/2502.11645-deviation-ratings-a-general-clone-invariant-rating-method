@@ -26,3 +26,7 @@ The main limitation is that the scored benchmark currently consists of exact the
 - Ready for gym use: partial
 - Confidence: high
 - Key limitation: scored metrics are saturated exact-property checks, so improve-mode headroom is limited
+
+## Hardening update (2026-11-07)
+
+The evaluation described above has been replaced. The benchmark now scores the rating program `scripts/rate.sh` on public games (train) and on hidden games generated at test time, behind validity gates. The improve-mode limitation still holds: the reference scores exactly 0 on every invariance metric. See `HARDENING.md` and `briefing/evaluation.md`.

@@ -66,5 +66,10 @@
 - Aligned the method-agnostic evaluation and scoring docs with the full canonical scoring contract
 - Confirmed the workspace is ready for use with the limitation that the scored theorem checks are already saturated
 
+### [2026-11-07 00:00] - secondary_claims
+- Hardened the benchmark. The method is now the rating program `scripts/rate.sh`; the hidden test generates its games at test time and gates every output (finite, normalized CCE, ratings equal to its deviation gains)
+- Restored the paper's nonzero-dual freezing rule in the sequential LP; the intermediate freeze-every-tight-constraint rule failed hidden invariance checks on all 11 sampled suites
+- Replayed all 45 audited shortcuts and 6 new probes through the hidden test (see `HARDENING.md`); the reference scores 0 on every invariance metric
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

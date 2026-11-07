@@ -1,104 +1,22 @@
 # Design Notes: Train/Test Evaluation for Deviation Ratings
 
-## Split Style: Metric Triangulation
+## Split style: public games vs. hidden games generated at test time
 
-This benchmark uses a **metric triangulation** split style rather than a data partition. The rationale:
+The paper's claims are exact properties (equality on cyclic games, clone/mixture/offset invariance, dominance preservation), so train and test use the same metrics on different games:
 
-1. **Small evaluation set**: The benchmark evaluates deviation rating on small normal-form games (2-4 actions per player). Data partitioning would make each slice too small to be meaningful.
+- **Train / standard evaluation** (`eval/train/evaluate.py`, `eval/evaluate.py`, shared code in `eval/protocol.py`): the five documented public games (paper Table 2, cloned RPS, the general-sum reference game with a fixed mixture and fixed offsets, the 2x2 dominance game).
+- **Hidden test** (`eval/test/evaluate.py`, self-contained, standard library only): about 190 games generated at test time from a seed that exists only in that file. They come from the same five families, built on random 2- and 3-player general-sum, zero-sum and common-interest games, cyclic games with provably equal ratings, and games with a bystander player. Clone positions, mixture weights, offsets, relabelings and dominance pairs are all fixed by the evaluator.
 
-2. **Property-based evaluation**: The paper's claims are about theoretical properties (clone invariance, mixture invariance, etc.) rather than statistical performance on a large dataset.
+An earlier version scored artifacts the method precomputed on the five public games, splitting metrics between train and test ("metric triangulation"). Constant ratings plus one special-cased dominance answer saturated that test, and margins could be inflated without bound. `HARDENING.md` documents the replacement.
 
-3. **Complementary metrics**: Train measures core equality properties; test measures multi-player symmetry, CCE gap stability, and margin preservation. Both probe the same underlying correctness.
+## Why a rating program instead of artifacts
 
-## Metrics
+The test must rate games the method has never seen, so the method has to run at test time. The evaluator writes anonymised, shuffled games and runs `scripts/rate.sh` in a fresh temporary directory. It acts as the reaper of every process the program starts, so detached daemons are killed, and only then reads and scores the output. The evaluators run under `python3 -I` and `scripts/evaluate_test.sh` ends in `exec`, so nothing a submission adds to `PYTHONPATH`, `sitecustomize.py` or the test script runs.
 
-### Train Metrics (core properties)
-- `dev_gap`: Maximum rating spread in augmented Shapley game
-- `CCE_gap`: Equilibrium quality for Shapley game
-- `max_diff`: Clone/mixture/offset invariance violation magnitude
-- `original_max_diff`: Mixture invariance violation
-- `mixture_error`: Mixed strategy rating inheritance error
-- `dominance_violations`: Number of dominance violations
+## Why ratings must be the deviation gains of a returned CCE
 
-### Test Metrics (complementary)
-- `all_player_dev_gap`: Maximum spread across BOTH players (not just player 0)
-- `player_symmetry_gap`: Same-action rating mismatch between symmetric players
-- `all_players_max_diff`: Clone invariance over ALL players (not just visible slice)
-- `clone_source_gap`: Clone/source action rating mismatch
-- `max_CCE_gap`: Maximum CCE gap across transformations
-- `min_margin`: Smallest dominance margin (positive = correctness)
+Constant ratings satisfy every invariance trivially. The paper defines a deviation rating as the deviation gain under an equilibrium, which couples the ratings to the game: the method returns the distribution, and the evaluator recomputes the gains and checks that they match the reported ratings and that the distribution is a CCE. This removes constant answers, rescaling (margins can no longer grow without bound) and any number the method reports about itself. Within this family the open question is equilibrium selection, which is what the paper contributes.
 
-## Design Decisions
+## Why bystander players
 
-### Why complementary metrics?
-A method that "gaming" the train metrics would need to simultaneously:
-- Equalize ratings across both players
-- Maintain equilibrium quality
-- Preserve clone/mixture/offset invariance
-- Not violate dominance properties
-
-This is harder to game than a single metric.
-
-### Why near-zero scores?
-The deviation rating algorithm achieves exact CCE for these small games, so scores are near 0. This is expected behavior - the test is whether a method ACHIEVES equilibrium, not HOW CLOSE it gets.
-
-## Issues Fixed
-
-1. **Scores files swapped** (fixed): `scores_train.json` had test metrics and vice versa. Swapped to correct assignment.
-
-2. **Score files must not exist at end of designer iteration**: Deleted `scores_train.json` and `scores_test.json` — they are produced later by `evaluate_train.sh` and `evaluate_test.sh`, not by the designer.
-
-## Leakage Analysis
-
-`split_common.py` is at top-level `eval/` (not inside `train/` or `test/`). A future agent reading `eval/train/` sees only the train evaluation code. The shared helper provides only discovery logic and constants — it does not contain test-specific metrics, data, or scoring shape. This is acceptable per the design rules.
-
-## Metrics Coverage
-
-The split uses **metric triangulation** rather than data partition because:
-- Small evaluation set (tiny normal-form games)
-- Property-based evaluation (invariance theorems, not statistical performance)
-- Complementary metrics across train and test
-
-All five experiments have both train and test metrics. The sets are non-overlapping, so gaming train doesn't guarantee good test scores.
-
-## Scripts
-
-- `scripts/evaluate_train.sh`: Runs `eval/train/evaluate.py`, writes `scores_train.json`
-- `scripts/evaluate_test.sh`: Runs `eval/test/evaluate.py`, writes `scores_test.json`
-
-Both scripts discover methods from `checkpoints/` and do not have hardcoded method names.
-
-## Stage 2 Review (Continue and Improve Pass)
-
-### Changes Made
-**None required** — the existing design was reviewed and is sound.
-
-### Review Checklist
-- [x] Split style is right for this paper (metric triangulation on property-based evaluation)
-- [x] Test slice resists shortcuts (complementary metrics require multi-property correctness)
-- [x] Metrics triangulate (8 train metrics, 13 test metrics across 5 experiments)
-- [x] No paper-agreement metrics in reference.json (all measure scientific quantities)
-- [x] Test slice is held-out (split_common.py provides only discovery, not test metrics)
-- [x] Evaluation is fast (re-scores existing artifacts, no re-execution)
-- [x] Scripts correctly wired (evaluate_test.sh invokes eval/test/, writes scores_test.json)
-- [x] No hardcoded method defaults
-- [x] Scores files absent (verified)
-- [x] Both scripts pass `bash -n` syntax check
-
-### Leakage Verified
-Both `eval/train/evaluate.py` and `eval/test/evaluate.py` import from `eval.split_common` only.
-`split_common.py` contains:
-- `SCORING_DIR` constant
-- `discover_method_dirs()` function for multi-method discovery
-- No test-specific metrics or scoring shape
-
-A future agent reading `eval/train/` sees only train metrics and cannot learn test metrics through the shared helper. This is acceptable per design rules.
-
-### Metrics in reference.json
-All metrics have `higher_is_better`, `coefficient`, and `description`. No paper-agreement metrics (no `author`, `paper`, `published`, `deviation_from_paper`, etc.). No new experiments created.
-
-### Runtime Notes for Runner Iteration
-- Both evaluators rely on method artifacts at `checkpoints/method/*.json` (legacy layout) or `checkpoints/outputs/<method_id>/*.json` (multi-method layout).
-- Method discovery is automatic via `discover_method_dirs()` — no hardcoded method names.
-- CCE gap computation uses `scipy`-style numerical computation; results should be ~0 for exact CCE.
-- `scores_train.json` and `scores_test.json` are produced by the evaluators at runtime (not pre-existing).
+On random games the first min-max LP usually has a unique solution, so a single LP already gives the deviation ratings. A bystander, a player whose payoff depends only on its own action, pins that LP at 0 without changing anyone's deviation ratings. The strictest equilibrium of the other players is then found only by the sequential freezing of Algorithm 1. With bystanders in every family, a single LP, an arbitrary CCE, and the earlier implementation's freeze-every-tight-constraint rule all fail on every sampled suite, while the reference passes all of them (`redteam/diagnostics.json`).

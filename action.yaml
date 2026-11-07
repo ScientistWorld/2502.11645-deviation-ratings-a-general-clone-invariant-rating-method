@@ -1,8 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening job 2: paper dual-rule freezing; hidden suite with bystander players (186 games); reference end to end; diagnostics over 11 seeds; replay of all 51 shortcuts."
+notes: "Hardened: rating-program contract, hidden games generated at test time, validity gates, isolated evaluator, paper's dual freezing rule; reference 0 on all invariance metrics (11/11 suites); all 51 shortcuts fail or tie only via the honest method (HARDENING.md)."

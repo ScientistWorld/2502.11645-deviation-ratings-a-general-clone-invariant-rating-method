@@ -2,42 +2,43 @@
 
 This is a game-theoretic rating benchmark, not a predictive-model training task.
 
+## Method Interface
+
+The method is the rating program `scripts/rate.sh GAMES_JSON RATINGS_JSON`. The contract is in [briefing/evaluation.md](/home/user/briefing/evaluation.md). For every game it must return:
+- one finite real rating per action of every player, and
+- the joint distribution those ratings come from: a probability vector over joint actions, C order.
+
+The distribution must be a coarse correlated equilibrium, and each rating must equal that distribution's deviation gain for the action. Outputs that break this contract are scored as failed rather than ranked.
+
 ## Data
 
-The scientist must use the provided local game definitions in [data/game_data.py](/home/user/data/game_data.py) for the scored benchmark:
-- `augmented_biased_shapley_game()` for `biased_shapley_augmented`
-- `rock_paper_scissors()` plus the cloned variant for `clone_invariance`
-- `general_sum_reference_game()` plus a mixed-strategy augmentation for `mixture_invariance`
-- `general_sum_reference_game()` plus arbitrary offsets for `offset_invariance`
-- `dominance_test_game()` for `dominance_preserving`
+The evaluators supply the scored games; the method does not choose or edit them:
+- `bash scripts/evaluate.sh` and `bash scripts/evaluate_train.sh` use the five documented public games. `data/game_data.py` contains the same definitions for development use.
+- `bash scripts/evaluate_test.sh` generates its own hidden games at test time. It reads nothing from `data/`, `checkpoints/`, `baseline/` or `scoring/reference.json`.
 
-No external datasets, modified payoff tables, or replacement benchmark games may be introduced for these scored experiments.
+No external datasets are needed or used.
 
 ## Evaluation Protocol
 
-The scientist must evaluate on the same scored experiments:
-- `biased_shapley_augmented`
-- `clone_invariance`
-- `mixture_invariance`
-- `offset_invariance`
-- `dominance_preserving`
+The scientist must keep the five scored experiments and their entrypoints:
+- `biased_shapley_augmented`, `clone_invariance`, `mixture_invariance`, `offset_invariance`, `dominance_preserving`
+- `bash scripts/evaluate.sh` (standard), `bash scripts/evaluate_train.sh`, `bash scripts/evaluate_test.sh` (hidden, no arguments)
 
-The standard evaluation entrypoint must remain:
-- `bash scripts/evaluate.sh`
+`eval/` and `scripts/evaluate*.sh` belong to the benchmark. Baselines, transformations, mixture weights, offsets, dominance pairs, tolerances and the test size are all fixed there.
 
 ## Method Boundary
 
-The scientist may improve or replace the current implementation, but the work must remain a principled strategy-rating method for normal-form games rather than a direct fit to the benchmark outputs.
+The scientist may improve or replace the implementation behind `scripts/rate.sh`, but the result must remain a principled strategy-rating method for normal-form games, not a fit to the benchmark outputs.
 
 The scientist may NOT:
-- Hardcode the benchmark's target numbers
+- Hardcode the benchmark's target numbers or special-case recognizable games
 - Ignore the game structure and score the experiments with table-specific rules
-- Change the scored game definitions while still claiming direct improvement on the same benchmark
-- Change the meaning of `dev_gap`, `CCE_gap`, `max_diff`, `mixture_error`, or `dominance_violations`
-- Skip any scored experiment
+- Change the scored game definitions, evaluators, tolerances or baselines while still claiming improvement on this benchmark
+- Change the meaning of `dev_gap`, `CCE_gap`, `max_diff`, `mixture_error`, `dominance_violations` or `min_margin`
+- Skip any scored experiment, or read or modify the hidden evaluator from the rating program
 
 ## Compliance Checklist
-- [ ] Method operates on the provided normal-form games rather than hardcoded target outputs
-- [ ] Evaluation uses the provided scored games
-- [ ] All five scored experiments are evaluated
-- [ ] Clone, mixture, offset, and dominance properties are preserved under the reported scores
+- [ ] `scripts/rate.sh` rates any finite 2- or 3-player normal-form game it is given (including players with a single action)
+- [ ] Ratings are the deviation gains of the returned CCE
+- [ ] All five scored experiments are evaluated through the provided entrypoints
+- [ ] Clone, mixture, offset and dominance properties hold on the hidden games, not only the public ones

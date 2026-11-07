@@ -1,12 +1,17 @@
 #!/bin/bash
-# Hardening job 2: reference end to end (method, baseline, public evaluation,
-# train and hidden test, validation), then the hardening audit.
-set -uo pipefail
+# Job script submitted via the end-of-turn YAML block.
+#
+# Reproduce the reference end to end: paper artifacts and uniform baseline,
+# the public evaluation (scripts/evaluate.sh), the train slice, the hidden test
+# (all three run the rating program scripts/rate.sh), and validation.
+# The hardening audit (diagnostics and shortcut replays) is
+# redteam/hardening_job.sh.
+
+set -euo pipefail
+
 cd /home/user
-python3 -c "import sys, numpy, scipy; print(sys.version); print('numpy', numpy.__version__, 'scipy', scipy.__version__)"
-bash scripts/reproduce.sh; echo "reproduce rc=$?"
-bash scripts/evaluate_train.sh; echo "train rc=$?"
-bash scripts/evaluate_test.sh; echo "test rc=$?"
-python3 validate.py; echo "validate rc=$?"
-bash redteam/hardening_job.sh
-echo "=== done"
+
+bash scripts/reproduce.sh
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
+python3 validate.py
