@@ -1,4 +1,3 @@
-action: submit
-gpus: 0
-test: false
-notes: "Confirm lax-CCE and batch-transport shortcuts from an empty method directory, repeat prestarted score-writer three times with immediate capture, and execute the 33x33 size-cutoff counterexample."
+action: done
+milestone: secondary_claims
+notes: "Completed audit of 62 shortcuts: five substantive reference-score ties, zero three-seed score spread, reference beats baseline. Gym restored; report and evidence committed as 060fb02. Existing reproduction milestone retained."
