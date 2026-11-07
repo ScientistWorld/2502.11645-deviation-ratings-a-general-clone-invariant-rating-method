@@ -1,0 +1,26 @@
+{
+  "shortcut": "python_startup_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.9191775531508029
+  },
+  "edited_files": {
+    "sitecustomize.py": "bd42d88cb51e768311eb17bb3b6f2fb6e7973ed28d0f320d5df77fd5dc2652b8"
+  },
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.11486932495608926
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.11475650407373905
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": true
+}

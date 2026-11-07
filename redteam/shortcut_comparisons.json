@@ -1,1454 +1,2006 @@
 {
-  "public_answers_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "uniform_payoffs_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1.25,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.25,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1.25
+  "reference_runs": 3,
+  "reference_runs_identical": true,
+  "shortcuts": {
+    "public_answers_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": 0.25
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "constant_zero_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 2,
-      "dominance_preserving/deviation_rating/min_margin": 0.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/dominance_violations": {
-        "reference": 0,
-        "shortcut": 2
+    "uniform_payoffs_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 0.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1.25",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.25",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "copy_input_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 10.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 10.0
+    "constant_zero_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "dominance_preserving.dominance_violations: 0 -> 2",
+          "dominance_preserving.min_margin: 1.0 -> 0.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "empty_artifacts_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 1,
-    "nonfinite_test_fields": []
-  },
-  "direct_scores_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1.25,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.25,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1.25
+    "copy_input_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": 0.25
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 10.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "reported_fields_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1.25,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.25,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1.25
+    "empty_artifacts_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": 0.25
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
       }
     },
-    "missing_vs_reference": []
-  },
-  "null_ratings_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 1,
-    "nonfinite_test_fields": []
-  },
-  "nan_ratings_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [
-      ".experiments.biased_shapley_augmented.results.deviation_rating.all_player_dev_gap",
-      ".experiments.biased_shapley_augmented.results.deviation_rating.player_symmetry_gap",
-      ".experiments.clone_invariance.results.deviation_rating.all_players_max_diff",
-      ".experiments.clone_invariance.results.deviation_rating.clone_source_gap",
-      ".experiments.mixture_invariance.results.deviation_rating.mixture_error",
-      ".experiments.offset_invariance.results.deviation_rating.max_diff",
-      ".experiments.dominance_preserving.results.deviation_rating.min_margin"
-    ],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": NaN,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": NaN,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": NaN,
-      "clone_invariance/deviation_rating/clone_source_gap": NaN,
-      "mixture_invariance/deviation_rating/mixture_error": NaN,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": NaN,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": NaN,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": NaN
+    "direct_scores_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": {
-        "reference": 0.0,
-        "shortcut": NaN
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": NaN
-      },
-      "clone_invariance/deviation_rating/clone_source_gap": {
-        "reference": 0.0,
-        "shortcut": NaN
-      },
-      "mixture_invariance/deviation_rating/mixture_error": {
-        "reference": 0.0,
-        "shortcut": NaN
-      },
-      "offset_invariance/deviation_rating/max_diff": {
-        "reference": 0.0,
-        "shortcut": NaN
-      },
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": NaN
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1.25",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.25",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "nan_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "infinite_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "overflow_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "negative_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "scaled_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "zero_equilibrium_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 1,
-    "nonfinite_test_fields": []
-  },
-  "short_equilibrium_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 1,
-    "nonfinite_test_fields": []
-  },
-  "rating_inflation_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1000000.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1000000.0
+    "reported_fields_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1.25",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.25",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "unbounded_margin_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1e+100,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1e+100
+    "null_ratings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
       }
     },
-    "missing_vs_reference": []
-  },
-  "infinite_margin_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [
-      ".experiments.dominance_preserving.results.deviation_rating.min_margin"
-    ],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": Infinity,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": Infinity
+    "nan_ratings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "accepted with non-finite scores",
+        "better": [],
+        "worse": [],
+        "nonfinite": [
+          "biased_shapley_augmented.all_player_dev_gap=nan",
+          "biased_shapley_augmented.player_symmetry_gap=nan",
+          "clone_invariance.all_players_max_diff=nan",
+          "clone_invariance.clone_source_gap=nan",
+          "mixture_invariance.mixture_error=nan",
+          "offset_invariance.max_diff=nan",
+          "dominance_preserving.min_margin=nan"
+        ],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "string_infinity_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [
-      ".experiments.dominance_preserving.results.deviation_rating.min_margin"
-    ],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": Infinity,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": Infinity
+    "nan_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "boolean_ratings_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "offset_translation_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "mixture_original_drift_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "clone_no_equilibrium_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "clone_arbitrary_ratings_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "short_action_set_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "empty_action_set_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 1,
-    "nonfinite_test_fields": []
-  },
-  "missing_player_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": []
-  },
-  "reverse_dominance_pairs_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "single_dominance_pair_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "empty_dominance_pairs_shortcut": {
-    "test_exit_code": 1,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": []
-  },
-  "phantom_dominance_action_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1000000000000.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1000000000000.0
+    "infinite_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "zero_mixture_weights_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "onehot_mixture_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "extrapolated_mixture_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "rounding_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "baseline_replace_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1.25,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.25,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1.25
+    "overflow_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": 0.25
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "data_replace_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 2,
-      "dominance_preserving/deviation_rating/min_margin": 0.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
+    "negative_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/dominance_violations": {
-        "reference": 0,
-        "shortcut": 2
-      },
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 0.0
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "reference_override_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1.25,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.94190871,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.25,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.5,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 1.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1.25
+    "scaled_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.94190871
-      },
-      "clone_invariance/deviation_rating/all_players_max_diff": {
-        "reference": 0.0,
-        "shortcut": 0.25
-      },
-      "mixture_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "offset_invariance/deviation_rating/max_CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 0.5
-      },
-      "dominance_preserving/deviation_rating/CCE_gap": {
-        "reference": 0.0,
-        "shortcut": 1.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "python_startup_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0.0,
-      "dominance_preserving/deviation_rating/min_margin": 1000000000000.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1000000000000.0
+    "zero_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
       }
     },
-    "missing_vs_reference": []
-  },
-  "checkpoint_precedence_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1000000000.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1000000000.0
+    "short_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
       }
     },
-    "missing_vs_reference": []
-  },
-  "method_id_collision_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/zero_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/zero_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/zero_rating/CCE_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/zero_rating/all_players_max_diff": 0.0,
-      "clone_invariance/zero_rating/clone_source_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/zero_rating/mixture_error": 0.0,
-      "mixture_invariance/zero_rating/max_CCE_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/zero_rating/max_diff": 0.0,
-      "offset_invariance/zero_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/zero_rating/all_player_dev_gap": {
-        "reference": null,
-        "shortcut": 0.0
+    "rating_inflation_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/zero_rating/player_symmetry_gap": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "biased_shapley_augmented/zero_rating/CCE_gap": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "clone_invariance/zero_rating/all_players_max_diff": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "clone_invariance/zero_rating/clone_source_gap": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "mixture_invariance/zero_rating/mixture_error": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "mixture_invariance/zero_rating/max_CCE_gap": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "offset_invariance/zero_rating/max_diff": {
-        "reference": null,
-        "shortcut": 0.0
-      },
-      "offset_invariance/zero_rating/max_CCE_gap": {
-        "reference": null,
-        "shortcut": 0.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "BEATS the reference",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1000000.0"
+        ],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "global_rating_scale_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 1e-08,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 1e-08,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1000000.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
-    },
-    "changed_vs_reference": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": {
-        "reference": 0.0,
-        "shortcut": 1e-08
+    "unbounded_margin_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       },
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": {
-        "reference": 0.0,
-        "shortcut": 1e-08
-      },
-      "dominance_preserving/deviation_rating/min_margin": {
-        "reference": 1.0,
-        "shortcut": 1000000.0
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "BEATS the reference",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1e+100"
+        ],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
       }
     },
-    "missing_vs_reference": []
-  },
-  "masked_nan_ratings_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
+    "infinite_margin_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "accepted with non-finite scores",
+        "better": [],
+        "worse": [],
+        "nonfinite": [
+          "dominance_preserving.min_margin=inf"
+        ],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
     },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
-  },
-  "masked_nan_strings_shortcut": {
-    "test_exit_code": 0,
-    "train_exit_code": 0,
-    "nonfinite_test_fields": [],
-    "test_metrics": {
-      "biased_shapley_augmented/deviation_rating/all_player_dev_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/player_symmetry_gap": 0.0,
-      "biased_shapley_augmented/deviation_rating/CCE_gap": 0.0,
-      "clone_invariance/deviation_rating/all_players_max_diff": 0.0,
-      "clone_invariance/deviation_rating/clone_source_gap": 0.0,
-      "mixture_invariance/deviation_rating/mixture_error": 0.0,
-      "mixture_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/deviation_rating/max_diff": 0.0,
-      "offset_invariance/deviation_rating/max_CCE_gap": 0.0,
-      "offset_invariance/uniform_payoff/max_diff": 0.0,
-      "offset_invariance/uniform_payoff/max_CCE_gap": 0.5,
-      "dominance_preserving/deviation_rating/dominance_violations": 0,
-      "dominance_preserving/deviation_rating/min_margin": 1.0,
-      "dominance_preserving/deviation_rating/CCE_gap": 0.0,
-      "dominance_preserving/zero_rating/dominance_violations": 2,
-      "dominance_preserving/zero_rating/min_margin": 0.0,
-      "dominance_preserving/zero_rating/CCE_gap": 1.0,
-      "dominance_preserving/negative_uniform_payoff/dominance_violations": 2,
-      "dominance_preserving/negative_uniform_payoff/min_margin": -1.0,
-      "dominance_preserving/negative_uniform_payoff/CCE_gap": 1.0
+    "string_infinity_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "accepted with non-finite scores",
+        "better": [],
+        "worse": [],
+        "nonfinite": [
+          "dominance_preserving.min_margin=inf"
+        ],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
     },
-    "changed_vs_reference": {},
-    "missing_vs_reference": []
+    "boolean_ratings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "offset_translation_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "mixture_original_drift_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "clone_no_equilibrium_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "clone_arbitrary_ratings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "short_action_set_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "empty_action_set_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
+      }
+    },
+    "missing_player_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
+      }
+    },
+    "reverse_dominance_pairs_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "single_dominance_pair_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "empty_dominance_pairs_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 1,
+        "attack_markers": [],
+        "verdict": "no test score (test exit code 1)"
+      }
+    },
+    "phantom_dominance_action_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "BEATS the reference",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1000000000000.0"
+        ],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
+    },
+    "zero_mixture_weights_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "onehot_mixture_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "extrapolated_mixture_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "rounding_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "baseline_replace_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1.25",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.25",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "data_replace_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.dominance_violations: 0 -> 2",
+          "dominance_preserving.min_margin: 1.0 -> 0.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "reference_override_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1.25",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 0.94190871",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.25",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "offset_invariance.max_CCE_gap: 0.0 -> 0.5",
+          "dominance_preserving.CCE_gap: 0.0 -> 1.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "python_startup_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "BEATS the reference",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1000000000000.0"
+        ],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
+    },
+    "checkpoint_precedence_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "BEATS the reference",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1000000000.0"
+        ],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
+    },
+    "method_id_collision_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "global_rating_scale_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "mixed (some metrics better, some worse)",
+        "better": [
+          "dominance_preserving.min_margin: 1.0 -> 1000000.0"
+        ],
+        "worse": [
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1e-08",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1e-08"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
+    },
+    "masked_nan_ratings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "masked_nan_strings_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      },
+      "before": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "single_lp_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "feasibility_cce_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 4.645833",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 5.6875",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 2.958333",
+          "clone_invariance.max_diff: 0.0 -> 0.63722",
+          "clone_invariance.all_players_max_diff: 0.0 -> 0.707698",
+          "mixture_invariance.original_max_diff: 0.0 -> 1.256",
+          "mixture_invariance.mixture_error: 0.0 -> 0.645351",
+          "offset_invariance.max_diff: 0.0 -> 0.565913"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "pure_nash_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "worse than the reference",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 4.645833",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 5.6875",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 2.958333",
+          "clone_invariance.max_diff: 0.0 -> 1.613",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1.613",
+          "mixture_invariance.original_max_diff: 0.0 -> 1.365",
+          "mixture_invariance.mixture_error: 0.0 -> 0.645351",
+          "offset_invariance.max_diff: 0.0 -> 1.826"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "uniform_gains_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "scored as failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving",
+        "better": [],
+        "worse": [
+          "biased_shapley_augmented.dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.all_player_dev_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.player_symmetry_gap: 0.0 -> 1000000.0",
+          "biased_shapley_augmented.CCE_gap: 0.0 -> 1000000.0",
+          "clone_invariance.max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.all_players_max_diff: 0.0 -> 1000000.0",
+          "clone_invariance.clone_source_gap: 0.0 -> 1000000.0",
+          "mixture_invariance.original_max_diff: 0.0 -> 1000000.0",
+          "mixture_invariance.mixture_error: 0.0 -> 1000000.0",
+          "mixture_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "offset_invariance.max_diff: 0.0 -> 1000000.0",
+          "offset_invariance.max_CCE_gap: 0.0 -> 1000000.0",
+          "dominance_preserving.dominance_violations: 0 -> 1000000",
+          "dominance_preserving.min_margin: 1.0 -> -1000000.0",
+          "dominance_preserving.CCE_gap: 0.0 -> 1000000.0"
+        ],
+        "nonfinite": [],
+        "failed_experiments": [
+          "biased_shapley_augmented",
+          "clone_invariance",
+          "mixture_invariance",
+          "offset_invariance",
+          "dominance_preserving"
+        ],
+        "baseline_rows_changed": []
+      }
+    },
+    "detached_rewriter_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    },
+    "script_append_shortcut": {
+      "after": {
+        "test_exit_code": 0,
+        "attack_markers": [],
+        "verdict": "ties the reference (no gain)",
+        "better": [],
+        "worse": [],
+        "nonfinite": [],
+        "failed_experiments": [],
+        "baseline_rows_changed": []
+      }
+    }
   }
 }

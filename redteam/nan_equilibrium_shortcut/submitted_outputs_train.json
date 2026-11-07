@@ -1,0 +1,167 @@
+{
+ "results": {
+  "shapley_augmented": {
+   "ratings": [
+    [
+     -2.821576763485473,
+     -2.821576763485478,
+     -2.8215767634854823,
+     -2.8215767634854787
+    ],
+    [
+     -2.8215767634854796,
+     -2.821576763485478,
+     -2.821576763485471,
+     -2.8215767634854787
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "rps": {
+   "ratings": [
+    [
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "rps_clone": {
+   "ratings": [
+    [
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "general_sum": {
+   "ratings": [
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     0.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "general_sum_mixture": {
+   "ratings": [
+    [
+     -1.0,
+     0.0,
+     -0.3
+    ],
+    [
+     -1.0,
+     0.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "general_sum_offset": {
+   "ratings": [
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     0.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  },
+  "dominance": {
+   "ratings": [
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ]
+   ],
+   "equilibrium": [
+    NaN,
+    NaN,
+    NaN,
+    NaN
+   ]
+  }
+ }
+}

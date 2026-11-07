@@ -1,0 +1,24 @@
+{
+  "shortcut": "empty_dominance_pairs_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.7179425661452115
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.11482174717821181
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 1,
+    "seconds": 0.11493727704510093
+  },
+  "nonfinite_test_fields": [],
+  "scores_produced": false
+}

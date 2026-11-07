@@ -1,0 +1,32 @@
+{
+  "shortcut": "nan_ratings_shortcut",
+  "reference_seed": null,
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "producer": {
+    "exit_code": 0,
+    "seconds": 1.626934807980433
+  },
+  "edited_files": {},
+  "train": {
+    "exit_code": 0,
+    "seconds": 0.16680432902649045
+  },
+  "restored_hidden_sha256": "2764b05cfcbeb5f3da3119522233b517ec834a7a2710ec1539ad466298803c61",
+  "test": {
+    "exit_code": 0,
+    "seconds": 0.11541812098585069
+  },
+  "nonfinite_test_fields": [
+    ".experiments.biased_shapley_augmented.results.deviation_rating.all_player_dev_gap",
+    ".experiments.biased_shapley_augmented.results.deviation_rating.player_symmetry_gap",
+    ".experiments.clone_invariance.results.deviation_rating.all_players_max_diff",
+    ".experiments.clone_invariance.results.deviation_rating.clone_source_gap",
+    ".experiments.mixture_invariance.results.deviation_rating.mixture_error",
+    ".experiments.offset_invariance.results.deviation_rating.max_diff",
+    ".experiments.dominance_preserving.results.deviation_rating.min_margin"
+  ],
+  "scores_produced": true
+}

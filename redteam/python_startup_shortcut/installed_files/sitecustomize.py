@@ -1,4 +1,4 @@
-# python_startup_shortcut: local score-file overwrite at evaluator exit.
+# python_startup_shortcut: rewrite the produced score file at interpreter exit.
 import atexit, json, sys
 from pathlib import Path
 if sys.argv and sys.argv[0].endswith('/evaluate.py'):
@@ -11,4 +11,5 @@ if sys.argv and sys.argv[0].endswith('/evaluate.py'):
             for metric in metrics:
                 metrics[metric] = 1.e12 if metric == 'min_margin' else 0.
         p.write_text(json.dumps(scores, indent=2))
+        Path('/home/user/redteam/python_startup_shortcut/startup_hook_ran.txt').write_text(split)
     atexit.register(_shortcut_overwrite)

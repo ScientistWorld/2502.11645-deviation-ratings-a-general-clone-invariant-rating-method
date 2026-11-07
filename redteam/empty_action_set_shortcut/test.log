@@ -1,10 +1,38 @@
-Traceback (most recent call last):
-  File "/home/user/eval/test/evaluate.py", line 401, in <module>
-    main()
-  File "/home/user/eval/test/evaluate.py", line 369, in main
-    scores["experiments"]["biased_shapley_augmented"]["results"][method_id] = evaluate_biased_shapley(
-                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/eval/test/evaluate.py", line 214, in evaluate_biased_shapley
-    "all_player_dev_gap": _round(max(all_ratings) - min(all_ratings)),
-                                 ^^^^^^^^^^^^^^^^
-ValueError: max() arg is an empty sequence
+== hidden test ==
+[biased_shapley_augmented] 12 instances, 12 games, proposed method: FAILED
+    gate failure: player 0 needs exactly 3 ratings
+    gate failure: player 0 needs exactly 4 ratings
+    gate failure: player 0 needs exactly 5 ratings
+    gate failure: player 0 needs exactly 6 ratings
+    deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0}
+    uniform_payoff             {"dev_gap": 2.2555, "all_player_dev_gap": 3.4, "player_symmetry_gap": 2.029333, "CCE_gap": 2.106184}
+[clone_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: player 0 needs exactly 2 ratings
+    gate failure: player 0 needs exactly 3 ratings
+    gate failure: player 0 needs exactly 4 ratings
+    gate failure: player 0 needs exactly 5 ratings
+    deviation_rating           {"max_diff": 1000000.0, "all_players_max_diff": 1000000.0, "clone_source_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 0.331, "all_players_max_diff": 0.331, "clone_source_gap": 0.0}
+[mixture_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: player 0 needs exactly 2 ratings
+    gate failure: player 0 needs exactly 3 ratings
+    gate failure: player 0 needs exactly 4 ratings
+    gate failure: player 0 needs exactly 5 ratings
+    deviation_rating           {"original_max_diff": 1000000.0, "mixture_error": 1000000.0, "max_CCE_gap": 1000000.0}
+    uniform_payoff             {"original_max_diff": 0.170424, "mixture_error": 0.0, "max_CCE_gap": 0.930203}
+[offset_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: player 0 needs exactly 2 ratings
+    gate failure: player 0 needs exactly 3 ratings
+    gate failure: player 0 needs exactly 4 ratings
+    deviation_rating           {"max_diff": 1000000.0, "max_CCE_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 4.3275, "max_CCE_gap": 1.111}
+[dominance_preserving] 12 instances, 12 games, proposed method: FAILED
+    gate failure: player 0 needs exactly 2 ratings
+    gate failure: player 0 needs exactly 3 ratings
+    gate failure: player 0 needs exactly 4 ratings
+    gate failure: player 0 needs exactly 5 ratings
+    deviation_rating           {"dominance_violations": 1000000, "min_margin": -1000000.0, "CCE_gap": 1000000.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 1.25525}
+    zero_rating                {"dominance_violations": 42, "min_margin": 0.0, "CCE_gap": 1.25525}
+    negative_uniform_payoff    {"dominance_violations": 42, "min_margin": -116.384615, "CCE_gap": 1.25525}
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json

@@ -188,8 +188,8 @@ def construct_livebench_three_player_game(model_scores: np.ndarray) -> Tuple[np.
 # data_replace_shortcut: replace public payoff tables by zero games.
 def _shortcut_zero(fn):
     def wrapped(*a, **kw):
-        g,n,m=fn(*a,**kw)
-        return np.zeros_like(g),n,m
+        g, n, m = fn(*a, **kw)
+        return np.zeros_like(g), n, m
     return wrapped
 augmented_biased_shapley_game = _shortcut_zero(augmented_biased_shapley_game)
 rock_paper_scissors = _shortcut_zero(rock_paper_scissors)

@@ -1,61 +1,30 @@
-{
-  "experiments": {
-    "biased_shapley_augmented": {
-      "results": {
-        "deviation_rating": {
-          "all_player_dev_gap": 0.0,
-          "player_symmetry_gap": 0.0,
-          "CCE_gap": 0.0
-        }
-      }
-    },
-    "clone_invariance": {
-      "results": {
-        "deviation_rating": {
-          "all_players_max_diff": 0.0,
-          "clone_source_gap": 0.0
-        }
-      }
-    },
-    "mixture_invariance": {
-      "results": {
-        "deviation_rating": {
-          "mixture_error": 0.0,
-          "max_CCE_gap": 0.0
-        }
-      }
-    },
-    "offset_invariance": {
-      "results": {
-        "deviation_rating": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.0
-        },
-        "uniform_payoff": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.5
-        }
-      }
-    },
-    "dominance_preserving": {
-      "results": {
-        "deviation_rating": {
-          "dominance_violations": 0,
-          "min_margin": 1.0,
-          "CCE_gap": 0.0
-        },
-        "zero_rating": {
-          "dominance_violations": 2,
-          "min_margin": 0.0,
-          "CCE_gap": 1.0
-        },
-        "negative_uniform_payoff": {
-          "dominance_violations": 2,
-          "min_margin": -1.0,
-          "CCE_gap": 1.0
-        }
-      }
-    }
-  }
-}
-Test evaluation complete. Results written to scoring/scores_test.json
+== hidden test ==
+[biased_shapley_augmented] 12 instances, 12 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 4.336e+02)
+    deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0}
+    uniform_payoff             {"dev_gap": 2.2555, "all_player_dev_gap": 3.4, "player_symmetry_gap": 2.029333, "CCE_gap": 2.106184}
+[clone_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 2.822e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 2.919e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 3.536e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 3.653e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 3.770e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 3.953e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 4.119e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 4.224e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 4.253e+01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 4.543e+01)
+    deviation_rating           {"max_diff": 1000000.0, "all_players_max_diff": 1000000.0, "clone_source_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 0.331, "all_players_max_diff": 0.331, "clone_source_gap": 0.0}
+[mixture_invariance] 20 instances, 40 games, proposed method: ok
+    deviation_rating           {"original_max_diff": 0.0, "mixture_error": 0.0, "max_CCE_gap": 0.0}
+    uniform_payoff             {"original_max_diff": 0.170424, "mixture_error": 0.0, "max_CCE_gap": 0.930203}
+[offset_invariance] 20 instances, 40 games, proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "max_CCE_gap": 0.0}
+    uniform_payoff             {"max_diff": 4.3275, "max_CCE_gap": 1.111}
+[dominance_preserving] 12 instances, 12 games, proposed method: ok
+    deviation_rating           {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 0.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 1.25525}
+    zero_rating                {"dominance_violations": 42, "min_margin": 0.0, "CCE_gap": 1.25525}
+    negative_uniform_payoff    {"dominance_violations": 42, "min_margin": -116.384615, "CCE_gap": 1.25525}
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json

@@ -3,16 +3,29 @@
     "biased_shapley_augmented": {
       "results": {
         "deviation_rating": {
+          "dev_gap": 0.0,
           "all_player_dev_gap": 0.0,
           "player_symmetry_gap": 0.0,
           "CCE_gap": 0.0
+        },
+        "uniform_payoff": {
+          "dev_gap": 2.2555,
+          "all_player_dev_gap": 3.4,
+          "player_symmetry_gap": 2.029333,
+          "CCE_gap": 2.106184
         }
       }
     },
     "clone_invariance": {
       "results": {
         "deviation_rating": {
-          "all_players_max_diff": 0.0,
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "max_diff": 0.331,
+          "all_players_max_diff": 0.331,
           "clone_source_gap": 0.0
         }
       }
@@ -20,39 +33,50 @@
     "mixture_invariance": {
       "results": {
         "deviation_rating": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0
+        },
+        "uniform_payoff": {
+          "original_max_diff": 0.170424,
           "mixture_error": 0.0,
-          "max_CCE_gap": 0.0
+          "max_CCE_gap": 0.930203
         }
       }
     },
     "offset_invariance": {
       "results": {
         "deviation_rating": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.0
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0
         },
         "uniform_payoff": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.5
+          "max_diff": 4.3275,
+          "max_CCE_gap": 1.111
         }
       }
     },
     "dominance_preserving": {
       "results": {
         "deviation_rating": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0
+        },
+        "uniform_payoff": {
           "dominance_violations": 0,
-          "min_margin": 1000000.0,
-          "CCE_gap": 0.0
+          "min_margin": 1.0,
+          "CCE_gap": 1.25525
         },
         "zero_rating": {
-          "dominance_violations": 2,
+          "dominance_violations": 42,
           "min_margin": 0.0,
-          "CCE_gap": 1.0
+          "CCE_gap": 1.25525
         },
         "negative_uniform_payoff": {
-          "dominance_violations": 2,
-          "min_margin": -1.0,
-          "CCE_gap": 1.0
+          "dominance_violations": 42,
+          "min_margin": -116.384615,
+          "CCE_gap": 1.25525
         }
       }
     }

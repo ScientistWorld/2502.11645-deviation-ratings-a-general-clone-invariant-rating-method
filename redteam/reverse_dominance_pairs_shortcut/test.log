@@ -1,61 +1,59 @@
-{
-  "experiments": {
-    "biased_shapley_augmented": {
-      "results": {
-        "deviation_rating": {
-          "all_player_dev_gap": 0.0,
-          "player_symmetry_gap": 0.0,
-          "CCE_gap": 0.0
-        }
-      }
-    },
-    "clone_invariance": {
-      "results": {
-        "deviation_rating": {
-          "all_players_max_diff": 0.0,
-          "clone_source_gap": 0.0
-        }
-      }
-    },
-    "mixture_invariance": {
-      "results": {
-        "deviation_rating": {
-          "mixture_error": 0.0,
-          "max_CCE_gap": 0.0
-        }
-      }
-    },
-    "offset_invariance": {
-      "results": {
-        "deviation_rating": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.0
-        },
-        "uniform_payoff": {
-          "max_diff": 0.0,
-          "max_CCE_gap": 0.5
-        }
-      }
-    },
-    "dominance_preserving": {
-      "results": {
-        "deviation_rating": {
-          "dominance_violations": 0,
-          "min_margin": 1.0,
-          "CCE_gap": 0.0
-        },
-        "zero_rating": {
-          "dominance_violations": 2,
-          "min_margin": 0.0,
-          "CCE_gap": 1.0
-        },
-        "negative_uniform_payoff": {
-          "dominance_violations": 2,
-          "min_margin": -1.0,
-          "CCE_gap": 1.0
-        }
-      }
-    }
-  }
-}
-Test evaluation complete. Results written to scoring/scores_test.json
+== hidden test ==
+[biased_shapley_augmented] 12 instances, 12 games, proposed method: ok
+    deviation_rating           {"dev_gap": 0.0, "all_player_dev_gap": 0.0, "player_symmetry_gap": 0.0, "CCE_gap": 0.0}
+    uniform_payoff             {"dev_gap": 2.2555, "all_player_dev_gap": 3.4, "player_symmetry_gap": 2.029333, "CCE_gap": 2.106184}
+[clone_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.000e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.005e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.186e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.367e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.527e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 5.318e-01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 5.510e-01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 7.195e-01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 7.470e-01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 7.503e-01)
+    deviation_rating           {"max_diff": 1000000.0, "all_players_max_diff": 1000000.0, "clone_source_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 0.331, "all_players_max_diff": 0.331, "clone_source_gap": 0.0}
+[mixture_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.008e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.072e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.137e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.152e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.208e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.319e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.426e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.542e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.778e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.802e+00)
+    deviation_rating           {"original_max_diff": 1000000.0, "mixture_error": 1000000.0, "max_CCE_gap": 1000000.0}
+    uniform_payoff             {"original_max_diff": 0.170424, "mixture_error": 0.0, "max_CCE_gap": 0.930203}
+[offset_invariance] 20 instances, 40 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.000e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.061e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.078e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.353e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.478e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.608e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.700e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.877e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 6.134e-01)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 6.673e-01)
+    deviation_rating           {"max_diff": 1000000.0, "max_CCE_gap": 1000000.0}
+    uniform_payoff             {"max_diff": 4.3275, "max_CCE_gap": 1.111}
+[dominance_preserving] 12 instances, 12 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.000e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.022e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.235e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.344e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.387e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.536e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.590e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.710e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.800e+00)
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 2.160e+00)
+    deviation_rating           {"dominance_violations": 1000000, "min_margin": -1000000.0, "CCE_gap": 1000000.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 1.25525}
+    zero_rating                {"dominance_violations": 42, "min_margin": 0.0, "CCE_gap": 1.25525}
+    negative_uniform_payoff    {"dominance_violations": 42, "min_margin": -116.384615, "CCE_gap": 1.25525}
+Test evaluation complete. Results written to /home/user/scoring/scores_test.json

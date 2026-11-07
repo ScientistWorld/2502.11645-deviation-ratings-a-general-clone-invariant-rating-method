@@ -1,54 +1,21 @@
-{
-  "experiments": {
-    "biased_shapley_augmented": {
-      "results": {
-        "deviation_rating": {
-          "dev_gap": 0.0,
-          "CCE_gap": 0.0
-        }
-      }
-    },
-    "clone_invariance": {
-      "results": {
-        "deviation_rating": {
-          "max_diff": 0.0
-        }
-      }
-    },
-    "mixture_invariance": {
-      "results": {
-        "deviation_rating": {
-          "original_max_diff": 0.0,
-          "mixture_error": 0.0
-        }
-      }
-    },
-    "offset_invariance": {
-      "results": {
-        "deviation_rating": {
-          "max_diff": 0.0
-        },
-        "uniform_payoff": {
-          "max_diff": 3.0
-        }
-      }
-    },
-    "dominance_preserving": {
-      "results": {
-        "deviation_rating": {
-          "dominance_violations": 0,
-          "CCE_gap": 0.0
-        },
-        "zero_rating": {
-          "dominance_violations": 0,
-          "CCE_gap": 1.0
-        },
-        "negative_uniform_payoff": {
-          "dominance_violations": 2,
-          "CCE_gap": 1.0
-        }
-      }
-    }
-  }
-}
+== train (public games) ==
+[biased_shapley_augmented] 1 instances, 1 games, proposed method: FAILED
+    gate failure: equilibrium is not a CCE (largest deviation gain 1.003e+00)
+    deviation_rating           {"dev_gap": 1000000.0, "all_player_dev_gap": 1000000.0, "player_symmetry_gap": 1000000.0, "CCE_gap": 1000000.0}
+    uniform_payoff             {"dev_gap": 1.25, "all_player_dev_gap": 1.25, "player_symmetry_gap": 0.0, "CCE_gap": 0.941909}
+[clone_invariance] 1 instances, 2 games, proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "all_players_max_diff": 0.0, "clone_source_gap": 0.0}
+    uniform_payoff             {"max_diff": 0.25, "all_players_max_diff": 0.25, "clone_source_gap": 0.0}
+[mixture_invariance] 1 instances, 2 games, proposed method: FAILED
+    gate failure: ratings are not the deviation gains of the submitted equilibrium (mismatch 1.007e+02)
+    deviation_rating           {"original_max_diff": 1000000.0, "mixture_error": 1000000.0, "max_CCE_gap": 1000000.0}
+    uniform_payoff             {"original_max_diff": 0.133333, "mixture_error": 0.0, "max_CCE_gap": 0.5}
+[offset_invariance] 1 instances, 2 games, proposed method: ok
+    deviation_rating           {"max_diff": 0.0, "max_CCE_gap": 0.0}
+    uniform_payoff             {"max_diff": 3.0, "max_CCE_gap": 0.5}
+[dominance_preserving] 1 instances, 1 games, proposed method: ok
+    deviation_rating           {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 0.0}
+    uniform_payoff             {"dominance_violations": 0, "min_margin": 1.0, "CCE_gap": 1.0}
+    zero_rating                {"dominance_violations": 2, "min_margin": 0.0, "CCE_gap": 1.0}
+    negative_uniform_payoff    {"dominance_violations": 2, "min_margin": -1.0, "CCE_gap": 1.0}
 Train evaluation complete. Results written to scoring/scores_train.json

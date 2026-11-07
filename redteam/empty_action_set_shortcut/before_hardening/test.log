@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/user/eval/test/evaluate.py", line 401, in <module>
+    main()
+  File "/home/user/eval/test/evaluate.py", line 369, in main
+    scores["experiments"]["biased_shapley_augmented"]["results"][method_id] = evaluate_biased_shapley(
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 214, in evaluate_biased_shapley
+    "all_player_dev_gap": _round(max(all_ratings) - min(all_ratings)),
+                                 ^^^^^^^^^^^^^^^^
+ValueError: max() arg is an empty sequence
