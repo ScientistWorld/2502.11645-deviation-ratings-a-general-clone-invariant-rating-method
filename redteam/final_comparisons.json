@@ -1,0 +1,1456 @@
+{
+ "reference_runs_identical": true,
+ "reference": {
+  "biased_shapley_augmented": {
+   "deviation_rating": {
+    "dev_gap": 0.0,
+    "all_player_dev_gap": 0.0,
+    "player_symmetry_gap": 0.0,
+    "CCE_gap": 0.0,
+    "strictness_gap": 0.0
+   },
+   "uniform_payoff": {
+    "dev_gap": 2.934636,
+    "all_player_dev_gap": 5.122333,
+    "player_symmetry_gap": 3.832333,
+    "CCE_gap": 3.209813,
+    "strictness_gap": 4.286515
+   }
+  },
+  "clone_invariance": {
+   "deviation_rating": {
+    "max_diff": 0.0,
+    "all_players_max_diff": 0.0,
+    "clone_source_gap": 0.0,
+    "strictness_gap": 0.0
+   },
+   "uniform_payoff": {
+    "max_diff": 0.25075,
+    "all_players_max_diff": 0.25075,
+    "clone_source_gap": 0.0,
+    "strictness_gap": 3.857303
+   }
+  },
+  "mixture_invariance": {
+   "deviation_rating": {
+    "original_max_diff": 0.0,
+    "mixture_error": 0.0,
+    "max_CCE_gap": 0.0,
+    "strictness_gap": 0.0
+   },
+   "uniform_payoff": {
+    "original_max_diff": 0.407582,
+    "mixture_error": 0.0,
+    "max_CCE_gap": 3.086416,
+    "strictness_gap": 2.621413
+   }
+  },
+  "offset_invariance": {
+   "deviation_rating": {
+    "max_diff": 0.0,
+    "max_CCE_gap": 0.0,
+    "strictness_gap": 0.0
+   },
+   "uniform_payoff": {
+    "max_diff": 3.84,
+    "max_CCE_gap": 1.738788,
+    "strictness_gap": 1.451191
+   }
+  },
+  "dominance_preserving": {
+   "deviation_rating": {
+    "dominance_violations": 0,
+    "min_margin": 1.0,
+    "CCE_gap": 0.0,
+    "strictness_gap": 0.0
+   },
+   "uniform_payoff": {
+    "dominance_violations": 0,
+    "min_margin": 1.0,
+    "CCE_gap": 2.507909,
+    "strictness_gap": 2.104818
+   },
+   "zero_rating": {
+    "dominance_violations": 65,
+    "min_margin": 0.0,
+    "CCE_gap": 2.507909,
+    "strictness_gap": 2.104818
+   },
+   "negative_uniform_payoff": {
+    "dominance_violations": 65,
+    "min_margin": -97.325057,
+    "CCE_gap": 2.507909,
+    "strictness_gap": 2.104818
+   }
+  },
+  "population_improvement": {
+   "deviation_rating": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   },
+   "uniform_payoff": {
+    "late_gap_ratio": 0.667682,
+    "mean_gap_ratio": 0.70202
+   },
+   "random_selection": {
+    "late_gap_ratio": 0.968004,
+    "mean_gap_ratio": 0.964801
+   }
+  }
+ },
+ "shortcuts": {
+  "public_answers_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Use public constant-rating targets and one CCE feasibility LP, with a public dominance-table special case.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "uniform_payoffs_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return average payoffs and a uniform joint distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "constant_zero_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return zero ratings and an independently feasible CCE.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "copy_input_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Copy payoff slices into ratings and return a uniform distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "empty_artifacts_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return empty result objects.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "direct_scores_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Prewrite favorable score files while running the weak uniform method.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "reported_fields_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Claim perfect gaps, success, timings, iteration count and margin in weak outputs.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "null_ratings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return null ratings with reference distributions.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "nan_ratings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return NaN ratings with reference distributions.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "nan_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace every joint probability with NaN.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "infinite_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace every joint probability with positive infinity.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "overflow_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return finite 1e308 joint weights whose sum overflows.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "negative_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace zero joint probabilities with -100.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "scaled_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Multiply all joint probabilities by 1000.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "zero_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return zero joint probability mass.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "short_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return a one-element joint distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "rating_inflation_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace dominated-action ratings with -1e6.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "unbounded_margin_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace dominated-action ratings with -1e100.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "infinite_margin_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace dominated-action ratings with negative infinity.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "string_infinity_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return the string \"-Infinity\" as dominated-action ratings.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "boolean_ratings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return Boolean ratings indicating reference row maxima.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "offset_translation_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Translate all ratings by player-dependent million-unit offsets.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "mixture_original_drift_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "R",
+    "population_improvement": "F"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, population_improvement; ties elsewhere",
+   "before": {
+    "what": "Set detected mixture-component ratings to alternating +/-1000.",
+    "score": "C=F; K=F; M=F; O=R; D=F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "clone_no_equilibrium_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance; ties elsewhere",
+   "before": {
+    "what": "Omit distributions on games containing detected clones.",
+    "score": "C=F; K=F; M=R; O=R; D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "clone_arbitrary_ratings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance; ties elsewhere",
+   "before": {
+    "what": "Replace ratings on detected clone games with 100 times average payoffs.",
+    "score": "C=F; K=F; M=R; O=R; D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "short_action_set_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Truncate player 0 ratings to one action and declare one action name.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "empty_action_set_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Truncate player 0 ratings to zero actions.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "missing_player_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Omit the last player from ratings.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "reverse_dominance_pairs_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Reverse actual rating orders and declare reversed dominance relations.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "single_dominance_pair_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Reverse an actual rating order and submit just one dominance pair.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "empty_dominance_pairs_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "ties the reference",
+   "before": {
+    "what": "Submit empty advisory dominance pairs with otherwise honest results.",
+    "score": "R",
+    "verdict": "Fails: advisory pairs ignored; genuine method still provides the score."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "phantom_dominance_action_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Append nonexistent actions rated 1e12 and declare them superior.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "zero_mixture_weights_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance; ties elsewhere",
+   "before": {
+    "what": "Replace a detected mixture with weights (0,0), then rate the altered game.",
+    "score": "C=F; K=F; M=F; O=R; D=F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "onehot_mixture_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "R",
+    "population_improvement": "F"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, population_improvement; ties elsewhere",
+   "before": {
+    "what": "Replace a detected mixture with weights (1,0), then rate the altered game.",
+    "score": "C=F; K=F; M=F; O=R; D=F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "extrapolated_mixture_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance; ties elsewhere",
+   "before": {
+    "what": "Replace a detected mixture with weights (-100,101), then rate the altered game.",
+    "score": "C=F; K=F; M=F; O=R; D=F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "rounding_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "ties the reference",
+   "before": {
+    "what": "Add 4e-9 to the final submitted rating.",
+    "score": "R",
+    "verdict": "Fails to gain: bounded discrepancy is accepted and discarded by recomputation."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "baseline_replace_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace the baseline producer and checkpoint with extreme negative values; submit weak outputs.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "data_replace_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace public payoff factories by zero games; submit zero ratings and uniform distributions.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "reference_override_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Write a favorable scoring/reference.json with changed weights and directions.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "python_startup_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Install a root sitecustomize exit hook to rewrite scores; submit weak outputs.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "checkpoint_precedence_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "ties the reference",
+   "before": {
+    "what": "Create a favorable alternative checkpoint beside genuine reference outputs.",
+    "score": "R",
+    "verdict": "Fails: decoy checkpoint ignored; genuine method still provides the score."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "method_id_collision_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "ties the reference",
+   "before": {
+    "what": "Create an alternate-method checkpoint under the zero_rating identifier.",
+    "score": "R",
+    "verdict": "Fails: alternate checkpoint ignored; genuine method still provides the score."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "global_rating_scale_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Multiply reference ratings by 1e6, retaining the original distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "masked_nan_ratings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace only the last rating with NaN, testing reduction masking.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "masked_nan_strings_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Replace only the last rating with the string \"NaN\".",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "single_lp_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance; ties elsewhere",
+   "before": {
+    "what": "Run only the first minimax LP and return its actual deviation gains.",
+    "score": "C=(1.364741, 4.239106, 3.641514, 0); K=(0.172132, 1.207766, 0); M=(0.406799, 0.266091, 0); O=(0.09665, 0); D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "feasibility_cce_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "worse",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement",
+   "before": {
+    "what": "Use one arbitrary CCE feasibility LP and return its actual deviation gains.",
+    "score": "C=(4.645833, 5.6875, 2.958333, 0); K=(0.756767, 1.267904, 0); M=(0.654964, 0.371217, 0); O=(0.878141, 0); D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.623895,
+    "mean_gap_ratio": 0.674323
+   }
+  },
+  "pure_nash_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "worse",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement",
+   "before": {
+    "what": "Use a pure Nash distribution when found, otherwise one CCE feasibility LP.",
+    "score": "C=(4.645833, 5.6875, 2.958333, 0); K=(1.687, 1.687, 0); M=(1.596, 0.842214, 0); O=(1.703, 0); D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 0.623895,
+    "mean_gap_ratio": 0.674323
+   }
+  },
+  "uniform_gains_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Return actual deviation gains of the uniform distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "detached_rewriter_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement; ties elsewhere",
+   "before": {
+    "what": "Double-fork a writer from the rating child to change scores after evaluation.",
+    "score": "R",
+    "verdict": "Fails: rating-child descendants killed; no rewrite marker."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "script_append_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Append a score-rewriting command to the hidden shell script from the rating child.",
+    "score": "R",
+    "verdict": "Fails: shell uses exec; appended command never runs; no marker."
+   },
+   "markers": null,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "zero_gain_fallback_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance; ties elsewhere",
+   "before": {
+    "what": "First seek a CCE with every deviation gain zero; use the reference only when infeasible.",
+    "score": "R",
+    "verdict": "Works: weaker stability selection ties reference."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "lax_cce_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "worse",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement",
+   "before": {
+    "what": "Reverse strictness: lexicographically maximize smallest gains subject to CCE, freezing nonzero-dual rows.",
+    "score": "R",
+    "verdict": "Works: opposite stability objective ties reference."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.636836,
+    "mean_gap_ratio": 0.679628
+   }
+  },
+  "zero_nondominated_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "worse",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement",
+   "before": {
+    "what": "Require zero gains for actions without a strictly dominating pure action; fall back to arbitrary CCE.",
+    "score": "C=R; K=(0.756767, 1.267904, 0); M=(0.654964, 0.371217, 0); O=R; D=R",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.623895,
+    "mean_gap_ratio": 0.674323
+   }
+  },
+  "batch_transport_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "worse",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving, population_improvement",
+   "before": {
+    "what": "Infer offset/permutation/convex-extension relationships across the input batch and transport arbitrary CCEs.",
+    "score": "R",
+    "verdict": "Works: batch context hides inconsistent standalone ratings."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.623895,
+    "mean_gap_ratio": 0.674323
+   }
+  },
+  "large_game_abandonment_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving; ties elsewhere",
+   "before": {
+    "what": "Run the reference only up to 1024 joint actions; return an empty distribution above that cutoff.",
+    "score": "R",
+    "verdict": "Works: total failure on larger valid inputs is unscored."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "negative_tolerance_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "F",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "F"
+   },
+   "overall": "failed in mixture_invariance, population_improvement; ties elsewhere",
+   "before": {
+    "what": "Replace reference zero probabilities by -5e-7.",
+    "score": "R",
+    "verdict": "Fails to gain: bounded negative mass is clipped; effective distribution unchanged."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "tiny_rating_mismatch_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "R",
+    "offset_invariance": "R",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "ties the reference",
+   "before": {
+    "what": "Add 5e-7 times payoff scale to submitted reference ratings.",
+    "score": "R",
+    "verdict": "Fails to gain: bounded mismatch accepted; recomputed ratings are scored."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "bystander_drop_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "R"
+   },
+   "overall": "failed in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance, dominance_preserving; ties elsewhere",
+   "before": {
+    "what": "Zero the third player ratings while keeping the reference distribution.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "fixed_options_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Submit weak outputs with fake tolerance=1e100, test_size=0, ground truth, baseline and success options.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "score_symlink_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Symlink the train/test score paths to a fabricated favorable file.",
+    "score": "F",
+    "verdict": "Fails: scored properties or validation gates catch the shortcut."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "prestarted_writer_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": {
+    "what": "Start a score-close watcher before evaluation; rewrite computed failed scores before the hidden command returns.",
+    "score": "R",
+    "verdict": "Works in this replay: forged persisted scores; requires the preparation process to survive until test."
+   },
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "strict_batch_transport_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "worse",
+    "clone_invariance": "worse",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "R",
+    "population_improvement": "R"
+   },
+   "overall": "worse in biased_shapley_augmented, clone_invariance, mixture_invariance, offset_invariance; ties elsewhere",
+   "before": null,
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.576602,
+    "mean_gap_ratio": 0.646034
+   }
+  },
+  "memo_transport_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "F",
+    "clone_invariance": "F",
+    "mixture_invariance": "F",
+    "offset_invariance": "F",
+    "dominance_preserving": "F",
+    "population_improvement": "F"
+   },
+   "overall": "failed in all 6 experiments",
+   "before": null,
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 1000000.0,
+    "mean_gap_ratio": 1000000.0
+   }
+  },
+  "sheriff_special_case_shortcut": {
+   "per_experiment": {
+    "biased_shapley_augmented": "R",
+    "clone_invariance": "R",
+    "mixture_invariance": "worse",
+    "offset_invariance": "worse",
+    "dominance_preserving": "R",
+    "population_improvement": "worse"
+   },
+   "overall": "worse in mixture_invariance, offset_invariance, population_improvement; ties elsewhere",
+   "before": null,
+   "markers": false,
+   "population": {
+    "late_gap_ratio": 0.636836,
+    "mean_gap_ratio": 0.679628
+   }
+  }
+ }
+}

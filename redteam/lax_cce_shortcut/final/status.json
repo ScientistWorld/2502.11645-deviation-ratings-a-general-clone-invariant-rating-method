@@ -1,0 +1,19 @@
+{
+  "name": "lax_cce_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "ddfb1cf41d70f19d8e1743b97d614a30a925c45c149b25ff99fe6d146c1c6546",
+  "from_scratch_install": true,
+  "train": {
+    "skipped": true
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 252.1179
+  },
+  "score_sha256": "1102484f337060818ce79b700c0cfec5c52e9ce8317634d8ca6bfdfba641ba59",
+  "shortcut_writer_marker_at_capture": false,
+  "memo_file_left": false
+}

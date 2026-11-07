@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening job 4: diagnose job 3's stalled hidden test (in-process hidden population loop with alarms), reference through the hidden test, validate, resumable shortcut replays"
+notes: "Hardening job 5: continue shortcut replays through the final hidden test (28 pending)"

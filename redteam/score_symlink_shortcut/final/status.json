@@ -1,0 +1,18 @@
+{
+  "name": "score_symlink_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "ddfb1cf41d70f19d8e1743b97d614a30a925c45c149b25ff99fe6d146c1c6546",
+  "train": {
+    "skipped": true
+  },
+  "test": {
+    "exit_code": 0,
+    "seconds": 12.2875
+  },
+  "score_sha256": "ef8e6704345091af598a24f8988109cd5ddad42ea00426cd5de074651f4c9ca4",
+  "shortcut_writer_marker_at_capture": false,
+  "memo_file_left": false
+}
