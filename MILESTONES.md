@@ -73,9 +73,3 @@
 
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
-
-### [2026-11-07 10:30] - secondary_claims
-- Hardening iteration 13 (final): `strictness_gap` is now certified on every independent block of players in product games (bystanders with 3-10 actions, two-bystander and two-game products), and every property experiment contains games above 2,048 joint actions
-- Closed the two shortcuts that tied the reference in `REDTEAM.md`: the three-LP cap is now worse in all five property experiments and size abandonment fails them; one-LP, two-LP and freeze-every-tight variants are worse in all five
-- Reference unchanged and byte-identical over five hidden runs (all property metrics 0, `min_margin` 1, population 0.576602 / 0.646034); details in `HARDENING.md`
-

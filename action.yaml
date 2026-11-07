@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: secondary_claims
-notes: "Rerun of the verification job after an infrastructure stall: hardened hidden test with the reference first, REDTEAM witness, resumable replays (shortcuts, variants, reference x2), then visible evaluations and validate.py; stall monitor on the log (~65 min CPU)."
+notes: "Hardened: strictness certified on independent player blocks (deeper bystanders, product games) and games >2,048 joint actions; three-LP and size-abandonment shortcuts now worse/failed in all 5 property experiments; reference unchanged (byte-identical over 5 hidden runs); HARDENING.md written."
