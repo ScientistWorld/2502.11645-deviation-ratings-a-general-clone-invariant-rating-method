@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardened hidden test (block-level strictness, deeper bystanders, product games, games >2048 joint actions): reference end to end (reproduce, train, test, validate), REDTEAM witness, and replays of reference x2, honest variants and fixed shortcuts through the hidden test (~75 min CPU)."
+notes: "Rerun of the verification job after an infrastructure stall: hardened hidden test with the reference first, REDTEAM witness, resumable replays (shortcuts, variants, reference x2), then visible evaluations and validate.py; stall monitor on the log (~65 min CPU)."

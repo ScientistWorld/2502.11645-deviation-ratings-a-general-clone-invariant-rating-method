@@ -1,0 +1,843 @@
+{
+  "reference_before": {
+    "biased_shapley_augmented": {
+      "dev_gap": 0.0,
+      "all_player_dev_gap": 0.0,
+      "player_symmetry_gap": 0.0,
+      "CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "clone_invariance": {
+      "max_diff": 0.0,
+      "all_players_max_diff": 0.0,
+      "clone_source_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "mixture_invariance": {
+      "original_max_diff": 0.0,
+      "mixture_error": 0.0,
+      "max_CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "offset_invariance": {
+      "max_diff": 0.0,
+      "max_CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "dominance_preserving": {
+      "dominance_violations": 0,
+      "min_margin": 1.0,
+      "CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "population_improvement": {
+      "late_gap_ratio": 0.576602,
+      "mean_gap_ratio": 0.646034
+    }
+  },
+  "reference_after": {
+    "biased_shapley_augmented": {
+      "dev_gap": 0.0,
+      "all_player_dev_gap": 0.0,
+      "player_symmetry_gap": 0.0,
+      "CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "clone_invariance": {
+      "max_diff": 0.0,
+      "all_players_max_diff": 0.0,
+      "clone_source_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "mixture_invariance": {
+      "original_max_diff": 0.0,
+      "mixture_error": 0.0,
+      "max_CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "offset_invariance": {
+      "max_diff": 0.0,
+      "max_CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "dominance_preserving": {
+      "dominance_violations": 0,
+      "min_margin": 1.0,
+      "CCE_gap": 0.0,
+      "strictness_gap": 0.0
+    },
+    "population_improvement": {
+      "late_gap_ratio": 0.576602,
+      "mean_gap_ratio": 0.646034
+    }
+  },
+  "cases": {
+    "three_lp_shortcut": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 3.691089,
+          "all_player_dev_gap": 3.691089,
+          "player_symmetry_gap": 3.691089,
+          "CCE_gap": 0.0,
+          "strictness_gap": 2.257277
+        },
+        "clone_invariance": {
+          "max_diff": 0.315778,
+          "all_players_max_diff": 0.315778,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.271212
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.436613,
+          "mixture_error": 0.171181,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.341164
+        },
+        "offset_invariance": {
+          "max_diff": 0.903585,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.265385
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.559935
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "worse",
+        "offset_invariance": "worse",
+        "dominance_preserving": "worse",
+        "population_improvement": "ties"
+      }
+    },
+    "size_abandonment_shortcut": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1000000.0,
+          "all_player_dev_gap": 1000000.0,
+          "player_symmetry_gap": 1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "clone_invariance": {
+          "max_diff": 1000000.0,
+          "all_players_max_diff": 1000000.0,
+          "clone_source_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1000000.0,
+          "mixture_error": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "offset_invariance": {
+          "max_diff": 1000000.0,
+          "max_CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 1000000,
+          "min_margin": -1000000.0,
+          "CCE_gap": 1000000.0,
+          "strictness_gap": 1000000.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "failed",
+        "clone_invariance": "failed",
+        "mixture_invariance": "failed",
+        "offset_invariance": "failed",
+        "dominance_preserving": "failed",
+        "population_improvement": "ties"
+      }
+    },
+    "reference_seed_0": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      }
+    },
+    "weaker_one_lp": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1.231797,
+          "all_player_dev_gap": 3.335093,
+          "player_symmetry_gap": 2.372299,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.309308,
+          "all_players_max_diff": 0.309308,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.837158,
+          "mixture_error": 0.004401,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.136487,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 3.839988,
+          "all_player_dev_gap": 4.61053,
+          "player_symmetry_gap": 3.839988,
+          "CCE_gap": 0.0,
+          "strictness_gap": 2.821577
+        },
+        "clone_invariance": {
+          "max_diff": 0.897,
+          "all_players_max_diff": 0.897,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.338037
+        },
+        "mixture_invariance": {
+          "original_max_diff": 1.007793,
+          "mixture_error": 0.680315,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.379064
+        },
+        "offset_invariance": {
+          "max_diff": 0.637173,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.279385
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.658735
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "worse",
+        "offset_invariance": "worse",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "worse",
+        "offset_invariance": "worse",
+        "dominance_preserving": "worse",
+        "population_improvement": "ties"
+      }
+    },
+    "two_lp_shortcut": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 1.148759,
+          "all_player_dev_gap": 1.973088,
+          "player_symmetry_gap": 0.82433,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.549515,
+          "all_players_max_diff": 0.549515,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 4.106582,
+          "all_player_dev_gap": 4.106582,
+          "player_symmetry_gap": 4.106582,
+          "CCE_gap": 0.0,
+          "strictness_gap": 2.821577
+        },
+        "clone_invariance": {
+          "max_diff": 0.691588,
+          "all_players_max_diff": 0.957292,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.287212
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.932011,
+          "mixture_error": 0.244323,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.379064
+        },
+        "offset_invariance": {
+          "max_diff": 1.764,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.279385
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.625835
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "worse",
+        "offset_invariance": "worse",
+        "dominance_preserving": "worse",
+        "population_improvement": "ties"
+      }
+    },
+    "active_freeze_variant": {
+      "before": null,
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 3.6,
+          "all_player_dev_gap": 5.725245,
+          "player_symmetry_gap": 4.44241,
+          "CCE_gap": 0.0,
+          "strictness_gap": 2.821577
+        },
+        "clone_invariance": {
+          "max_diff": 0.552,
+          "all_players_max_diff": 0.555,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.338037
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.713938,
+          "mixture_error": 0.182117,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.379064
+        },
+        "offset_invariance": {
+          "max_diff": 0.08254,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.279385
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.658735
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "worse",
+        "clone_invariance": "worse",
+        "mixture_invariance": "worse",
+        "offset_invariance": "worse",
+        "dominance_preserving": "worse",
+        "population_improvement": "ties"
+      }
+    },
+    "vectorized_solver": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      }
+    },
+    "precision_solver": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      }
+    },
+    "reference_seed_1": {
+      "before": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "after": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        }
+      },
+      "before_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      },
+      "after_vs_reference": {
+        "biased_shapley_augmented": "ties",
+        "clone_invariance": "ties",
+        "mixture_invariance": "ties",
+        "offset_invariance": "ties",
+        "dominance_preserving": "ties",
+        "population_improvement": "ties"
+      }
+    }
+  }
+}

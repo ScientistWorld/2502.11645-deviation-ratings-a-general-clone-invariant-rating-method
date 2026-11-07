@@ -1,0 +1,27 @@
+{
+  "name": "size_abandonment_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+  "standalone": {
+    "command": [
+      "bash",
+      "scripts/rate.sh",
+      "/home/user/redteam/hardening_final/size_abandonment_shortcut/probe_input.json",
+      "/home/user/redteam/hardening_final/size_abandonment_shortcut/probe_output.json"
+    ],
+    "returncode": 0,
+    "seconds": 1.667
+  },
+  "test": {
+    "command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "returncode": 0,
+    "seconds": 234.014
+  },
+  "score_sha256": "dd78591b33312700a27cae5e3a62957ec5d307f2796d807abe1468bdaa050cff"
+}

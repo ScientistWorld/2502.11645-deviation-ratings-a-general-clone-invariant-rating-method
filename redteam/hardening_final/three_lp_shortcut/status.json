@@ -1,0 +1,27 @@
+{
+  "name": "three_lp_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a",
+  "standalone": {
+    "command": [
+      "bash",
+      "scripts/rate.sh",
+      "/home/user/redteam/hardening_final/three_lp_shortcut/probe_input.json",
+      "/home/user/redteam/hardening_final/three_lp_shortcut/probe_output.json"
+    ],
+    "returncode": 0,
+    "seconds": 1.768
+  },
+  "test": {
+    "command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "returncode": 0,
+    "seconds": 209.346
+  },
+  "score_sha256": "524d5413f5d479d6e6c08c20748dae2a4cf083fdd84b14b4089237138bc018ae"
+}

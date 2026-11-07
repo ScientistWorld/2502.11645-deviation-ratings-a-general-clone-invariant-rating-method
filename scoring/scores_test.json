@@ -10,10 +10,10 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "dev_gap": 2.934636,
-          "all_player_dev_gap": 5.122333,
-          "player_symmetry_gap": 3.832333,
-          "CCE_gap": 3.209813,
+          "dev_gap": 2.2555,
+          "all_player_dev_gap": 3.5608,
+          "player_symmetry_gap": 2.481,
+          "CCE_gap": 4.76672,
           "strictness_gap": 4.286515
         }
       }
@@ -27,10 +27,10 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "max_diff": 0.25075,
-          "all_players_max_diff": 0.25075,
+          "max_diff": 0.415752,
+          "all_players_max_diff": 0.415752,
           "clone_source_gap": 0.0,
-          "strictness_gap": 3.857303
+          "strictness_gap": 3.959754
         }
       }
     },
@@ -43,10 +43,10 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "original_max_diff": 0.407582,
+          "original_max_diff": 0.343772,
           "mixture_error": 0.0,
           "max_CCE_gap": 3.086416,
-          "strictness_gap": 2.621413
+          "strictness_gap": 2.688069
         }
       }
     },
@@ -58,8 +58,8 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "max_diff": 3.84,
-          "max_CCE_gap": 1.738788,
+          "max_diff": 4.088,
+          "max_CCE_gap": 2.171173,
           "strictness_gap": 1.451191
         }
       }
@@ -75,20 +75,20 @@
         "uniform_payoff": {
           "dominance_violations": 0,
           "min_margin": 1.0,
-          "CCE_gap": 2.507909,
-          "strictness_gap": 2.104818
+          "CCE_gap": 2.50856,
+          "strictness_gap": 2.546267
         },
         "zero_rating": {
-          "dominance_violations": 65,
+          "dominance_violations": 204,
           "min_margin": 0.0,
-          "CCE_gap": 2.507909,
-          "strictness_gap": 2.104818
+          "CCE_gap": 2.50856,
+          "strictness_gap": 2.546267
         },
         "negative_uniform_payoff": {
-          "dominance_violations": 65,
-          "min_margin": -97.325057,
-          "CCE_gap": 2.507909,
-          "strictness_gap": 2.104818
+          "dominance_violations": 204,
+          "min_margin": -1813.69697,
+          "CCE_gap": 2.50856,
+          "strictness_gap": 2.546267
         }
       }
     },

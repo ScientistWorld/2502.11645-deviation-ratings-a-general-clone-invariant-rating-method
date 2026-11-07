@@ -1,0 +1,47 @@
+[
+  {
+    "name": "three_lp_shortcut",
+    "returncode": 0,
+    "elapsed": 211.5
+  },
+  {
+    "name": "size_abandonment_shortcut",
+    "returncode": 0,
+    "elapsed": 447.4
+  },
+  {
+    "name": "reference_seed_0",
+    "returncode": 0,
+    "elapsed": 704.9
+  },
+  {
+    "name": "weaker_one_lp",
+    "returncode": 0,
+    "elapsed": 906.8
+  },
+  {
+    "name": "two_lp_shortcut",
+    "returncode": 0,
+    "elapsed": 1115.6
+  },
+  {
+    "name": "active_freeze_variant",
+    "returncode": 0,
+    "elapsed": 1359.6
+  },
+  {
+    "name": "vectorized_solver",
+    "returncode": 0,
+    "elapsed": 1601.4
+  },
+  {
+    "name": "precision_solver",
+    "returncode": 0,
+    "elapsed": 1852.5
+  },
+  {
+    "name": "reference_seed_1",
+    "returncode": 0,
+    "elapsed": 2104.9
+  }
+]
