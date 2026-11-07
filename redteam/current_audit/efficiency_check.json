@@ -1,0 +1,33 @@
+[
+  {
+    "dims": [
+      8,
+      8
+    ],
+    "coefficients_bitwise_equal": true,
+    "reference_seconds": 0.0018413970246911049,
+    "vectorized_seconds": 0.0033402469707652926,
+    "coefficient_speedup": 0.5512757112894612
+  },
+  {
+    "dims": [
+      11,
+      11,
+      9
+    ],
+    "coefficients_bitwise_equal": true,
+    "reference_seconds": 0.05770769400987774,
+    "vectorized_seconds": 0.00035686208866536617,
+    "coefficient_speedup": 161.7086707800753
+  },
+  {
+    "dims": [
+      33,
+      33
+    ],
+    "coefficients_bitwise_equal": true,
+    "reference_seconds": 0.12068050808738917,
+    "vectorized_seconds": 0.00516042800154537,
+    "coefficient_speedup": 23.385755610048147
+  }
+]

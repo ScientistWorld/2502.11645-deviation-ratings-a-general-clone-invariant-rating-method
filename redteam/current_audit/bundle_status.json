@@ -1,0 +1,87 @@
+[
+  {
+    "name": "reference_seed_0",
+    "returncode": 0,
+    "elapsed": 450.85
+  },
+  {
+    "name": "reference_seed_1",
+    "returncode": 0,
+    "elapsed": 674.94
+  },
+  {
+    "name": "reference_seed_2",
+    "returncode": 0,
+    "elapsed": 896.6
+  },
+  {
+    "name": "vectorized_solver",
+    "returncode": 0,
+    "elapsed": 1335.39
+  },
+  {
+    "name": "precision_solver",
+    "returncode": 0,
+    "elapsed": 1554.05
+  },
+  {
+    "name": "weaker_one_lp",
+    "returncode": 0,
+    "elapsed": 1933.43
+  },
+  {
+    "name": "two_lp_shortcut",
+    "returncode": 0,
+    "elapsed": 2124.74
+  },
+  {
+    "name": "three_lp_shortcut",
+    "returncode": 0,
+    "elapsed": 2320.29
+  },
+  {
+    "name": "size_abandonment_shortcut",
+    "returncode": 0,
+    "elapsed": 2542.61
+  },
+  {
+    "name": "visible_answers_shortcut",
+    "returncode": 0,
+    "elapsed": 2568.31
+  },
+  {
+    "name": "reported_fields_shortcut",
+    "returncode": 0,
+    "elapsed": 2581.77
+  },
+  {
+    "name": "direct_scores_shortcut",
+    "returncode": 0,
+    "elapsed": 2595.63
+  },
+  {
+    "name": "baseline_move_shortcut",
+    "returncode": 0,
+    "elapsed": 2609.59
+  },
+  {
+    "name": "artifact_replace_shortcut",
+    "returncode": 0,
+    "elapsed": 2623.35
+  },
+  {
+    "name": "constant_ratings_shortcut",
+    "returncode": 0,
+    "elapsed": 2637.19
+  },
+  {
+    "name": "empty_output_shortcut",
+    "returncode": 0,
+    "elapsed": 2650.97
+  },
+  {
+    "name": "nonfinite_shortcut",
+    "returncode": 0,
+    "elapsed": 2664.64
+  }
+]

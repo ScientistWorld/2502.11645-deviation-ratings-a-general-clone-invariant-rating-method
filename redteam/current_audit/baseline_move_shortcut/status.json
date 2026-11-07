@@ -1,0 +1,31 @@
+{
+  "name": "baseline_move_shortcut",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "hidden_sha256": "68494d8f5e58b931234c1ddf9d70a5cad3fc1a5eb7ff1f919292a1a87a200bf9",
+  "comparison_changes": [
+    "baseline/run_uniform.py",
+    "scoring/reference.json"
+  ],
+  "standalone": {
+    "command": [
+      "bash",
+      "scripts/rate.sh",
+      "/home/user/redteam/current_audit/baseline_move_shortcut/probe_input.json",
+      "/home/user/redteam/current_audit/baseline_move_shortcut/probe_output.json"
+    ],
+    "returncode": 0,
+    "seconds": 1.717
+  },
+  "test": {
+    "command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "returncode": 0,
+    "seconds": 11.986
+  },
+  "score_sha256": "ef8e6704345091af598a24f8988109cd5ddad42ea00426cd5de074651f4c9ca4"
+}
