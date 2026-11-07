@@ -45,9 +45,10 @@ def execute(command,log):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('name')
+    p.add_argument('--evidence-subdir',default='')
     args=p.parse_args()
     name=args.name
-    folder=ROOT/'redteam'/name
+    folder=ROOT/'redteam'/name/args.evidence_subdir
     folder.mkdir(parents=True,exist_ok=True)
     if STATE.exists(): raise RuntimeError('Unrestored shortcut state')
     STATE.mkdir()
@@ -56,6 +57,12 @@ def main():
             'hidden_sha256':hashlib.sha256((ROOT/'eval/test/evaluate.py').read_bytes()).hexdigest()}
     daemon=None
     try:
+        if name in ('lax_cce_shortcut','batch_transport_shortcut'):
+            # Exercise from-scratch mode, with no reproduced method available.
+            remove(ROOT/'method')
+            (ROOT/'method').mkdir()
+            (ROOT/'method/__init__.py').write_text('')
+            status['from_scratch_install']=True
         # Installation makes the candidate a method rather than an evaluator import.
         shutil.copy2(ROOT/'redteam/audit_v2/shortcut_methods.py',ROOT/'method/audit_shortcut.py')
         (ROOT/'scripts/rate.sh').write_text('#!/bin/bash\n# '+name+' rating entrypoint.\nset -euo pipefail\ncd /home/user\nexport PYTHONPATH=/home/user\nexec python3 -m method.audit_shortcut '+name+' "$1" "$2"\n')

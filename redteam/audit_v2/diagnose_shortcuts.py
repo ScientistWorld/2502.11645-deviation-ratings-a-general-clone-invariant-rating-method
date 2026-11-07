@@ -6,6 +6,7 @@ scripts/evaluate_test.sh with no arguments, in each shortcut's run.sh.
 import contextlib
 import io
 import json
+import subprocess
 import sys
 from pathlib import Path
 import numpy as np
@@ -45,9 +46,19 @@ def main():
             break
     # Size cutoff: a finite two-player game remains inside the documented contract.
     big=rng.uniform(-1,1,size=(2,33,33))
+    large_folder=ROOT/'redteam/large_game_abandonment_shortcut'
+    large_input=large_folder/'shortcut_large_input.json'
+    large_output=large_folder/'shortcut_large_output.json'
+    large_input.write_text(json.dumps({'games':[{'id':'large','payoffs':big.tolist()}]}))
+    # Execute the actual shortcut CLI on a new, finite game inside the contract.
+    subprocess.run([sys.executable,'-m','redteam.audit_v2.shortcut_methods',
+                    'large_game_abandonment_shortcut',str(large_input),str(large_output)],
+                   cwd=ROOT,check=True)
+    large_result=json.loads(large_output.read_text())['results']['large']
     report['large_game_abandonment_shortcut_check']={
         'shape':list(big.shape),'joint_actions':33*33,
-        'shortcut_returned_equilibrium_length':0,'required_equilibrium_length':33*33}
+        'shortcut_returned_equilibrium_length':len(large_result['equilibrium']),
+        'required_equilibrium_length':33*33,'actual_shortcut_cli_executed':True}
     reference=json.loads((ROOT/'redteam/reference_unmodified/scores_test.json').read_text())
     spreads={}
     for exp,entry in reference['experiments'].items():

@@ -13,7 +13,11 @@ from scipy.optimize import linprog
 
 ROOT = Path('/home/user')
 sys.path.insert(0, str(ROOT))
-from method.rate import rate_game
+def rate_game(game):
+    # Reference-dependent shortcuts use improve mode. Other shortcuts can run
+    # with an empty method directory and never import the reference algorithm.
+    from method.rate import rate_game as reference_rate_game
+    return reference_rate_game(game)
 
 
 def shortcut_coefficients(game):
