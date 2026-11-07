@@ -1,8 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: ""
+notes: "Hardened hidden test (block-level strictness, deeper bystanders, product games, games >2048 joint actions): reference end to end (reproduce, train, test, validate), REDTEAM witness, and replays of reference x2, honest variants and fixed shortcuts through the hidden test (~75 min CPU)."

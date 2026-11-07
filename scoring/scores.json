@@ -12,8 +12,8 @@
         "uniform_payoff": {
           "dev_gap": 3.4,
           "all_player_dev_gap": 3.4,
-          "player_symmetry_gap": 1.368333,
-          "CCE_gap": 3.303251,
+          "player_symmetry_gap": 1.241079,
+          "CCE_gap": 3.810821,
           "strictness_gap": 5.202199
         }
       }
@@ -27,10 +27,10 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "max_diff": 0.684875,
-          "all_players_max_diff": 0.684875,
+          "max_diff": 0.261917,
+          "all_players_max_diff": 0.261917,
           "clone_source_gap": 0.0,
-          "strictness_gap": 3.381661
+          "strictness_gap": 3.899657
         }
       }
     },
@@ -43,10 +43,10 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "original_max_diff": 0.352571,
+          "original_max_diff": 0.139619,
           "mixture_error": 0.0,
-          "max_CCE_gap": 5.794775,
-          "strictness_gap": 5.307505
+          "max_CCE_gap": 5.771073,
+          "strictness_gap": 5.307902
         }
       }
     },
@@ -58,7 +58,7 @@
           "strictness_gap": 0.0
         },
         "uniform_payoff": {
-          "max_diff": 4.014,
+          "max_diff": 3.8085,
           "max_CCE_gap": 3.005284,
           "strictness_gap": 2.21565
         }
@@ -75,20 +75,20 @@
         "uniform_payoff": {
           "dominance_violations": 0,
           "min_margin": 1.0,
-          "CCE_gap": 2.370042,
-          "strictness_gap": 1.884682
+          "CCE_gap": 2.566334,
+          "strictness_gap": 1.958751
         },
         "zero_rating": {
-          "dominance_violations": 90,
+          "dominance_violations": 278,
           "min_margin": 0.0,
-          "CCE_gap": 2.370042,
-          "strictness_gap": 1.884682
+          "CCE_gap": 2.566334,
+          "strictness_gap": 1.958751
         },
         "negative_uniform_payoff": {
-          "dominance_violations": 90,
-          "min_margin": -622.049435,
-          "CCE_gap": 2.370042,
-          "strictness_gap": 1.884682
+          "dominance_violations": 278,
+          "min_margin": -115.166667,
+          "CCE_gap": 2.566334,
+          "strictness_gap": 1.958751
         }
       }
     },
