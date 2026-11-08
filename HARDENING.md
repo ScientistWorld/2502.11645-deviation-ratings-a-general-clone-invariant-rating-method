@@ -65,11 +65,12 @@ The paper's method on the data (rate the observation as given) is the reference.
 - Copies become exact clones, so Property 6 applies to them, and their repeated measurements average out.
 - On exact games it is the reference. It ties every other experiment exactly and changes no clean observation.
 
-**Larger than the test's noise.** The reference is deterministic, so the relevant noise is how the comparison would vary over other hidden draws. `redteam/hardening_iter14/paired_noisy.py` re-rates every hidden noisy observation both ways in exact arithmetic. Its plug-in aggregate is PAIRED_PLUG, against 0.712453 from the job's float reference, and its merge aggregate is PAIRED_MERGE. On the padded observations:
-- the paired improvement is PAIRED_DIFF ± PAIRED_SE (standard error), t = PAIRED_T;
-- the merge variant is better on PAIRED_BETTER of 96 instances and worse on PAIRED_WORSE.
+**Larger than the test's noise.** The reference is deterministic, so the relevant noise is how the comparison would vary over other hidden draws. `redteam/hardening_iter14/paired_noisy.py` re-rates every hidden noisy observation both ways in exact arithmetic. Its exact aggregates (plug-in 0.712453, merge 0.448893) equal the job's float scores to all 6 decimals. On the padded observations:
+- the paired improvement is 0.264 ± 0.047 (standard error), t = 5.6;
+- the merge variant is better on 85 of 96 instances and worse on 11;
+- on the clean observations the two are identical on all 96.
 
-**Headroom remains above the merge variant.** It does not touch `clean_rating_error`, where noise alone moves ratings by about half the bound on average and occasionally by more than one payoff unit, because deviation ratings are discontinuous in the payoffs. 0 is unattainable from noisy data.
+**Headroom remains above the merge variant.** It does not touch `clean_rating_error`. There the median observation's mean rating error is about a quarter of the bound, but a few observations average 3-7.6 times the bound (12.8 on a padded one), because deviation ratings are discontinuous in the payoffs (`paired_noisy_test.json`). 0 is unattainable from noisy data.
 
 **Weights.**
 - The six earlier experiments were scaled by 0.85, so their ratios are unchanged.

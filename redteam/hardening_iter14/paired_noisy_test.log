@@ -1,0 +1,27 @@
+{
+ "split": "test",
+ "instances": 96,
+ "seconds": 449.7,
+ "padded (rating_error)": {
+  "plug_in_mean": 0.7124530345341293,
+  "merge_mean": 0.4488933576605068,
+  "mean_paired_improvement": 0.2635596768736225,
+  "paired_sd": 0.4635026452084029,
+  "paired_se": 0.04730604063295223,
+  "t": 5.571374677466311,
+  "merge_better": 85,
+  "merge_worse": 11,
+  "tied": 0
+ },
+ "clean (clean_rating_error)": {
+  "plug_in_mean": 0.4876129626847945,
+  "merge_mean": 0.4876129626847945,
+  "mean_paired_improvement": 0.0,
+  "paired_sd": 0.0,
+  "paired_se": 0.0,
+  "t": null,
+  "merge_better": 0,
+  "merge_worse": 0,
+  "tied": 96
+ }
+}
