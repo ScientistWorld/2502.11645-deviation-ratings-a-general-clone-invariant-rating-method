@@ -1,0 +1,663 @@
+{
+  "formula": "sum_experiment weight * sum_metric coefficient * (candidate - reference seed 0)",
+  "splits": {
+    "test": {
+      "reference": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.576602,
+          "mean_gap_ratio": 0.646034
+        },
+        "noisy_clone_resilience": {
+          "rating_error": 0.712453,
+          "clean_rating_error": 0.487613
+        }
+      },
+      "cases": {
+        "cap32_shortcut": {
+          "rank_delta": -1.7298551994,
+          "per_experiment": {
+            "biased_shapley_augmented": -1.5316540694,
+            "clone_invariance": -0.03683968000000001,
+            "mixture_invariance": -0.11030795099999997,
+            "offset_invariance": -0.044591085,
+            "dominance_preserving": -0.006462414,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {
+            "biased_shapley_augmented": {
+              "dev_gap": [
+                0.0,
+                2.944856
+              ],
+              "all_player_dev_gap": [
+                0.0,
+                2.944856
+              ],
+              "player_symmetry_gap": [
+                0.0,
+                1.924954
+              ],
+              "strictness_gap": [
+                0.0,
+                2.292531
+              ]
+            },
+            "clone_invariance": {
+              "max_diff": [
+                0.0,
+                0.08639
+              ],
+              "all_players_max_diff": [
+                0.0,
+                0.155685
+              ],
+              "strictness_gap": [
+                0.0,
+                0.151021
+              ]
+            },
+            "mixture_invariance": {
+              "original_max_diff": [
+                0.0,
+                0.933819
+              ],
+              "strictness_gap": [
+                0.0,
+                0.295263
+              ]
+            },
+            "offset_invariance": {
+              "max_diff": [
+                0.0,
+                0.340042
+              ],
+              "strictness_gap": [
+                0.0,
+                0.194251
+              ]
+            },
+            "dominance_preserving": {
+              "strictness_gap": [
+                0.0,
+                0.126714
+              ]
+            }
+          }
+        },
+        "merge_variant": {
+          "rank_delta": 0.039534,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.039534
+          },
+          "changed": {
+            "noisy_clone_resilience": {
+              "rating_error": [
+                0.712453,
+                0.448893
+              ]
+            }
+          }
+        },
+        "reference_run": {
+          "rank_delta": 0.0,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {}
+        },
+        "reference_seed_0": {
+          "rank_delta": 0.0,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {}
+        },
+        "size_limit_shortcut": {
+          "rank_delta": -1638800.0306,
+          "per_experiment": {
+            "biased_shapley_augmented": -618800.0,
+            "clone_invariance": -367200.0,
+            "mixture_invariance": -275400.0,
+            "offset_invariance": -173400.0,
+            "dominance_preserving": -204000.0306,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {
+            "biased_shapley_augmented": {
+              "dev_gap": [
+                0.0,
+                1000000.0
+              ],
+              "all_player_dev_gap": [
+                0.0,
+                1000000.0
+              ],
+              "player_symmetry_gap": [
+                0.0,
+                1000000.0
+              ],
+              "CCE_gap": [
+                0.0,
+                1000000.0
+              ],
+              "strictness_gap": [
+                0.0,
+                1000000.0
+              ]
+            },
+            "clone_invariance": {
+              "max_diff": [
+                0.0,
+                1000000.0
+              ],
+              "all_players_max_diff": [
+                0.0,
+                1000000.0
+              ],
+              "clone_source_gap": [
+                0.0,
+                1000000.0
+              ],
+              "strictness_gap": [
+                0.0,
+                1000000.0
+              ]
+            },
+            "mixture_invariance": {
+              "original_max_diff": [
+                0.0,
+                1000000.0
+              ],
+              "mixture_error": [
+                0.0,
+                1000000.0
+              ],
+              "max_CCE_gap": [
+                0.0,
+                1000000.0
+              ],
+              "strictness_gap": [
+                0.0,
+                1000000.0
+              ]
+            },
+            "offset_invariance": {
+              "max_diff": [
+                0.0,
+                1000000.0
+              ],
+              "max_CCE_gap": [
+                0.0,
+                1000000.0
+              ],
+              "strictness_gap": [
+                0.0,
+                1000000.0
+              ]
+            },
+            "dominance_preserving": {
+              "dominance_violations": [
+                0,
+                1000000
+              ],
+              "min_margin": [
+                1.0,
+                -1000000.0
+              ],
+              "CCE_gap": [
+                0.0,
+                1000000.0
+              ],
+              "strictness_gap": [
+                0.0,
+                1000000.0
+              ]
+            }
+          }
+        },
+        "weaker_one_lp": {
+          "rank_delta": -3.9622708708,
+          "per_experiment": {
+            "biased_shapley_augmented": -3.3340022225999997,
+            "clone_invariance": -0.2007163072,
+            "mixture_invariance": -0.264186528,
+            "offset_invariance": -0.14385932099999998,
+            "dominance_preserving": -0.014099817,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": -0.0054066750000000005
+          },
+          "changed": {
+            "biased_shapley_augmented": {
+              "dev_gap": [
+                0.0,
+                6.289931
+              ],
+              "all_player_dev_gap": [
+                0.0,
+                7.008548
+              ],
+              "player_symmetry_gap": [
+                0.0,
+                7.008548
+              ],
+              "strictness_gap": [
+                0.0,
+                2.821577
+              ]
+            },
+            "clone_invariance": {
+              "max_diff": [
+                0.0,
+                0.74874
+              ],
+              "all_players_max_diff": [
+                0.0,
+                0.807581
+              ],
+              "strictness_gap": [
+                0.0,
+                0.323617
+              ]
+            },
+            "mixture_invariance": {
+              "original_max_diff": [
+                0.0,
+                1.482109
+              ],
+              "mixture_error": [
+                0.0,
+                0.884059
+              ],
+              "strictness_gap": [
+                0.0,
+                0.447792
+              ]
+            },
+            "offset_invariance": {
+              "max_diff": [
+                0.0,
+                1.251
+              ],
+              "strictness_gap": [
+                0.0,
+                0.318771
+              ]
+            },
+            "dominance_preserving": {
+              "strictness_gap": [
+                0.0,
+                0.276467
+              ]
+            },
+            "noisy_clone_resilience": {
+              "rating_error": [
+                0.712453,
+                0.726966
+              ],
+              "clean_rating_error": [
+                0.487613,
+                0.530676
+              ]
+            }
+          }
+        }
+      },
+      "uniform_rank_delta": -4.4247934596,
+      "baselines": {
+        "uniform_payoff": {
+          "biased_shapley_augmented": {
+            "dev_gap": 2.2555,
+            "all_player_dev_gap": 3.5608,
+            "player_symmetry_gap": 2.029333,
+            "CCE_gap": 4.76672,
+            "strictness_gap": 4.286515
+          },
+          "clone_invariance": {
+            "max_diff": 0.443252,
+            "all_players_max_diff": 0.443252,
+            "clone_source_gap": 0.0,
+            "strictness_gap": 3.857303
+          },
+          "mixture_invariance": {
+            "original_max_diff": 0.492555,
+            "mixture_error": 0.0,
+            "max_CCE_gap": 3.172225,
+            "strictness_gap": 2.838214
+          },
+          "offset_invariance": {
+            "max_diff": 3.2,
+            "max_CCE_gap": 2.254367,
+            "strictness_gap": 1.451191
+          },
+          "dominance_preserving": {
+            "dominance_violations": 0,
+            "min_margin": 1.0,
+            "CCE_gap": 2.704158,
+            "strictness_gap": 2.274145
+          },
+          "population_improvement": {
+            "late_gap_ratio": 0.667682,
+            "mean_gap_ratio": 0.70202
+          },
+          "noisy_clone_resilience": {
+            "rating_error": 6.109139,
+            "clean_rating_error": 6.165559
+          }
+        },
+        "zero_rating": {
+          "dominance_preserving": {
+            "dominance_violations": 2827,
+            "min_margin": 0.0,
+            "CCE_gap": 2.704158,
+            "strictness_gap": 2.274145
+          }
+        },
+        "negative_uniform_payoff": {
+          "dominance_preserving": {
+            "dominance_violations": 2827,
+            "min_margin": -302.583333,
+            "CCE_gap": 2.704158,
+            "strictness_gap": 2.274145
+          }
+        },
+        "random_selection": {
+          "population_improvement": {
+            "late_gap_ratio": 0.968004,
+            "mean_gap_ratio": 0.964801
+          }
+        }
+      }
+    },
+    "train": {
+      "reference": {
+        "biased_shapley_augmented": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "clone_invariance": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "mixture_invariance": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "offset_invariance": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "dominance_preserving": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "population_improvement": {
+          "late_gap_ratio": 0.712638,
+          "mean_gap_ratio": 0.778461
+        },
+        "noisy_clone_resilience": {
+          "rating_error": 0.735823,
+          "clean_rating_error": 0.547185
+        }
+      },
+      "cases": {
+        "merge_variant": {
+          "rank_delta": 0.03067695000000001,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.03067695000000001
+          },
+          "changed": {
+            "noisy_clone_resilience": {
+              "rating_error": [
+                0.735823,
+                0.53131
+              ]
+            }
+          }
+        },
+        "reference_run": {
+          "rank_delta": 0.0,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {}
+        },
+        "reference_seed_0": {
+          "rank_delta": 0.0,
+          "per_experiment": {
+            "biased_shapley_augmented": 0.0,
+            "clone_invariance": 0.0,
+            "mixture_invariance": 0.0,
+            "offset_invariance": 0.0,
+            "dominance_preserving": 0.0,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": 0.0
+          },
+          "changed": {}
+        },
+        "weaker_one_lp": {
+          "rank_delta": -3.536714439,
+          "per_experiment": {
+            "biased_shapley_augmented": -2.8841583988,
+            "clone_invariance": -0.3328868192,
+            "mixture_invariance": -0.191877606,
+            "offset_invariance": -0.086421897,
+            "dominance_preserving": -0.019774892999999998,
+            "population_improvement": 0.0,
+            "noisy_clone_resilience": -0.021594824999999995
+          },
+          "changed": {
+            "biased_shapley_augmented": {
+              "dev_gap": [
+                0.0,
+                5.635539
+              ],
+              "all_player_dev_gap": [
+                0.0,
+                5.635539
+              ],
+              "player_symmetry_gap": [
+                0.0,
+                5.635539
+              ],
+              "strictness_gap": [
+                0.0,
+                2.821577
+              ]
+            },
+            "clone_invariance": {
+              "max_diff": [
+                0.0,
+                1.327918
+              ],
+              "all_players_max_diff": [
+                0.0,
+                1.376011
+              ],
+              "strictness_gap": [
+                0.0,
+                0.313143
+              ]
+            },
+            "mixture_invariance": {
+              "original_max_diff": [
+                0.0,
+                1.501069
+              ],
+              "mixture_error": [
+                0.0,
+                0.199085
+              ],
+              "strictness_gap": [
+                0.0,
+                0.361998
+              ]
+            },
+            "offset_invariance": {
+              "max_diff": [
+                0.0,
+                0.663407
+              ],
+              "strictness_gap": [
+                0.0,
+                0.367733
+              ]
+            },
+            "dominance_preserving": {
+              "strictness_gap": [
+                0.0,
+                0.387743
+              ]
+            },
+            "noisy_clone_resilience": {
+              "rating_error": [
+                0.735823,
+                0.824232
+              ],
+              "clean_rating_error": [
+                0.547185,
+                0.658298
+              ]
+            }
+          }
+        }
+      },
+      "uniform_rank_delta": -5.0522005966000005,
+      "baselines": {
+        "uniform_payoff": {
+          "biased_shapley_augmented": {
+            "dev_gap": 3.4,
+            "all_player_dev_gap": 3.4,
+            "player_symmetry_gap": 1.563667,
+            "CCE_gap": 3.810821,
+            "strictness_gap": 5.202199
+          },
+          "clone_invariance": {
+            "max_diff": 0.684875,
+            "all_players_max_diff": 0.684875,
+            "clone_source_gap": 0.0,
+            "strictness_gap": 3.899657
+          },
+          "mixture_invariance": {
+            "original_max_diff": 0.694046,
+            "mixture_error": 0.0,
+            "max_CCE_gap": 5.722456,
+            "strictness_gap": 5.242964
+          },
+          "offset_invariance": {
+            "max_diff": 3.98,
+            "max_CCE_gap": 3.005284,
+            "strictness_gap": 2.21565
+          },
+          "dominance_preserving": {
+            "dominance_violations": 0,
+            "min_margin": 1.0,
+            "CCE_gap": 2.376408,
+            "strictness_gap": 1.645026
+          },
+          "population_improvement": {
+            "late_gap_ratio": 0.797493,
+            "mean_gap_ratio": 0.825532
+          },
+          "noisy_clone_resilience": {
+            "rating_error": 6.29709,
+            "clean_rating_error": 5.902903
+          }
+        },
+        "zero_rating": {
+          "dominance_preserving": {
+            "dominance_violations": 14652,
+            "min_margin": 0.0,
+            "CCE_gap": 2.376408,
+            "strictness_gap": 1.645026
+          }
+        },
+        "negative_uniform_payoff": {
+          "dominance_preserving": {
+            "dominance_violations": 14652,
+            "min_margin": -62.8,
+            "CCE_gap": 2.376408,
+            "strictness_gap": 1.645026
+          }
+        },
+        "random_selection": {
+          "population_improvement": {
+            "late_gap_ratio": 1.083548,
+            "mean_gap_ratio": 1.08643
+          }
+        }
+      }
+    }
+  }
+}

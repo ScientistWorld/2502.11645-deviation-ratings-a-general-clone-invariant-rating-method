@@ -1,0 +1,27 @@
+[
+  {
+    "name": "reference_seed_0",
+    "returncode": 0,
+    "elapsed_seconds": 862.308
+  },
+  {
+    "name": "merge_variant",
+    "returncode": 0,
+    "elapsed_seconds": 2191.079
+  },
+  {
+    "name": "weaker_one_lp",
+    "returncode": 0,
+    "elapsed_seconds": 2970.616
+  },
+  {
+    "name": "cap32_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 3495.408
+  },
+  {
+    "name": "size_limit_shortcut",
+    "returncode": 0,
+    "elapsed_seconds": 4087.55
+  }
+]

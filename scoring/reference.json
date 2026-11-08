@@ -240,8 +240,8 @@
       "results": {
         "deviation_rating": {
           "type": "proposed",
-          "rating_error": 0.55,
-          "clean_rating_error": 0.63
+          "rating_error": 0.712453,
+          "clean_rating_error": 0.487613
         },
         "uniform_payoff": {
           "type": "baseline"

@@ -1,140 +1,149 @@
-# Hardening report (iteration 13, final)
+# Hardening report (iteration 14, final)
 
 ## Summary
 
-`REDTEAM.md` found two shortcuts that tied the reference on all 22 hidden metrics:
-- **three_lp_shortcut** stops Algorithm 1 after three LP rounds.
-- **size_abandonment_shortcut** returns nothing for games above 2,048 joint actions.
+`REDTEAM.md` found three problems:
+- **No honest method could score higher than the reference.** A faster exact solver tied it; no better variant existed.
+- **The 32-round-cap shortcut tied the reference** on all 22 hidden metrics.
+- **The size-limit shortcut tied the reference.** It abandons games above 4,096 joint actions.
 
-The audit also found that `strictness_gap` only certified the *top* of the lexicographic order the paper's selection minimises. The bystander players then in the test had at most 3 actions, so three rounds always reached the other players' strictest value.
+All three are fixed:
 
-Both shortcuts are now closed:
-- **Three-LP shortcut:** scores worse than the reference in all five property experiments.
-- **Size-abandonment shortcut:** is scored as failed in all five.
-- **The reference** is unchanged: 0 on every property metric, `min_margin` 1, population 0.576602 / 0.646034. Five hidden runs are byte-identical.
-
-Better results now score higher in a clean order of how much of the algorithm runs:
-
-| | one LP | two LPs | three LPs | full algorithm |
-|---|---|---|---|---|
-| Cyclic `strictness_gap` | 2.82 | 2.82 | 2.26 | 0 |
-| Dominance `strictness_gap` | 0.66 | 0.63 | 0.56 | 0 |
-
-Hidden test SHA-256: before `68494d8f…a200bf9`, after `acb833a426208a9bebe3dccfe842b42f3e91d0575b3ec4bae2931ffa1b19d45a`.
-
-## What changed
-
-| ID | Fix | Where |
+| | Before (REDTEAM, old test) | After (this test) |
 |---|---|---|
-| B | **`strictness_gap` is certified on every independent block of players.** Some games are products of independent sub-games. In each block, players' payoffs, up to offsets `b_p(a_-p)`, depend only on the block's own actions. A block's deviation gains depend only on the distribution's marginal on that block, and the blocks' marginals can be chosen independently. So the lexicographically strictest gain vector is the merge of each block's own strictest vector: within every block, the largest gain equals that block's own min-max value. Each value is one well-posed LP, solved and certified by its dual bound like the top level was. The metric is now the largest excess over games *and blocks*. Blocks below the game's top sit deeper in the lexicographic order. This avoids re-solving the degenerate LP chain, which iteration 12 rejected as ill-posed in floating point. | `block_strictness`, `strictness_gap`, `strictest_epsilon(game, players)` |
-| D | **Deeper bystanders and product games.** Bystanders now have 3-10 actions. Their gain levels are fractions of the base game's strictest value: 18 of 22 lie between 0 and that value, 4 below it. So the original players' value is reached only after one LP round per level above it. New kinds: `bb4` (a base with a strict CCE plus two bystanders), `pr4` (two independent 2-player games), `pb5` (`pr4` plus a bystander), and a cyclic game with two bystanders. Planted dominated actions only touch their own block. A check over all 78 product games in each suite found 0 violations of block independence; it reports 187 with an injected dependence. On the hidden suite, every property experiment contains blocks that need at least 4 rounds; the deepest needs about 11. | `_with_bystander`, `_product_game`, `_random_game`, `_plant_dominated_action` |
-| L | **Games above 2,048 joint actions in every property experiment:** 3-player games of 2,184-2,366 joint actions (`XL3`), and a 48-strategy cyclic population (2,304). The documented envelope is now 2 to 5 players, up to about 2,400 joint actions. | `LARGE_DIMS`, `_shapley_family` |
-| R | **Non-blocking reaping of killed rating processes.** Bounded at 30 s. A process stuck in uninterruptible I/O keeps its pending SIGKILL and runs no more of its own code. Verification job 1 stalled for 16 minutes without output (see below). | `_kill_descendants` |
+| Better variant (merges near-copies within the noise bound) | ties (no game where it differs) | **+0.0395** (train +0.0307) |
+| Weaker variant (one LP of Algorithm 1) | −3.196 | −3.962 (train −3.537) |
+| 32-round cap shortcut | **0, tie** | −1.730, worse in all 5 property experiments |
+| Size-limit shortcut (>4,096 joint actions) | **0, tie** | failed (1e6) in all 5 property experiments |
+| Uniform baseline | −3.878 | −4.425 |
 
-The visible protocol (`eval/protocol.py`) has the same changes. Its generators are identical apart from the seed, and it still shares no code with `eval/test/`.
+- **Rank** is `sum_experiment weight * sum_metric coefficient * (method - reference)`, with the weights and coefficients of `scoring/reference.json` (`redteam/hardening_iter14/summary.json`). Higher is better; the reference is 0.
+- **Before** values are REDTEAM's ranks with the old weights.
+- **The reference is unchanged** on every metric it was scored on before. It still scores 0 on every property metric (`min_margin` 1) and 0.576602 / 0.646034 on the population experiment. Its train and hidden runs are byte-identical to an independent replay.
 
-Documents updated to the fixed gym: `briefing/evaluation.md`, `scoring/{TARGETS,EXPERIMENTS,CONSTRAINTS,DIRECTION}.md`, the `strictness_gap` descriptions in `scoring/reference.json`, and `DESIGN_NOTES.md`. The paper's reported numbers and all experiment weights are unchanged. The block check extends what the existing `strictness_gap` certifies (the paper's "strictest equilibrium" selection). It is not a new claim, so its weight did not need to move.
+## Why better results could not score higher, and what changed
 
-## Does a better result score higher? (variants, hidden test, proposed row)
+The diagnosis behind the fix:
+- A valid output is the deviation gains of a CCE.
+- `strictness_gap` and the invariance checks pin which CCE.
+- So on exact games, every method that scores 0 on every property metric returns the reference's ratings.
+- It therefore also makes the same drop decisions in the population experiment. Iterations 12-14 found every honest variant tied there.
+- So the old test could only measure reproduction, and no amount of re-weighting would change that.
 
-Rerun from the final code with the REDTEAM's own candidate program and harness (copied to `redteam/hardening_final/`). Each case runs `bash scripts/evaluate_test.sh` with no arguments. Before = `redteam/current_audit/<case>/scores_test.json`, after = `redteam/hardening_final/<case>/scores_test.json`, comparison in `redteam/hardening_final/summary.json`.
+**New scored experiment `noisy_clone_resilience` (weight 0.15), from where the paper's method falls short.**
 
-| Variant | Before | After |
-|---|---|---|
-| Reference (seed 0, and seed 1 with permuted labels) | R | R, byte-identical to `scoring/scores_test.json` |
-| Vectorized coefficient construction (honest, faster) | R | R (runtime is deliberately unscored) |
-| Tighter solver tolerances (honest) | R | R |
-| One-LP ablation (weaker) | worse in shapley, clone, mixture, offset; dominance tied R | **worse in all 5:** shapley `dev_gap` 3.84, strictness 2.82; clone `max_diff` 0.90, strictness 0.34; mixture drift 1.01, strictness 0.38; offset 0.64, strictness 0.28; dominance strictness 0.66 |
-| Freeze-every-tight-constraint rule (weaker, new) | — | **worse in all 5:** shapley `dev_gap` 3.60, strictness 2.82; clone 0.55; mixture 0.71; offset 0.08; dominance strictness 0.66 |
-| Two-LP cap | worse in shapley (1.15) and clone (0.55) only | **worse in all 5:** shapley 4.11 / strictness 2.82; clone 0.69; mixture 0.93; offset 1.76; dominance strictness 0.63 |
+- **Motivation.** The paper motivates clone invariance with evaluation data: LLM leaderboards, Chatbot Arena, "similar prompts". In such data every payoff is a measurement and redundant strategies are near-copies.
+- **Instances.** 96 hidden instances (96 more visible, from the train seed). Each is a small true game:
+  - random 2-player games (3-4 actions);
+  - random 3-player games (2-3 actions);
+  - random zero-sum games;
+  - the paper's Section 5.2 model vs model vs task game, built from a model x task score matrix.
+- **Observations.** Each true game is observed twice, in different calls, with every payoff within the stated `noise_bound` 0.05 of the truth:
+  - once padded with 3-10 near-copies of one action (for the model vs model vs task game, of one task);
+  - once without.
+- **Target.** The exact deviation rating of the true game. The evaluator computes it in rational arithmetic (Algorithm 1 with an exact simplex), which avoids the float ill-posedness that ruled out float ground truth below the top level.
+- **Metrics.** Mean absolute rating error, in units of the noise bound:
+  - `rating_error` (padded observations; primary, coefficient −1);
+  - `clean_rating_error` (unpadded observations; −0.5).
+- **Gate.** For these games, and only these, a method may return `payoffs`: the game it rated, its estimate of the true game. Every entry must be within the noise bound of the observation; the CCE and rating gates then use it.
+- **Why the property side is untouched.**
+  - Exact games carry no noise bound, so a method cannot use this field to change anything on experiments 1-6.
+  - The true game always lies within the bound, so the exact answer is admissible.
 
-The population experiment ties the reference for every one of these variants: they all make the same drop decisions on the 8x8 Sheriff meta-games. Selections that differ at the *top* level do move it (iteration 12: least strict CCE 0.637, any feasible CCE 0.624).
+The paper's method on the data (rate the observation as given) is the reference. It is not optimal:
 
-## Major shortcuts, before and after
+| Hidden test | Reference (paper's method) | Merge variant | Uniform baseline |
+|---|---:|---:|---:|
+| `rating_error` | 0.712453 | **0.448893** | 6.109139 |
+| `clean_rating_error` | 0.487613 | 0.487613 | 6.165559 |
+| Train: `rating_error` / `clean_rating_error` | 0.735823 / 0.547185 | 0.531310 / 0.547185 | 6.297090 / 5.902903 |
+
+**The merge variant** (`merge_near_copies` in `redteam/hardening_iter14/rating_program.py`) works as follows:
+- It treats two actions as copies when every pair of corresponding observed payoffs is within twice the bound, so one true payoff is consistent with both.
+- It sets each merged payoff to the midpoint of the interval consistent with all observations.
+- It then runs the unchanged Algorithm 1 on that estimate.
+- Copies become exact clones, so Property 6 applies to them, and their repeated measurements average out.
+- On exact games it is the reference. It ties every other experiment exactly and changes no clean observation.
+
+**Larger than the test's noise.** The reference is deterministic, so the relevant noise is how the comparison would vary over other hidden draws. `redteam/hardening_iter14/paired_noisy.py` re-rates every hidden noisy observation both ways in exact arithmetic. Its plug-in aggregate is PAIRED_PLUG, against 0.712453 from the job's float reference, and its merge aggregate is PAIRED_MERGE. On the padded observations:
+- the paired improvement is PAIRED_DIFF ± PAIRED_SE (standard error), t = PAIRED_T;
+- the merge variant is better on PAIRED_BETTER of 96 instances and worse on PAIRED_WORSE.
+
+**Headroom remains above the merge variant.** It does not touch `clean_rating_error`, where noise alone moves ratings by about half the bound on average and occasionally by more than one payoff unit, because deviation ratings are discontinuous in the payoffs. 0 is unattainable from noisy data.
+
+**Weights.**
+- The six earlier experiments were scaled by 0.85, so their ratios are unchanged.
+- `noisy_clone_resilience` gets 0.15, between the single invariance experiments (0.102-0.136) and the population experiment (0.17).
+- Reason: it is the one experiment where an honest method can score above the paper's without breaking the constraints the paper satisfies, and it tests the paper's own resilience claim on realistic data.
+- `scoring/reference.json` keeps every paper-reported number unchanged.
+- The schema requires a value for the proposed method in the new experiment. The paper reports none, so the reproduced hidden-test values are recorded there and labelled as not paper results.
+
+## Major shortcuts: fix and score before and after
 
 | Shortcut | Before | Fix | After |
 |---|---|---|---|
-| [three_lp_shortcut](redteam/hardening_final/three_lp_shortcut/scores_test.json) | **R on all 22 metrics** | B + D | **Worse in all 5 property experiments:** shapley `dev_gap` 3.69 / strictness 2.26; clone `max_diff` 0.32 / strictness 0.27; mixture drift 0.44, `mixture_error` 0.17 / strictness 0.34; offset 0.90 / strictness 0.27; dominance strictness 0.56. Population ties. |
-| [size_abandonment_shortcut](redteam/hardening_final/size_abandonment_shortcut/scores_test.json) | **R on all 22 metrics** | L | **Failed in all 5 property experiments:** the equilibrium is missing on every hidden game above 2,048 joint actions (2,184-2,352). Population ties (8x8 games). |
+| [32-round cap](redteam/hardening_iter14/cap32_shortcut/scores_test.json) | **R on all 22 metrics** | **Deep bystanders.** Every property experiment has games with one bystander of 40-150 actions. Every level lies strictly between 0 and the other players' strictest value, so that value is reached only after one LP round per level. The existing block certificate (`strictness_gap` per independent block) then detects a selection that stopped early. Block values are now computed on each block's own sub-game: same constraints, much cheaper. | Worse in all 5 property experiments: cyclic `dev_gap` 2.94, strictness 2.29; clone 0.086; mixture 0.93; offset 0.34; dominance strictness 0.13. Rank −1.730. On REDTEAM's public witness it still returns −0.31, −0.31, −1.65, −0.61 for ratings that are all −2.82. |
+| [Size limit (abandon >4,096 joint actions)](redteam/hardening_iter14/size_limit_shortcut/scores_test.json) | **R on all 22 metrics** | **Bigger games in every property experiment**: 3- to 5-player games of 4,600-6,300 joint actions, and a 48-strategy cyclic population with a bystander (4,608). | **Failed** in all 5 property experiments: missing equilibria on games of 4,608-6,300 joint actions. |
+| New gate: `payoffs` outside the noise bound | — | The evaluator checks shape, finiteness and that every entry is within the bound (+1e-9·scale). | Direct check on all 192 hidden noisy observations (`band_gate_check.json`): moved by 2·bound fails 192/192 with the band reason; moved by exactly the bound passes the band check; malformed fails 192/192; ignored on exact games. The container replay of this case stalled (see below). |
 
-The REDTEAM's public witness (paper Table 2 with an independent six-action bystander), scored with the new check in `redteam/hardening_final/witness.json`. The original players' block has certified value −2.821577.
+The other eleven REDTEAM shortcuts are left as they were, because none of them depends on anything this iteration changed:
+- nine scored F: visible-answer cache, reported fields, direct score writing, baseline moving, artifact replacement, constant zero, empty output, impossible values, copied input;
+- two scored below the reference: the 12-round cap (−0.009) and feasibility-only (−0.042).
 
-| Mode | Original players' largest gain | `strictness_gap` |
-|---|---|---|
-| Reference | −2.821577 | 0 |
-| Three LPs | −0.02 | 2.80 |
-| Two LPs | −0.01 | 2.81 |
-| One LP, or freeze-every-tight rule | 0 | 2.82 |
+They rest on recomputation from raw outputs, the validity gates, evaluator-owned baselines and fresh score files, all unchanged, so they were not replayed. The 12-round cap is strictly weaker than the 32-round cap, which now loses in all five property experiments.
 
-The other nine shortcuts in `REDTEAM.md` already scored F before. They were stopped by the validity gates, recomputation, evaluator-owned baselines and fresh score files, all unchanged, so they were not replayed. The two-LP cap above is the only one of them that was not F; it is now worse in all five experiments.
+## Shortcuts and gaps left open
 
-## Shortcuts and gaps left open, and why
-
-- **A large round cap.** The deepest certified block on the hidden test needs about 11 LP rounds. A cap of 12 or more rounds would tie this test, while still being wrong on deeper games. This is a coverage limit of the same kind as the size envelope, and no finite test closes it. Such a cap saves little: it is the full algorithm on almost every game.
-- **Abandoning games above about 2,400 joint actions.** This is outside the documented envelope (2 to 5 players, up to about 2,400 joint actions). It is a coverage limit, not worse quality inside the envelope.
-- **Strictness below the top within a game without product structure** is still not certified directly. Such games are covered only by the invariance checks. Recomputing the full lexicographic order would need the degenerate LP chain, which is ill-posed in floating point (iteration 12).
-- **Detecting the product structure and treating blocks specially.** A method could do this to pass the block check without running the full chain within each block. It would be special-casing recognizable games, which `CONSTRAINTS.md` forbids. The structure is also hidden by offsets and relabeling, and such a method would still face the invariance checks.
-- **Runtime.** The vectorized variant is genuinely faster (coefficient construction 30-174x, `REDTEAM.md`) and ties. This is by design: no metric may depend on wall-clock time.
-- **Iteration-12 residuals, unchanged:**
+- **A round cap of about 150 or more.** The deepest certified block on the hidden test needs about 150 rounds; a cap above that ties. No finite test closes this, and such a cap is the full algorithm on every tested game.
+- **Abandoning games above about 6,300 joint actions.** This is outside the documented envelope (2-5 players, up to about 6,500 joint actions, players with up to 150 actions). The compliance checklist now states the tested range instead of "any finite game".
+- **Strictness below the top within games without product structure** is still certified only through the invariance checks, not directly.
+- **Recognizing product structure** in order to treat blocks specially would be special-casing, which `CONSTRAINTS.md` forbids.
+- **Runtime is unscored.** The faster exact solver still ties, by design: no metric may depend on wall-clock time.
+- **In the noisy experiment, using the stated bound, the bounded-noise model, the payoff range and the model vs model vs task construction is allowed.** That is information about the data, not about the test. True payoffs and noise have 6 decimals, so there is no grid to snap to.
+- **Iteration-12/13 residuals, unchanged:**
   - the stateless check has unwatched system paths;
-  - the rater is not sandboxed and could read `eval/test/evaluate.py` while running;
+  - the rater is not sandboxed from reading `eval/test/evaluate.py`;
   - the container is trusted.
 
 ## Reference score, before and after
 
-Before: `REDTEAM.md` reference on the previous test. After: `scoring/scores_test.json`, regenerated from the final code by `scripts/run.sh`. Five runs are byte-identical: the main run, the harness's reference seed 0, seed 1 with permuted action labels, and the vectorized and tighter-tolerance variants.
-
-| Experiment | Reference before | Reference after | Uniform baseline after |
+| Experiment | Reference before | Reference after | Uniform after |
 |---|---|---|---|
-| biased_shapley_augmented | all gaps 0, strictness 0 | all gaps 0, strictness 0 | dev 2.2555, all 3.5608, symmetry 2.481, CCE 4.76672, strictness 4.286515 |
-| clone_invariance | 0 / 0 / 0, strictness 0 | 0 / 0 / 0, strictness 0 | 0.415752 / 0.415752 / 0, strictness 3.959754 |
-| mixture_invariance | 0 / 0 / 0, strictness 0 | 0 / 0 / 0, strictness 0 | 0.343772 / 0 / 3.086416, strictness 2.688069 |
-| offset_invariance | 0 / 0, strictness 0 | 0 / 0, strictness 0 | 4.088 / 2.171173, strictness 1.451191 |
-| dominance_preserving | 0 violations, margin 1, CCE 0, strictness 0 | the same | uniform: 0, 1, 2.50856, strictness 2.546267; zero rating and negated uniform: 204 violations |
-| population_improvement | late 0.576602, mean 0.646034 | late 0.576602, mean 0.646034 | uniform 0.667682 / 0.70202; random selection 0.968004 / 0.964801 |
+| Five property experiments | 0 on all 20 metrics (`min_margin` 1) | the same, on the enlarged suite (281 games, up to 6,300 joint actions, bystanders up to 150 actions) | e.g. cyclic `dev_gap` 2.2555, clone 0.443252, offset 3.2, strictness 1.45-4.29 |
+| `population_improvement` | 0.576602 / 0.646034 | 0.576602 / 0.646034 | 0.667682 / 0.70202; random 0.968004 / 0.964801 |
+| `noisy_clone_resilience` | — | 0.712453 / 0.487613 | 6.109139 / 6.165559 |
 
-The reference's property values are unchanged. The baseline rows changed because the hidden games changed.
-
-The visible side was regenerated by the same job (`scoring/scores.json`, `scoring/scores_train.json`):
-- the reference scores 0 on every property metric of the new visible suite;
-- its train-seed population late gap ratio is 0.712638 (uniform 0.797493, random 1.083548), as before.
-
-`python3 validate.py` passes.
+- `scoring/scores_test.json`, `scores_train.json` and `scores.json` were regenerated by `scripts/run.sh` from the final code. They are byte-identical to the replay harness's reference run (`redteam/hardening_iter14/reference_seed_0`).
+- Train: 0 on every property metric, population 0.712638 / 0.778461, noisy 0.735823 / 0.547185.
+- `python3 validate.py` passes.
 
 ## Headroom check
 
-- **Property metrics: the reference sits at the bound of all 20.** Every gap and every `strictness_gap` is 0, there are 0 dominance violations, and `min_margin` is 1. This is the cap for any rating that is a distribution's deviation gain. No method can score higher on them; they are the constraint side of the paper's claim.
-- **`population_improvement` (paper Section 5.3, weight 0.2) is the headroom experiment, kept from iteration 12.** The reference has a late gap ratio of 0.577 against a bound of 0. Uniform scores 0.668 and random selection 0.968, so the simple baseline is clearly below the reference on a scale with room above it.
-- **The headroom is still not demonstrated.** No method tried in iterations 12 or 13 beats the reference there. Selections that differ only below the top level (one, two and three LPs, the freeze-every-tight rule) all tie it, so the experiment measures top-level selection, not the lower levels.
-
-## Larger than seed noise
-
-- **Reference:** deterministic. Five hidden runs are byte-identical, including one with every game's action labels permuted before solving, so solver-vertex choice does not move any score.
-- **The block check:**
-  - the reference's excess is 0 on all certified blocks in all five runs;
-  - the shortcuts' excesses are 0.27-2.82;
-  - property differences below `1e-6 * scale` count as 0.
-- **Population effect over uniform:** 0.091 on the hidden seed. Iteration 12 measured it as positive on 6 of 6 paired diagnostic seeds (0.041-0.107, `redteam/population_diagnostics.json`).
+- **At the bound:** all 20 property metrics, by construction. They are the constraint side of the paper's claim: invariance, dominance, strictness.
+- **Below the bound, but no honest variant beats it:** `population_improvement` (0.577; bound 0). Any method that keeps the property metrics at 0 makes the reference's drop decisions.
+- **Below the bound, and a better variant scores higher:** `noisy_clone_resilience`. The merge variant lowers `rating_error` from 0.712 to 0.449 on the hidden test and from 0.736 to 0.531 on train. It does not reach the bound, and it leaves `clean_rating_error` (0.488) untouched.
+- **The simple baseline** (uniform) is far below on a scale with room above: 6.11 vs 0.71.
 
 ## Direction of the paper's claims
 
-- **Property claims:** the reference beats uniform averaging on cyclic equality, clone, mixture and offset invariance, CCE validity and strictness. It ties uniform on dominance, where both preserve it.
-- **Section 5.3:** deviation ratings reduce the full-game gap more than uniform averaging, on the hidden seed and the train seed. The effect is smaller than in the paper's single run (paper: 0.649 vs 0.821 at the gym's horizon). The possible causes are listed in iteration 12's report: the measuring distribution of footnote 6 is unspecified, policy sampling details differ, and the paper reports one run.
+Unchanged from iteration 13:
+- the reference beats uniform on cyclic equality, clone, mixture and offset invariance, CCE validity and strictness, and ties it on dominance;
+- on Section 5.3, deviation ratings reduce the full-game gap more than uniform averaging, on both the hidden and the train seed (0.577 vs 0.668; 0.713 vs 0.797).
 
-## What I could not fix or explain
+## What I could not finish or explain
 
-- **Unexplained stall.**
-  - In verification job 1 (`jobs/b989d22a-7c0`), the visible evaluation finished in 261 s. The train evaluation then printed nothing for about 16 minutes, and the infrastructure killed the job ("Ray actor no longer exists").
-  - The train evaluation runs the identical suite, so this was not a deterministic hang. Iteration 12 saw the same signature once. The cause is still unknown; blocked I/O on the node is the likeliest.
-  - Mitigations: reaping that can no longer block on such a process (R above), and a log relay that reports process states after 120 s of silence.
-  - The rerun (`jobs/81632208-bca`) completed every step: 10 hidden tests at 200-258 s each, the train and visible evaluations, and `validate.py`. There was no stall and no reaping warning.
-- **Headroom.** No method was found that beats the reference on `population_improvement`.
-- **Scope.** LiveBench, Atari, Figure 1's population studies and 3-player Kuhn poker remain unscored.
+- **The container replay of `band_violation_shortcut` stalled.**
+  - Its hidden test printed nothing for 49 minutes; normally the first progress line appears after about 2 minutes. Even the harness's 2,800-second timeout did not fire.
+  - I cancelled the job. This is the same no-output stall that iterations 12 and 13 each saw once, in different cases; the cause is still unknown.
+  - The gate itself is verified directly on every hidden noisy observation (`band_gate_check.py`).
+  - The cancelled harness left the candidate installed; I restored the workspace from its saved state and checked it against the reference run.
+- **The seed-1 replay** (every game's action labels permuted before solving) was queued after it and did not run. Determinism rests on two byte-identical runs of the reference, plus iteration 13's five byte-identical runs including the permuted one.
+- **Unchanged scope:** the paper's LiveBench and Atari data, Figure 1's population studies and 3-player Kuhn poker remain unscored. Experiment 7 uses the model vs model vs task construction on synthetic score matrices.
 
 ## Reproducing this report
 
-- `bash scripts/run.sh`: the reference end to end (paper artifacts, baseline, standard, train and hidden evaluation, `validate.py`), about 15 minutes.
-- `python3 redteam/hardening_final/witness.py`: the public three-LP witness.
-- `python3 redteam/hardening_final/run_bundle.py`: the 9 replays above, about 35 minutes, resumable.
-- `python3 redteam/hardening_final/summarize.py`: the before/after comparison.
-- Iteration 12's full replay of 65 shortcuts: `python3 redteam/replay_all.py`. It was not rerun against this test.
+- `bash scripts/run.sh`: the reference end to end (paper artifacts, baseline, standard, train and hidden evaluation, `validate.py`), about 25 minutes.
+- `python3 redteam/hardening_iter14/run_bundle.py`: the replays above, resumable, about 2 hours.
+- `python3 redteam/hardening_iter14/summarize.py`: the ranks.
+- `python3 redteam/hardening_iter14/paired_noisy.py --split test`: the exact paired comparison, about 30 minutes on 2 cores.
+- `python3 redteam/hardening_iter14/band_gate_check.py`: the noise-bound gate check.

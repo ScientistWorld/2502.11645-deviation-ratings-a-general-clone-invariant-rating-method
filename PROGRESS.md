@@ -76,3 +76,10 @@ Reference results:
 - **Population (late gap ratio):** reference 0.577, uniform 0.668, random selection 0.968.
 
 `HARDENING.md` lists every shortcut with its score before and after.
+
+## Hardening iteration 14 (2026-11-08)
+
+- New experiment `noisy_clone_resilience` (weight 0.15; earlier weights scaled by 0.85): noisy observations (bound 0.05) of small true games, padded with 3-10 near-copies of one action or not, scored against the exact deviation ratings of the true game. Reference (the paper's method on the observation as given): `rating_error` 0.712, `clean_rating_error` 0.488 on the hidden test; a merge-near-copies variant reaches 0.449 / 0.488.
+- Deep bystanders (40-150 actions) and games of 4,600-6,300 joint actions in every property experiment close the 32-round-cap and size-limit shortcuts.
+- Reference scores on every earlier metric unchanged (0 on every property metric; population 0.577 / 0.646). See `HARDENING.md`.
+

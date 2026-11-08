@@ -1,0 +1,15 @@
+{
+  "moved_2b": {
+    "band_failure": 192
+  },
+  "moved_b": {
+    "other_failure": 192
+  },
+  "malformed": {
+    "shape_failure": 192
+  },
+  "exact_game_out_of_band": {
+    "field_ignored": 1
+  },
+  "noisy_observations": 192
+}

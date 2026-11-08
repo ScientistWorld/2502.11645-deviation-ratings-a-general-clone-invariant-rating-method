@@ -71,5 +71,10 @@
 - Restored the paper's nonzero-dual freezing rule in the sequential LP; the intermediate freeze-every-tight-constraint rule failed hidden invariance checks on all 11 sampled suites
 - Replayed all 45 audited shortcuts and 6 new probes through the hidden test (see `HARDENING.md`); the reference scores 0 on every invariance metric
 
+### [2026-11-08 01:30] - secondary_claims
+- Final hardening (iteration 14). Added the scored experiment `noisy_clone_resilience`: ratings from noisy observations of small true games, with and without near-copies of one action, scored against exact (rational) deviation ratings of the true game. This is where an honest method can beat the reference: merging near-copies within the noise bound lowers the hidden `rating_error` from 0.712 to 0.449 without changing any other score
+- Closed the two shortcuts that tied the reference: bystanders with 40-150 actions make a 32-round cap lose in all five property experiments, and games of 4,600-6,300 joint actions make abandoning games above 4,096 fail
+- The reference is unchanged on every earlier metric and deterministic; see `HARDENING.md`
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

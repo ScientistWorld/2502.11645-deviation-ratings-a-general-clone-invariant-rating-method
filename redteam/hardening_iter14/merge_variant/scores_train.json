@@ -1,0 +1,124 @@
+{
+  "experiments": {
+    "biased_shapley_augmented": {
+      "results": {
+        "deviation_rating": {
+          "dev_gap": 0.0,
+          "all_player_dev_gap": 0.0,
+          "player_symmetry_gap": 0.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "dev_gap": 3.4,
+          "all_player_dev_gap": 3.4,
+          "player_symmetry_gap": 1.563667,
+          "CCE_gap": 3.810821,
+          "strictness_gap": 5.202199
+        }
+      }
+    },
+    "clone_invariance": {
+      "results": {
+        "deviation_rating": {
+          "max_diff": 0.0,
+          "all_players_max_diff": 0.0,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "max_diff": 0.684875,
+          "all_players_max_diff": 0.684875,
+          "clone_source_gap": 0.0,
+          "strictness_gap": 3.899657
+        }
+      }
+    },
+    "mixture_invariance": {
+      "results": {
+        "deviation_rating": {
+          "original_max_diff": 0.0,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "original_max_diff": 0.694046,
+          "mixture_error": 0.0,
+          "max_CCE_gap": 5.722456,
+          "strictness_gap": 5.242964
+        }
+      }
+    },
+    "offset_invariance": {
+      "results": {
+        "deviation_rating": {
+          "max_diff": 0.0,
+          "max_CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "max_diff": 3.98,
+          "max_CCE_gap": 3.005284,
+          "strictness_gap": 2.21565
+        }
+      }
+    },
+    "dominance_preserving": {
+      "results": {
+        "deviation_rating": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 0.0,
+          "strictness_gap": 0.0
+        },
+        "uniform_payoff": {
+          "dominance_violations": 0,
+          "min_margin": 1.0,
+          "CCE_gap": 2.376408,
+          "strictness_gap": 1.645026
+        },
+        "zero_rating": {
+          "dominance_violations": 14652,
+          "min_margin": 0.0,
+          "CCE_gap": 2.376408,
+          "strictness_gap": 1.645026
+        },
+        "negative_uniform_payoff": {
+          "dominance_violations": 14652,
+          "min_margin": -62.8,
+          "CCE_gap": 2.376408,
+          "strictness_gap": 1.645026
+        }
+      }
+    },
+    "noisy_clone_resilience": {
+      "results": {
+        "deviation_rating": {
+          "rating_error": 0.53131,
+          "clean_rating_error": 0.547185
+        },
+        "uniform_payoff": {
+          "rating_error": 6.29709,
+          "clean_rating_error": 5.902903
+        }
+      }
+    },
+    "population_improvement": {
+      "results": {
+        "deviation_rating": {
+          "late_gap_ratio": 0.712638,
+          "mean_gap_ratio": 0.778461
+        },
+        "uniform_payoff": {
+          "late_gap_ratio": 0.797493,
+          "mean_gap_ratio": 0.825532
+        },
+        "random_selection": {
+          "late_gap_ratio": 1.083548,
+          "mean_gap_ratio": 1.08643
+        }
+      }
+    }
+  }
+}
