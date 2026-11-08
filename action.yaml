@@ -1,3 +1,6 @@
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
 action: done
 milestone: secondary_claims
-notes: "Audit complete: 21 hidden tests, 13 shortcut attempts, 2 shortcut ties; weaker ablation loses, faster exact solver ties, reference seed spread 0. REDTEAM.md and replay evidence committed; original Git blobs restored outside audit, with pre-existing read-only mounts documented."
+notes: "Iteration 14 hardening: new scored experiment noisy_clone_resilience (exact ground truth) where an honest merge-near-copies variant beats the reference (+0.0395 rank hidden, paired t=5.6, 85/96 better); deep bystanders and >4,096-action games close the cap-32 and size-limit shortcuts; reference unchanged on all earlier metrics; validate.py passes. See HARDENING.md."
